@@ -1,0 +1,856 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Blog Name</title>
+  <subtitle>Blog subtitle</subtitle>
+  <id>http://blog.url.com/articles</id>
+  <link href="http://blog.url.com/articles"/>
+  <link href="http://blog.url.com/feed.xml" rel="self"/>
+  <updated>2015-09-25T16:33:00-06:00</updated>
+  <author>
+    <name>Blog Author</name>
+  </author>
+  <entry>
+    <title>Javascript Object Key Transformation Helpers</title>
+    <link rel="alternate" href="http://blog.url.com/articles/2015/09/25/javascript-object-key-transformation-helpers.html"/>
+    <id>http://blog.url.com/articles/2015/09/25/javascript-object-key-transformation-helpers.html</id>
+    <published>2015-09-25T16:33:00-06:00</published>
+    <updated>2015-10-07T22:41:34-06:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;There are multiple times when I get data back from the server that is snake_case
+and I need it to be camelCase in my Javascript. Here are a couple of helpers I
+use to transform Javascript keys.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;I should note that these helpers are using lodash and an object called StringHelpers
+to manipulate the keys.&lt;/p&gt;
+
+&lt;p&gt;Here is the StringHelpers module&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-coffee"&gt;StringHelpers =
+  # Capitalize the first letter of the string
+  capitalize: (word) -&amp;gt;
+    word.charAt(0).toUpperCase() + word.slice(1)
+
+  # Convert the first char to lowercase
+  uncapitalize: (word) -&amp;gt;
+    word.charAt(0).toLowerCase() + word.slice(1)
+
+  # Titleize a string
+  ## foo_bar =&amp;gt; Foo Bar
+  ## BarFoo =&amp;gt; Bar Foo
+  titleize: (string) -&amp;gt;
+    cleanTitle = string.replace(/[ \-_]+/g, &amp;#39; &amp;#39;);
+    words = cleanTitle.replace(/([A-Z])/g, &amp;quot; $&amp;amp;&amp;quot;).trim().split(&amp;#39; &amp;#39;)
+    capitalizedWords = words.map (word) -&amp;gt;
+      capitalize(word)
+
+    capitalizedWords.join(&amp;#39; &amp;#39;)
+
+  # Converts CamelCase to snake_case
+  ## FooBar =&amp;gt; foo_bar
+  ## fooBar =&amp;gt; foo_bar
+  underscore: (string) -&amp;gt;
+    newString = string.replace /([A-Z])/g, ($1) -&amp;gt;
+      &amp;quot;_#{ $1.toLowerCase() }&amp;quot;
+    newString.replace(/^_/, &amp;#39;&amp;#39;).replace(/-/g, &amp;#39;_&amp;#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Convert JS Object Keys to Camel Case (camelCase)&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-coffee"&gt;objectKeysToCamelCase = (object) -&amp;gt;
+  newObj = null
+
+  if _.isArray(object)
+    newObj = object.map (item) -&amp;gt;
+      objectKeysToCamelCase item
+
+  else if _.isObject(object)
+    newObj = {}
+    _.forEach object, (value, key) -&amp;gt;
+      newKey = StringHelpers.uncapitalize(StringHelpers.titleize(key).replace(/\s+/g,&amp;#39;&amp;#39;))
+      newObj[newKey] = objectKeysToCamelCase(value)
+
+  else
+    newObj = object
+
+  return newObj
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Convert JS Object Keys to Snake Case (snake_case)&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-coffee"&gt;objectKeysToSnakeCase = (object) -&amp;gt;
+  newObj = null
+
+  if _.isArray(object)
+    newObj = object.map (item) -&amp;gt;
+      objectKeysToSnakeCase item
+
+  else if _.isObject(object)
+    newObj = {}
+    _.forEach object, (value, key) -&amp;gt;
+      newKey = StringHelpers.underscore(key).replace(/\s+/g,&amp;#39;&amp;#39;)
+      newObj[newKey] = objectKeysToSnakeCase(value)
+
+  else
+    newObj = object
+
+  return newObj
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;And All Together in Angular Modules&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-coffee"&gt;# Lodash Module
+angular.module(&amp;#39;lodash&amp;#39;, [])
+  .factory &amp;#39;_&amp;#39;, -&amp;gt;
+    window._
+
+# StringHelpers Module
+StringHelpers = -&amp;gt;
+  # Capitalize the first letter of the string
+  capitalize = (word) -&amp;gt;
+    word.charAt(0).toUpperCase() + word.slice(1)
+
+  # Convert the first char to lowercase
+  uncapitalize = (word) -&amp;gt;
+    word.charAt(0).toLowerCase() + word.slice(1)
+
+  # Titleize a string
+  ## foo_bar =&amp;gt; Foo Bar
+  ## BarFoo =&amp;gt; Bar Foo
+  titleize = (string) -&amp;gt;
+    cleanTitle = string.replace(/[ \-_]+/g, &amp;#39; &amp;#39;);
+    words = cleanTitle.replace(/([A-Z])/g, &amp;quot; $&amp;amp;&amp;quot;).trim().split(&amp;#39; &amp;#39;)
+    capitalizedWords = words.map (word) -&amp;gt;
+      capitalize(word)
+
+    capitalizedWords.join(&amp;#39; &amp;#39;)
+
+  # Converts CamelCase to snake_case
+  ## FooBar =&amp;gt; foo_bar
+  ## fooBar =&amp;gt; foo_bar
+  underscore = (string) -&amp;gt;
+    newString = string.replace /([A-Z])/g, ($1) -&amp;gt;
+      &amp;quot;_#{ $1.toLowerCase() }&amp;quot;
+    newString.replace(/^_/, &amp;#39;&amp;#39;).replace(/-/g, &amp;#39;_&amp;#39;)
+
+  return {
+    capitalize: capitalize
+    uncapitalize: uncapitalize
+    titleize: titleize
+    underscore: underscore
+  }
+
+angular.module(&amp;#39;string-helpers&amp;#39;, [])
+  .factory &amp;#39;StringHelpers&amp;#39;, StringHelpers
+
+# StringHelpers Module
+JsonHelpers = (StringHelpers, _) -&amp;gt;
+
+  objectKeysToCamelCase = (object) -&amp;gt;
+    newObj = null
+
+    if _.isArray(object)
+      newObj = object.map (item) -&amp;gt;
+        objectKeysToCamelCase item
+
+    else if _.isObject(object)
+      newObj = {}
+      _.forEach object, (value, key) -&amp;gt;
+        newKey = StringHelpers.uncapitalize(StringHelpers.titleize(key).replace(/\s+/g,&amp;#39;&amp;#39;))
+        newObj[newKey] = objectKeysToCamelCase(value)
+
+    else
+      newObj = object
+
+    return newObj
+
+  objectKeysToSnakeCase = (object) -&amp;gt;
+    newObj = null
+
+    if _.isArray(object)
+      newObj = object.map (item) -&amp;gt;
+        objectKeysToSnakeCase item
+
+    else if _.isObject(object)
+      newObj = {}
+      _.forEach object, (value, key) -&amp;gt;
+        newKey = StringHelpers.underscore(key).replace(/\s+/g,&amp;#39;&amp;#39;)
+        newObj[newKey] = objectKeysToSnakeCase(value)
+
+    else
+      newObj = object
+
+    return newObj
+
+  return {
+    objectKeysToCamelCase: objectKeysToCamelCase,
+    objectKeysToSnakeCase: objectKeysToSnakeCase
+  }
+
+angular.module(&amp;#39;json-helpers&amp;#39;, [&amp;#39;string-helpers&amp;#39;, &amp;#39;lodash&amp;#39;])
+  .factory &amp;#39;JsonHelpers&amp;#39;, JsonHelpers
+
+JsonHelpers.$inject = [&amp;#39;StringHelpers&amp;#39;, &amp;#39;_&amp;#39;]
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+  </entry>
+  <entry>
+    <title>OSX Keep SSH Session Alive</title>
+    <link rel="alternate" href="http://blog.url.com/articles/2015/09/19/osx-keep-ssh-session-alive.html"/>
+    <id>http://blog.url.com/articles/2015/09/19/osx-keep-ssh-session-alive.html</id>
+    <published>2015-09-19T22:43:00-06:00</published>
+    <updated>2015-10-07T22:41:34-06:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;For keeping the connection alive, you can check in &lt;code class="prettyprint"&gt;/etc/ssh_config&lt;/code&gt; the line where
+it says &lt;code class="prettyprint"&gt;ServerAliveInterval&lt;/code&gt;, that tells you how often (in seconds) your computer
+is gonna send a null packet to keep the connection alive. If you have a 0 in there
+that indicates that your computer is not trying to keep the connection alive
+(it is disabled), otherwise it tells you how often (in seconds) it is sending
+the aforementioned packet. Try putting 120 or 240, if it is still killing your
+connection, you can go lower, maybe to 5, if with that number it doesn&amp;rsquo;t happen,
+maybe it is your router who is dumping the connection to free memory.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Angular Form Validations from Rails Model Errors</title>
+    <link rel="alternate" href="http://blog.url.com/articles/2015/09/15/angular-form-validations-from-rails-model-errors.html"/>
+    <id>http://blog.url.com/articles/2015/09/15/angular-form-validations-from-rails-model-errors.html</id>
+    <published>2015-09-15T23:25:00-06:00</published>
+    <updated>2015-10-07T22:41:34-06:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;I love Rails for it&amp;rsquo;s baked in model validations. I love Angular for the simplicity.
+Together, you can keep your data validations on the server and update the angular
+forms with something that is familiar to Rails devs, convention over configuration.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;First, let&amp;rsquo;s start with the Rails model.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-ruby"&gt;class InventoryItem &amp;lt; ActiveRecord::Base
+  validates :price, presence: true
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We have a &lt;code class="prettyprint"&gt;InventoryItem&lt;/code&gt; model that has a validation for presence. Since you are
+familiar with Rails validations, you know that if try to save your flight without
+a price you will get an error that looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-ruby"&gt;inventory_item = InventoryItem.new
+inventory_item.valid? #=&amp;gt; false
+inventory_item.errors.messages #=&amp;gt;  {:price=&amp;gt;[&amp;quot;can&amp;#39;t be blank&amp;quot;]}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We just have to pass the error hash back to the UI as json.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-ruby"&gt;class InventoryItemController &amp;lt; ApplicationController
+  def create
+    @inventory_item = InventoryItem.new params_for_create
+
+    if @inventory_item.save
+      # return the item
+      render json: @inventory_item
+    else
+      # Return the inventory_item errors
+      render json: { errors: @inventory_item.errors.messages }, status: :conflict
+    end
+  end
+
+  private #-------------------------
+
+  def params_for_create
+    params[:inventory_item]
+    params.required(:inventory_item).permit(:price)
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s create the Angular controller and view that will handle the error
+response.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-coffee"&gt;angular.module(&amp;#39;myApp&amp;#39;, [&amp;#39;error-helpers&amp;#39;]) # error-helpers will be defined in just a bit
+
+# Define controller
+InventoryItemController = ($http, ErrorHelpers)-&amp;gt;
+  ctrl = @
+  # bind the methods from ErrorHelpers.setupErrorHelpers to this controller
+  ErrorHelpers.setupErrorHelpers.call(ctrl)
+  # Setup new model
+  ctrl.inventoryItem = {
+    price: null
+  }
+
+  ctrl.onSubmit = -&amp;gt;
+    # clear any errors that were set on a previous submit
+    ctrl.clearErrors()
+
+    $http.post &amp;#39;/api/inventory_items&amp;#39;, ctrl.inventoryItem
+      .then (response) -&amp;gt;
+        # do whatever you need to
+      .catch (response) -&amp;gt;
+        # populate the errors object
+        ctrl.populateErrors(response.data.errors)
+
+angular.module(&amp;#39;myApp&amp;#39;).controller &amp;#39;InventoryItemController&amp;#39;, InventoryItemController
+InventoryItemController.$inject = [&amp;#39;$http&amp;#39;, &amp;#39;ErrorHelpers&amp;#39;]
+
+# Define ErrorHelpers
+ErrorHelpers = -&amp;gt;
+  helper = @
+  helper.setupErrorHelpers = -&amp;gt;
+    binding = @
+    binding.errors = {}
+
+    binding.populateErrors = (errors) -&amp;gt;
+      for own key, value of errors
+        binding.errors[key] = value
+
+    binding.clearErrors = -&amp;gt;
+      for own key, value of binding.errors
+        delete binding.errors[key]
+
+  return helper
+
+angular.module(&amp;#39;error-helpers&amp;#39;, [])
+  .service &amp;#39;ErrorHelpers&amp;#39;, ErrorHelpers
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For the HTML I will just use some Bootstrap markup:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-html"&gt;&amp;lt;form ng-submit=&amp;quot;itemCtrl.onSubmit()&amp;quot; ng-controller=&amp;quot;InventoryItemController as itemCtrl&amp;quot;&amp;gt;
+  &amp;lt;!--
+    when itemCtrl.errors.price is present add &amp;#39;has-class&amp;#39; to .form-group
+  --&amp;gt;
+  &amp;lt;div class=&amp;quot;form-group&amp;quot; ng-class=&amp;quot;{ &amp;#39;has-error&amp;#39;: itemCtrl.errors.price }&amp;quot;&amp;gt;
+    &amp;lt;label for=&amp;quot;price&amp;quot;&amp;gt;Item Price&amp;lt;/label&amp;gt;
+    &amp;lt;input type=&amp;quot;text&amp;quot; id=&amp;quot;price&amp;quot; ng-model=&amp;quot;itemCtrl.inventoryItem.price&amp;quot;&amp;gt;
+    &amp;lt;!--
+      when itemCtrl.errors.price is present display .help-block
+    --&amp;gt;
+    &amp;lt;p class=&amp;quot;help-block&amp;quot; ng-if=&amp;quot;itemCtrl.errors.price&amp;quot;&amp;gt;{{ itemCtrl.errors.price.join(&amp;#39;, &amp;#39;) }}&amp;lt;/p&amp;gt;
+  &amp;lt;/div&amp;gt;
+&amp;lt;/form&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This could definitely use a directive but rather than abstract it for this example,
+I chose simplicity.&lt;/p&gt;
+
+&lt;p&gt;This will interpolate your Rails model errors when they are returned from the server
+and apply the Bootstrap &lt;code class="prettyprint"&gt;has-error&lt;/code&gt; class to the markup to highlight the error.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>UI Router Multiple Nested Child Views Example</title>
+    <link rel="alternate" href="http://blog.url.com/articles/2015/09/11/ui-router-multiple-nested-child-views-example.html"/>
+    <id>http://blog.url.com/articles/2015/09/11/ui-router-multiple-nested-child-views-example.html</id>
+    <published>2015-09-11T05:18:00-06:00</published>
+    <updated>2015-10-07T22:41:34-06:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;Since you are here, I am assuming that you are wondering how to setup your angular
+app with the &lt;a href="https://github.com/angular-ui/ui-router"&gt;UI Router&lt;/a&gt; with child views.&lt;/p&gt;
+
+&lt;p&gt;UI Router has a pretty simple setup for full page changes, but is definitely a
+little tricky when it comes to child views changes. Not because the concept is
+difficult, it&amp;rsquo;s because the documentation leaves a lot to be desired. Luckily
+I have gone through the UI Router&amp;rsquo;s wiki pages and have a simple example of child
+views in action.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Here is our base HTML. Really the only thing you will care about is near the bottom
+with the &lt;code class="prettyprint"&gt;ui-view&lt;/code&gt;s.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-html"&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+  &amp;lt;title&amp;gt;UiRouter&amp;lt;/title&amp;gt;
+  &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css&amp;quot; media=&amp;quot;screen&amp;quot; charset=&amp;quot;utf-8&amp;quot;&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body ng-app=&amp;quot;myApp&amp;quot;&amp;gt;
+
+  &amp;lt;!-- Navigation --&amp;gt;
+  &amp;lt;div class=&amp;quot;text-center&amp;quot;&amp;gt;
+    &amp;lt;a ui-sref=&amp;quot;app&amp;quot;&amp;gt;Root&amp;lt;/a&amp;gt;
+  &amp;lt;/div&amp;gt;
+  &amp;lt;div class=&amp;quot;row&amp;quot;&amp;gt;
+    &amp;lt;div class=&amp;quot;small-4 columns&amp;quot;&amp;gt;
+      &amp;lt;ul class=&amp;quot;side-nav&amp;quot;&amp;gt;
+        &amp;lt;li&amp;gt;&amp;lt;a ui-sref=&amp;quot;app.panelOne.childOne&amp;quot;&amp;gt;Panel 1 Child 1&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+        &amp;lt;li&amp;gt;&amp;lt;a ui-sref=&amp;quot;app.panelOne.childTwo&amp;quot;&amp;gt;Panel 1 Child 2&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+      &amp;lt;/ul&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;small-4 columns end&amp;quot;&amp;gt;
+      &amp;lt;ul class=&amp;quot;side-nav&amp;quot;&amp;gt;
+        &amp;lt;li&amp;gt;&amp;lt;a ui-sref=&amp;quot;app.panelTwo.childOne&amp;quot;&amp;gt;Panel 2 Child 1&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+        &amp;lt;li&amp;gt;&amp;lt;a ui-sref=&amp;quot;app.panelTwo.childTwo&amp;quot;&amp;gt;Panel 2 Child 2&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+        &amp;lt;li&amp;gt;&amp;lt;a ui-sref=&amp;quot;app.panelTwo.childThree&amp;quot;&amp;gt;Change panel in a diff parent&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+      &amp;lt;/ul&amp;gt;
+    &amp;lt;/div&amp;gt;
+  &amp;lt;/div&amp;gt;
+
+  &amp;lt;!-- UI Views --&amp;gt;
+  &amp;lt;div class=&amp;quot;row&amp;quot;&amp;gt;
+    &amp;lt;div class=&amp;quot;small-4 columns&amp;quot;&amp;gt;
+      &amp;lt;div ui-view=&amp;quot;panelOne&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;small-4 columns&amp;quot;&amp;gt;
+      &amp;lt;div ui-view=&amp;quot;panelTwo&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;small-4 columns&amp;quot;&amp;gt;
+      &amp;lt;div ui-view=&amp;quot;panelThree&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+  &amp;lt;/div&amp;gt;
+
+  &amp;lt;!-- Scripts --&amp;gt;
+  &amp;lt;script src=&amp;quot;https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+  &amp;lt;script src=&amp;quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+  &amp;lt;script src=&amp;quot;myapp.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code class="prettyprint"&gt;ui-view&lt;/code&gt;s are named so we can target the correct view when inserting the
+child views.&lt;/p&gt;
+
+&lt;p&gt;The rest is handled by our js.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-js"&gt;angular.module(&amp;#39;myApp&amp;#39;, [&amp;#39;ui.router&amp;#39;]);
+
+var Config = function($stateProvider, $urlRouterProvider) {
+  $stateProvider.state(&amp;#39;app&amp;#39;, {
+    url: &amp;quot;/&amp;quot;,
+    views: {
+      &amp;#39;panelOne&amp;#39;: {
+        template: &amp;quot;&amp;lt;h1&amp;gt;Panel 1&amp;lt;/h1&amp;gt; &amp;lt;div ui-view=&amp;#39;panelOneContent&amp;#39;&amp;gt;&amp;lt;/div&amp;gt;&amp;quot;
+      },
+      &amp;#39;panelTwo&amp;#39;: {
+        template: &amp;quot;&amp;lt;h1&amp;gt;Panel 2&amp;lt;/h1&amp;gt; &amp;lt;div ui-view=&amp;#39;panelTwoContent&amp;#39;&amp;gt;&amp;lt;/div&amp;gt;&amp;quot;
+      },
+      &amp;#39;panelThree&amp;#39;: {
+        template: &amp;quot;&amp;lt;h1&amp;gt;Panel 3&amp;lt;/h1&amp;gt;&amp;quot;
+      }
+    }
+  })
+
+  // Panel One ================================================================
+  .state(&amp;#39;app.panelOne&amp;#39;, {
+    abstract: true,
+    url: &amp;quot;panel1&amp;quot;,
+    views: {
+      &amp;#39;panelOneContent&amp;#39;: {
+        template: &amp;#39;&amp;lt;div ui-view=&amp;quot;content&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&amp;#39;
+      }
+    }
+  })
+  .state(&amp;#39;app.panelOne.childOne&amp;#39;, {
+    url: &amp;quot;/child1&amp;quot;,
+    views: {
+      &amp;#39;content&amp;#39;: {
+        template: &amp;#39;Panel 1 child 1&amp;#39;
+      }
+    }
+  })
+  .state(&amp;#39;app.panelOne.childTwo&amp;#39;, {
+    url: &amp;quot;/child2&amp;quot;,
+    views: {
+      &amp;#39;content&amp;#39;: {
+        template: &amp;#39;Panel 1 child 2&amp;#39;
+      }
+    }
+  })
+
+  // Panel Two ================================================================
+  .state(&amp;#39;app.panelTwo&amp;#39;, {
+    abstract: true,
+    url: &amp;quot;panel2&amp;quot;,
+    views: {
+      &amp;#39;panelTwoContent&amp;#39;: {
+        template: &amp;#39;&amp;lt;div ui-view=&amp;quot;content&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&amp;#39;
+      }
+    }
+  })
+  .state(&amp;#39;app.panelTwo.childOne&amp;#39;, {
+    url: &amp;quot;/child1&amp;quot;,
+    views: {
+      &amp;#39;content&amp;#39;: {
+        template: &amp;#39;Panel 2 child 1&amp;#39;
+      }
+    }
+  })
+  .state(&amp;#39;app.panelTwo.childTwo&amp;#39;, {
+    url: &amp;quot;/child2&amp;quot;,
+    views: {
+      &amp;#39;content&amp;#39;: {
+        template: &amp;#39;Panel 2 child 2&amp;#39;
+      }
+    }
+  })
+  .state(&amp;#39;app.panelTwo.childThree&amp;#39;, {
+    url: &amp;quot;/child3&amp;quot;,
+    views: {
+      &amp;#39;content&amp;#39;: {
+        template: &amp;#39;Panel 2 child 3&amp;#39;
+      },
+      &amp;#39;panelOne@&amp;#39;: {
+        template: &amp;#39;&amp;lt;h2&amp;gt;This one takes over Panel One&amp;lt;/h2&amp;gt;&amp;#39;
+      }
+    }
+  });
+
+  $urlRouterProvider.otherwise(&amp;quot;/&amp;quot;);
+};
+
+angular.module(&amp;#39;myApp&amp;#39;).config(Config);
+Config.$inject = [&amp;#39;$stateProvider&amp;#39;, &amp;#39;$urlRouterProvider&amp;#39;];
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s go over the js state by state.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-js"&gt;$stateProvider.state(&amp;#39;app&amp;#39;, {
+  url: &amp;quot;/&amp;quot;,
+  views: {
+    &amp;#39;panelOne&amp;#39;: {
+      template: &amp;quot;&amp;lt;h1&amp;gt;Panel 1&amp;lt;/h1&amp;gt; &amp;lt;div ui-view=&amp;#39;panelOneContent&amp;#39;&amp;gt;&amp;lt;/div&amp;gt;&amp;quot;
+    },
+    &amp;#39;panelTwo&amp;#39;: {
+      template: &amp;quot;&amp;lt;h1&amp;gt;Panel 2&amp;lt;/h1&amp;gt; &amp;lt;div ui-view=&amp;#39;panelTwoContent&amp;#39;&amp;gt;&amp;lt;/div&amp;gt;&amp;quot;
+    },
+    &amp;#39;panelThree&amp;#39;: {
+      template: &amp;quot;&amp;lt;h1&amp;gt;Panel 3&amp;lt;/h1&amp;gt;&amp;quot;
+    }
+  }
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code class="prettyprint"&gt;panelOne&lt;/code&gt;, &lt;code class="prettyprint"&gt;panelTwo&lt;/code&gt; and &lt;code class="prettyprint"&gt;panelThree&lt;/code&gt; match up to the named views we have in
+our HTML (&lt;code class="prettyprint"&gt;&amp;lt;div ui-view=&amp;quot;panelOne&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;, &lt;code class="prettyprint"&gt;&amp;lt;div ui-view=&amp;quot;panelTwo&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;  and
+&lt;code class="prettyprint"&gt;&amp;lt;div ui-view=&amp;quot;panelThree&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;The next state is just setup for adding child views to children.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-js"&gt;.state(&amp;#39;app.panelOne&amp;#39;, {
+  abstract: true,
+  url: &amp;quot;panel1&amp;quot;,
+  views: {
+    &amp;#39;panelOneContent&amp;#39;: {
+      template: &amp;#39;&amp;lt;div ui-view=&amp;quot;content&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&amp;#39;
+    }
+  }
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code class="prettyprint"&gt;panelOneContent&lt;/code&gt; is the named view in the panelOne template&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-js"&gt;&amp;#39;panelOne&amp;#39;: {
+  template: &amp;quot;&amp;lt;h1&amp;gt;Panel 1&amp;lt;/h1&amp;gt; &amp;lt;div ui-view=&amp;#39;panelOneContent&amp;#39;&amp;gt;&amp;lt;/div&amp;gt;&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I will admit this step seems a counterintuitive. Why insert a ui-view inside
+another ui-view? Because this is the only way you can add children within children.
+UI Router doesn&amp;rsquo;t know where to insert the view content without this step unfortunately.&lt;/p&gt;
+
+&lt;p&gt;This next section does the same thing as the last except it is going to insert
+it&amp;rsquo;s template in the &lt;code class="prettyprint"&gt;app.panelOne&lt;/code&gt; content named view.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-js"&gt;.state(&amp;#39;app.panelTwo.childOne&amp;#39;, {
+  url: &amp;quot;/child1&amp;quot;,
+  views: {
+    &amp;#39;content&amp;#39;: { // inserted into &amp;#39;ui-view=&amp;quot;content&amp;quot;&amp;#39; in app.panelOne
+      template: &amp;#39;Panel 2 child 1&amp;#39;
+    }
+  }
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The rest is just rinse and repeat, with one exception, &lt;code class="prettyprint"&gt;app.panelTwo.childThree&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-js"&gt;.state(&amp;#39;app.panelTwo.childThree&amp;#39;, {
+  url: &amp;quot;/child3&amp;quot;,
+  views: {
+    &amp;#39;content&amp;#39;: {
+      template: &amp;#39;Panel 2 child 3&amp;#39;
+    },
+    &amp;#39;panelOne@&amp;#39;: { // replaces panelOne content
+      template: &amp;#39;&amp;lt;h2&amp;gt;This one takes over Panel One&amp;lt;/h2&amp;gt;&amp;#39;
+    }
+  }
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In addition to updating the &amp;lsquo;content&amp;rsquo; view for panel 2, it also populates content
+into panelOne. It replaces &lt;code class="prettyprint"&gt;&amp;lt;h1&amp;gt;Panel 1&amp;lt;/h1&amp;gt; &amp;lt;div ui-view=&amp;#39;panelOneContent&amp;#39;&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;
+with &lt;code class="prettyprint"&gt;&amp;lt;h2&amp;gt;This one takes over Panel One&amp;lt;/h2&amp;gt;&lt;/code&gt;. This is acheived by telling UI Router
+to use the absolute path to panelOne with the appended &lt;code class="prettyprint"&gt;@&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;I will admit that this example is far from a real-life implementation, but it should
+show you how to use child views.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Rails Internationalization (I18n) Tips</title>
+    <link rel="alternate" href="http://blog.url.com/articles/2015/09/08/rails-internationalization-i18n-tips.html"/>
+    <id>http://blog.url.com/articles/2015/09/08/rails-internationalization-i18n-tips.html</id>
+    <published>2015-09-08T02:12:00-06:00</published>
+    <updated>2015-10-07T22:41:34-06:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;Internationalization (I18n) in Rails is a pretty simple concept. Just create a YML
+file with your translations and Rails will slurp them in for the various languages
+that you support. The problem is that the documentation leaves a little to be desired.
+Here are just a few tips that I have used.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2&gt;activemodel instead of activerecord&lt;/h2&gt;
+
+&lt;p&gt;I use activerecord and mongoid on a daily basis and while most of the documentation
+of Rails I18n shows &lt;code class="prettyprint"&gt;en.activerecord&lt;/code&gt;, use &lt;code class="prettyprint"&gt;en.activemodel&lt;/code&gt; instead. No matter if
+you are using mongoid or activerecord or a non-persisted form object, they both all
+use activemodel.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-yml"&gt;# /config/locales/en.yml
+en:
+  activemodel: # Notice how this is not activerecord
+    attributes:
+      user:
+        name: Full Name
+    models:
+       user: User
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;i18n_key&lt;/h2&gt;
+
+&lt;p&gt;I have had more than a few occasions where I was wondering what the i18n path was
+for an attribute on a form object, mongoid model, and active model. Here is a
+simple helper to get the model portion of the path:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;Forms::UserForm.model_name.i18n_key #=&amp;gt; forms/user_form
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This information can be useful for debugging purposes and show you how the model
+yml needs to be setup. Here is a yml example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-yml"&gt;# /config/locales/en.yml
+en:
+  activemodel:
+    attributes:
+      forms/user_form:
+        name: Full Name
+    models:
+       forms/user_form: User
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;While this only gives a partial path, it is a good starting point if you are lost.&lt;/p&gt;
+
+&lt;h2&gt;Translations for a single page&lt;/h2&gt;
+
+&lt;p&gt;Most of the Rails I18n docs show translations for models and attributes. But as
+you start putting you app together you will need to display copy that is not a
+model or attribute value. To get the translation for the current file, you just
+use a period before the key. So if the translation key you want to use is &amp;ldquo;headline&amp;rdquo;,
+you would put a dot (.) in front of headline:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;# /app/views/users/show.html.erb
+t(&amp;#39;.headline&amp;#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Assuming the file calling this is located &lt;code class="prettyprint"&gt;/app/views/users/show.html.erb&lt;/code&gt;, our yml
+file will look like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-yml"&gt;# /config/locales/en.yml
+en:
+  users:
+    show:
+      headline: User show page
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Rails Form Objects</title>
+    <link rel="alternate" href="http://blog.url.com/articles/2015/09/04/rails-form-objects.html"/>
+    <id>http://blog.url.com/articles/2015/09/04/rails-form-objects.html</id>
+    <published>2015-09-04T02:22:00-06:00</published>
+    <updated>2015-10-07T22:41:34-06:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;Form objects are a pretty simple. If you are familiar with ActiveRecord models, then you
+can work with form objects. Essentially, a form object is a non-persisted model. They
+allow you to run validations on specific properties of a separate, persisted model.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2&gt;Why should I use a form object?&lt;/h2&gt;
+
+&lt;p&gt;Form objects are a great solution when you have a model that has a bunch of if/else
+logic on validations. For instance, if you have an admin section that allows for
+the creation of a &lt;code class="prettyprint"&gt;User&lt;/code&gt; model. Here is that model:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;# located /app/models/user.rb
+class User &amp;lt; ActiveRecord::Base
+  validates :first_name,
+            :last_name,
+            :phone_number,
+            :email,
+            :password,
+            :password_confirmation,
+            presence: true
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The admin can create the entire user so all of the validations should be run on save.&lt;/p&gt;
+
+&lt;p&gt;Now, let&amp;rsquo;s assume that there are non-admins that can update an user but don&amp;rsquo;t have the
+rights to change emails and passwords. You could do something like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;# located /app/models/user.rb
+class User &amp;lt; ActiveRecord::Base
+  attr_accessor :admin_update
+  validates :email,
+            :password,
+            :password_confirmation,
+            presence: true,
+            if: Proc.new{ admin_update == true  }
+
+  validates :first_name,
+            :last_name,
+            :phone_number
+            presence: true
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We added an &lt;code class="prettyprint"&gt;attr_accessor&lt;/code&gt; to create a non-persisted property that we check each time
+to require &lt;code class="prettyprint"&gt;:email&lt;/code&gt;, &lt;code class="prettyprint"&gt;:password&lt;/code&gt; and &lt;code class="prettyprint"&gt;:password_confirmation&lt;/code&gt; if being updated by an admin.&lt;/p&gt;
+
+&lt;p&gt;There are two down side here. You have now created logic in your base model that has nothing
+to do with the model itself. It has to do with your business logic. And, you now
+have to do this &lt;code class="prettyprint"&gt;user.admin_update = true&lt;/code&gt; in any section updating the user by an admin.
+This may be a bad example since email and password is typically only updated in one or
+two spots anyway, but you can see my point.&lt;/p&gt;
+
+&lt;h2&gt;Get to the Form Ojects Already!&lt;/h2&gt;
+
+&lt;p&gt;So, rather than creating a bunch of spaghetti logic within your models, use a form object.
+Non-admins can only update &lt;code class="prettyprint"&gt;:first_name&lt;/code&gt;, &lt;code class="prettyprint"&gt;:last_name&lt;/code&gt;, and &lt;code class="prettyprint"&gt;:phone_number&lt;/code&gt;, so those
+are the only attributes within the form object.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;# located /app/forms/user.rb
+module Forms
+  class User
+    include ActiveModel::Model
+
+    attr_accessor :first_name, :last_name, :phone_number
+    validates :first_name, :last_name, :phone_number, presence: true
+    validates :phone_number,
+              length: {
+                is: 10
+              },
+              numericality: {
+                only_integer: true
+              }
+
+    def initialize(attrs={})
+      attrs.each do |key, value|
+        send(&amp;quot;#{key}=&amp;quot;, value)
+      end
+    end
+
+    def attributes
+      {
+        first_name: first_name,
+        last_name: last_name,
+        phone_number: phone_number
+      }
+    end
+
+    def save_to(user)
+      if valid?
+        user.assign_attributes attributes
+        user.save validate: false
+      else
+        false
+      end
+    end
+  end
+end
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There is a little bit that we should go over here.&lt;/p&gt;
+
+&lt;p&gt;First, we just set up a simple Ruby object and include &lt;code class="prettyprint"&gt;ActiveModel::Model&lt;/code&gt;. This
+is what give us our validations.&lt;/p&gt;
+
+&lt;p&gt;Next we setup our non-persisted attributes with &lt;code class="prettyprint"&gt;attr_accessor&lt;/code&gt;. After that, a few
+validations. Both of which should look familiar to you if you work with Rails.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class="prettyprint"&gt;initialize&lt;/code&gt; is just iterating over each attribute passed in and setting it on the
+form object. This is similar to how &lt;code class="prettyprint"&gt;User.build&lt;/code&gt; works. Here is an example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;user = User.find params[:id]
+form = Forms::User.new first_name: user.first_name, last_name: user.last_name
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Unfortunately, since we are just using &lt;code class="prettyprint"&gt;attr_accessor&lt;/code&gt; we don&amp;rsquo;t have anyway to
+get the collection of attributes as a hash. So we have to define the attributes
+method.&lt;/p&gt;
+
+&lt;p&gt;And finally, &lt;code class="prettyprint"&gt;save_to&lt;/code&gt; allows us to save our valid form object back to the parent
+user. Notice we use &lt;code class="prettyprint"&gt;validate: false&lt;/code&gt; because we don&amp;rsquo;t want to trigger an email
+validation when the current non-admin can&amp;rsquo;t do anything about it.&lt;/p&gt;
+
+&lt;h2&gt;Examples&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;user = User.find params[:id]
+form = Forms::User.new phone_number: &amp;#39;5555555555&amp;#39;
+form.save_to user #=&amp;gt; false
+form.errors #=&amp;gt; #&amp;lt;ActiveModel::Errors:0x007fd5c8814020 @base=#&amp;lt;Forms::User:0x007fd5c884cc90 @phone_number=&amp;quot;5555555555&amp;quot;, @validation_context=nil, @errors=#&amp;lt;ActiveModel::Errors:0x007fd5c8814020 ...&amp;gt;&amp;gt;, @messages={:first_name=&amp;gt;[&amp;quot;can&amp;#39;t be blank&amp;quot;], :last_name=&amp;gt;[&amp;quot;can&amp;#39;t be blank&amp;quot;]}&amp;gt;
+form.first_name = &amp;#39;Grant&amp;#39;
+form.last_name = &amp;#39;Klinsing&amp;#39;
+form.valid? #=&amp;gt; true
+form.save_to user #=&amp;gt; true
+user.first_name #=&amp;gt; &amp;quot;Grant&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Validation Callbacks&lt;/h2&gt;
+
+&lt;p&gt;In most cases you will only need to add &lt;code class="prettyprint"&gt;include ActiveModel::Model&lt;/code&gt;.
+If you would like to run &lt;code class="prettyprint"&gt;before_validation&lt;/code&gt; and/or &lt;code class="prettyprint"&gt;after_validation&lt;/code&gt; just include
+&lt;code class="prettyprint"&gt;ActiveModel::Validations::Callbacks&lt;/code&gt; after &lt;code class="prettyprint"&gt;include ActiveModel::Model&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;# located /app/forms/user.rb
+module Forms
+  class User
+    include ActiveModel::Model
+    include ActiveModel::Validations::Callbacks
+    #...
+    before_validation :clean_phone_number
+    #...
+
+    private #-------------------------------------------------------
+
+    def clean_phone_number
+      @phone_number = @phone_number.scan(/\d+/).join(&amp;#39;&amp;#39;)
+    end
+  end
+end
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now our &lt;code class="prettyprint"&gt;clean_phone_number&lt;/code&gt; method allow phone_number to only be validated against
+the numbers so our numericality check will not fail.&lt;/p&gt;
+</content>
+  </entry>
+</feed>

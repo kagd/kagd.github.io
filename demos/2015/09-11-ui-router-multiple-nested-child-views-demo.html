@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>UiRouter</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css" media="screen" charset="utf-8">
+</head>
+<body ng-app="myApp">
+
+  <!-- Navigation -->
+  <div class="text-center">
+    <a ui-sref="app">Root</a>
+  </div>
+  <div class="row">
+    <div class="small-4 columns">
+      <ul class="side-nav">
+        <li><a ui-sref="app.panelOne.childOne">Panel 1 Child 1</a></li>
+        <li><a ui-sref="app.panelOne.childTwo">Panel 1 Child 2</a></li>
+      </ul>
+    </div>
+    <div class="small-4 columns end">
+      <ul class="side-nav">
+        <li><a ui-sref="app.panelTwo.childOne">Panel 2 Child 1</a></li>
+        <li><a ui-sref="app.panelTwo.childTwo">Panel 2 Child 2</a></li>
+        <li><a ui-sref="app.panelTwo.childThree">Change panel in a diff parent</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- UI Views -->
+  <div class="row">
+    <div class="small-4 columns">
+      <div ui-view="panelOne"></div>
+    </div>
+    <div class="small-4 columns">
+      <div ui-view="panelTwo"></div>
+    </div>
+    <div class="small-4 columns">
+      <div ui-view="panelThree"></div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+  <script type="text/javascript">
+    angular.module('myApp', ['ui.router']);
+
+    var Config = function($stateProvider, $urlRouterProvider) {
+    $stateProvider.state('app', {
+      url: "/",
+      views: {
+        'panelOne': {
+          template: "<h1>Panel 1</h1> <div ui-view='panelOneContent'></div>"
+        },
+        'panelTwo': {
+          template: "<h1>Panel 2</h1> <div ui-view='panelTwoContent'></div>"
+        },
+        'panelThree': {
+          template: "<h1>Panel 3</h1>"
+        }
+      }
+    })
+
+    // Panel One ================================================================
+    .state('app.panelOne', {
+      abstract: true,
+      url: "panel1",
+      views: {
+        'panelOneContent': {
+          template: '<h2>Panel 1 Content</h2> <div ui-view="content"></div>'
+        }
+      }
+    })
+    .state('app.panelOne.childOne', {
+      url: "/child1",
+      views: {
+        'content': {
+          template: 'Panel 1 child 1'
+        }
+      }
+    })
+    .state('app.panelOne.childTwo', {
+      url: "/child2",
+      views: {
+        'content': {
+          template: 'Panel 1 child 2'
+        }
+      }
+    })
+
+    // Panel Two ================================================================
+    .state('app.panelTwo', {
+      abstract: true,
+      url: "panel2",
+      views: {
+        'panelTwoContent': {
+          template: '<h2>Panel 2 Content</h2> <div ui-view="content"></div>'
+        }
+      }
+    })
+    .state('app.panelTwo.childOne', {
+      url: "/child1",
+      views: {
+        'content': {
+          template: 'Panel 2 child 1'
+        }
+      }
+    })
+    .state('app.panelTwo.childTwo', {
+      url: "/child2",
+      views: {
+        'content': {
+          template: 'Panel 2 child 2'
+        }
+      }
+    })
+    .state('app.panelTwo.childThree', {
+      url: "/child3",
+      views: {
+        'content': {
+          template: 'Panel 2 child 3'
+        },
+        'panelOne@': {
+          template: '<h2>This one takes over Panel One</h2>'
+        }
+      }
+    });
+
+    $urlRouterProvider.otherwise("/");
+    };
+
+    angular.module('myApp').config(Config);
+    Config.$inject = ['$stateProvider', '$urlRouterProvider'];
+
+  </script>
+</body>
+</html>

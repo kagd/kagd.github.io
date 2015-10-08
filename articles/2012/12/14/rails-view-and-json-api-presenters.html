@@ -1,0 +1,269 @@
+<!DOCTYPE html><html ng-app="kagd"><head><script src="https://use.typekit.net/ola6uac.js"></script><script>try{Typekit.load({ async: true });}catch(e){}</script><meta charset="utf-8" /><meta content="IE=edge;chrome=1" http-equiv="X-UA-Compatible" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><title>Grant R. Klinsing  - Rails View and JSON API Presenters</title><link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/articles/feed.xml" /><link href="/stylesheets/application.css" rel="stylesheet" /><link href="/stylesheets/syntax_highlighter/monokai.css" rel="stylesheet" /><link href="/images/favicon.ico" rel="icon" type="image/ico" /><script src="/javascripts/vendor.js"></script></head><body class="articles articles_2012 articles_2012_12 articles_2012_12_14 articles_2012_12_14_rails-view-and-json-api-presenters" ng-class="{'menu-open': appCtrl.menuOpen}" ng-controller="ApplicationController as appCtrl"><div class="grid-frame"><div class="grid-block vertical"><div class="grid-block shrink"><header class="title-bar dark"><div class="title left"><a class="brand" href="/"><img alt="Grant Klinsing" src="/images/logo.svg" /></a></div><div class="right"><nav><ul><li class="menu"><a ng-click="appCtrl.toggleMenu()"><span>Menu</span><div class="bars"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div></a></li><li class="articles"><a href="/posts.html"><i class="fa fa-book"></i><span>/ Articles</span></a></li><li class="github"><a href="http://github.com/kagd" target="_blank"><i class="fa fa-github"></i><span>/ kagd</span></a></li><li class="twitter"><a href="http://twitter.com/gklinsing" target="_blank"><i class="fa fa-twitter"></i><span>/ @gklinsing</span></a></li><li class="stack-overflow"><a href="http://careers.stackoverflow.com/gklinsing" target="_blank"><i class="fa fa-stack-overflow"></i><span>/ gklinsing</span></a></li></ul></nav></div></header></div><section class="grid-block" id="main" role="main"><div class="grid-block align-center"><div class="grid-content large-8 article-content"><div class="article-header"><a class="tag" href="/articles/tags/rails.html"><img src="/images/rails.svg" /></a><h1>Rails View and JSON API Presenters</h1><div class="date"> <span>2012 /</span>  <span>December 14</span> </div></div><div class="article-body"><p>Presenters are essentially a bridge between the model and the view. They allow you to customize the output of a data object without polluting your views with <code class="prettyprint">if</code>s and <code class="prettyprint">else</code>s.</p>
+
+<p></p>
+
+<p>For instance, let&rsquo;s say we have the following model.</p>
+
+<pre><code class="prettyprint lang-rb">class Person
+  attr_accessible :name, :occupation, :education
+end
+</code></pre>
+
+<p>and the following view</p>
+
+<pre><code class="prettyprint lang-html">Name: &lt;% if @person.name.present? %&gt;
+    &lt;%= @person.name %&gt;
+  &lt;% else %&gt;
+    &lt;%= link_to &#39;Add a name&#39;, edit_name_path %&gt;
+  &lt;% end %&gt;&lt;br&gt;
+Occupation: &lt;% if @person.occupation.present? %&gt;
+    &lt;%= @person.occupation %&gt;
+  &lt;% else %&gt;
+    &lt;%= link_to &#39;Add a name&#39;, edit_occupation_path %&gt;
+  &lt;% end %&gt;&lt;br&gt;
+Education: &lt;% if @person.education.present? %&gt;
+    &lt;%= @person.education %&gt;
+  &lt;% else %&gt;
+    &lt;%= link_to &#39;Add a name&#39;, edit_education_path %&gt;
+  &lt;% end %&gt;
+</code></pre>
+
+<p>Our view is getting crowded quickly with all the <code class="prettyprint">if</code> statements. It would be a lot nicer if we could call <code class="prettyprint">@person.education</code> and it
+would add a link automatically if <code class="prettyprint">education</code> is blank, without having to add the <code class="prettyprint">if</code>s each time.</p>
+
+<h2>View Presenter</h2>
+
+<p>Here is what we want our view to look when it&rsquo;s finished.</p>
+
+<pre><code class="prettyprint lang-html">&lt;% present @person do |presenter| %&gt;
+  Name: &lt;%= presenter.name %&gt;
+  Occupation: &lt;%= presenter.occupation %&gt;
+  Education: &lt;%= presenter.education %&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<p>That&rsquo;s better. It&rsquo;s shortened, and a lot easier to read. We removed the <code class="prettyprint">if</code>s and the only piece that we added is the <code class="prettyprint">present</code> block.
+The <code class="prettyprint">present</code> method is apart of our <code class="prettyprint">application_helper.rb</code>.</p>
+
+<pre><code class="prettyprint lang-rb">module ApplicationHelper
+  def present(object, klass = nil)
+    klass ||= &quot;#{object.class}Presenter&quot;.constantize
+    presenter = klass.new(object, self)
+    yield presenter if block_given?
+    presenter
+  end
+end
+</code></pre>
+
+<p>It creates a new instance of the <code class="prettyprint">PersonPresenter</code> and passes in the object, in this case <code class="prettyprint">@person</code>, and the view block.</p>
+
+<p>Next, we want to create a <code class="prettyprint">BasePresenter</code> that each individual presenter will inherit from.</p>
+
+<pre><code class="prettyprint lang-rb">class BasePresenter
+  def initialize(object, template)
+    @object = object
+    @template = template
+  end
+end
+</code></pre>
+
+<p>The only thing that <code class="prettyprint">initialize</code> does is create instance variables of <code class="prettyprint">object</code> and <code class="prettyprint">template</code> for later use. Now, on to the
+<code class="prettyprint">PersonPresenter</code>.</p>
+
+<pre><code class="prettyprint lang-rb">class PersonPresenter &lt; BasePresenter
+  def name
+    if @object.name.present?
+      @object.name
+    else
+      link_to &#39;Add a name&#39;, new_name_path
+    end
+  end
+
+  def occupation
+    if @object.occupation.present?
+      @object.occupation
+    else
+      link_to &#39;Add a occupation&#39;, new_occupation_path
+    end
+  end
+
+  def education
+    if @object.education.present?
+      @object.education
+    else
+      link_to &#39;Add a education&#39;, new_education_path
+    end
+  end
+end
+</code></pre>
+
+<p>This is good, but always calling <code class="prettyprint">@object</code> is a little ambiguous. It would be better if we could make it explicit by calling
+<code class="prettyprint">person.name</code> instead of <code class="prettyprint">@object.name</code>, so let&rsquo;s add a few things.</p>
+
+<pre><code class="prettyprint lang-rb">class PersonPresenter &lt; BasePresenter
+  presents :person
+  ...
+end
+</code></pre>
+
+<p>and</p>
+
+<pre><code class="prettyprint lang-rb">class BasePresenter
+  ...
+
+  private
+
+  def self.presents(name)
+    define_method(name) do
+      @object
+    end
+  end
+end
+</code></pre>
+
+<p>This basically is saying <code class="prettyprint">person = @object</code>. So, now we can use <code class="prettyprint">person</code> instead of <code class="prettyprint">@object</code>. And now we can finish our <code class="prettyprint">PersonPresenter</code>.</p>
+
+<pre><code class="prettyprint lang-rb">class PersonPresenter &lt; BasePresenter
+  presents :person
+
+  def name
+    if person.name.present?
+      person.name
+    else
+      link_to &#39;Add a name&#39;, new_name_path
+    end
+  end
+
+  def occupation
+    if person.occupation.present?
+      person.occupation
+    else
+      link_to &#39;Add a occupation&#39;, new_occupation_path
+    end
+  end
+
+  def education
+    if person.education.present?
+      person.education
+    else
+      link_to &#39;Add a education&#39;, new_education_path
+    end
+  end
+end
+</code></pre>
+
+<p>But wait, we added <code class="prettyprint">link_to</code> to the presenter. We will have to add a way to render the anchors. We could include <code class="prettyprint">UrlHelper</code>, but
+let&rsquo;s do it the sexy way, by using <code class="prettyprint">method_missing</code>.</p>
+
+<pre><code class="prettyprint lang-rb">class BasePresenter
+  ...
+
+  private
+
+  ...
+
+  def method_missing(*args, &amp;block)
+    @template.send(*args, &amp;block)
+  end
+end
+</code></pre>
+
+<p>Remember the instance variable <code class="prettyprint">@template</code> that we defined in <code class="prettyprint">initialize</code>? We are sending all <code class="prettyprint">method_missing</code> calls to the view
+(<code class="prettyprint">@template</code>), where it already has the ability to render links.</p>
+
+<p>There! We now have a way to add attributes to a view without always having to add <code class="prettyprint">if</code>s each time.</p>
+
+<h2>JSON API Presenter</h2>
+
+<p>In the same fashion that views can use presenters, API calls can use presenters too. Although, rather than displaying links, API
+calls use custom formats. For instance, when you want to display only a couple model properties, or want to add custom properties.</p>
+
+<p>Let&rsquo;s define a model.</p>
+
+<pre><code class="prettyprint lang-rb">class Team &lt; ActiveRecord::Base
+  attr_accessible :name, :nickname, :location
+end
+</code></pre>
+
+<p>If you were to call <code class="prettyprint">Team.first.to_json</code>, you would get someting similar to this.</p>
+
+<pre><code class="prettyprint lang-js">{
+  city: null,
+  created_at: &quot;2012-12-15T02:08:45Z&quot;,
+  id: 1,
+  name: &quot;Green Bay&quot;,
+  nickname: &quot;Packers&quot;,
+  updated_at: &quot;2012-12-15T02:08:45Z&quot;
+}
+</code></pre>
+
+<p>What if we didn&rsquo;t want to show <code class="prettyprint">created_at</code> and <code class="prettyprint">updated_at</code>? Queue the presenters.</p>
+
+<pre><code class="prettyprint lang-rb">class BasePresenter
+  def initialize( resource )
+    name = resource.class.to_s.underscore
+    self.class.send :define_method, name do
+      resource
+    end
+  end
+end
+</code></pre>
+
+<p>The same way we started with view presenters, we create a base API presenter to inherit from. The only parameter it takes is an instance
+of a model. Where as the view presenter made you add something like <code class="prettyprint">presents :person</code> to the presenter, we changed it up and now
+it is automatically created. So if we have a instance of <code class="prettyprint">SportsTeam</code>, <code class="prettyprint">sports_team</code> will be available for use.</p>
+
+<p>Now, let&rsquo;s create the <code class="prettyprint">TeamPresenter</code> with a customized format.</p>
+
+<pre><code class="prettyprint lang-rb">class TeamPresenter &lt; BasePresenter
+  def as_json( include_root=false )
+    {
+      :type =&gt; &quot;team&quot;,
+      :team =&gt; {
+        :id =&gt; team.id,
+        :city =&gt; team.city,
+        :name =&gt; team.name,
+        :nickname =&gt; team.nickname
+      }
+    }
+  end
+end
+</code></pre>
+
+<p>There isn&rsquo;t a whole lot of craziness going on here, but now we are only showing the attributes we want. <code class="prettyprint">team</code> was defined when
+initializing the <code class="prettyprint">BasePresenter</code>.</p>
+
+<p>Any finally, how do we use this bad boy?</p>
+
+<pre><code class="prettyprint lang-rb">class TeamsController &lt; ApplicationController
+  def show
+    team = Team.find params[:id]
+    render :json =&gt; TeamPresenter.new( team ).to_json
+  end
+end
+</code></pre>
+
+<p>Resources used for this post:</p>
+
+<ul>
+<li><a href="http://railscasts.com/episodes/287-presenters-from-scratch">http://railscasts.com/episodes/287-presenters-from-scratch</a></li>
+<li><a href="http://quickleft.com/blog/presenters-as-a-solution-to-asjson-woes-in-rails-apis">http://quickleft.com/blog/presenters-as-a-solution-to-asjson-woes-in-rails-apis</a></li>
+</ul>
+<div id="disqus_thread"></div><script>/* * * CONFIGURATION VARIABLES * * */
+var disqus_shortname = 'kagdgithubio';
+var disqus_identifier = 'rails-view-and-json-api-presenters';
+var disqus_title = 'Rails View and JSON API Presenters';
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript></div></div></div></section></div></div><div class="mobile-menu"><ul><li class="articles"><a href="/posts.html"><i class="fa fa-book"></i><span>/ Articles</span></a></li><li class="github"><a href="http://github.com/kagd" target="_blank"><i class="fa fa-github"></i><span>/ kagd</span></a></li><li class="twitter"><a href="http://twitter.com/gklinsing" target="_blank"><i class="fa fa-twitter"></i><span>/ @gklinsing</span></a></li><li class="stack-overflow"><a href="http://careers.stackoverflow.com/gklinsing" target="_blank"><i class="fa fa-stack-overflow"></i><span>/ gklinsing</span></a></li></ul></div><script src="/javascripts/application.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-67203020-1', 'auto');
+ga('send', 'pageview');</script></body></html>

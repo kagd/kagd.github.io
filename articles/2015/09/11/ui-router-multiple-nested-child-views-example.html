@@ -1,0 +1,258 @@
+<!DOCTYPE html><html ng-app="kagd"><head><script src="https://use.typekit.net/ola6uac.js"></script><script>try{Typekit.load({ async: true });}catch(e){}</script><meta charset="utf-8" /><meta content="IE=edge;chrome=1" http-equiv="X-UA-Compatible" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><title>Grant R. Klinsing  - UI Router Multiple Nested Child Views Example</title><link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/articles/feed.xml" /><link href="/stylesheets/application.css" rel="stylesheet" /><link href="/stylesheets/syntax_highlighter/monokai.css" rel="stylesheet" /><link href="/images/favicon.ico" rel="icon" type="image/ico" /><script src="/javascripts/vendor.js"></script></head><body class="articles articles_2015 articles_2015_09 articles_2015_09_11 articles_2015_09_11_ui-router-multiple-nested-child-views-example" ng-class="{'menu-open': appCtrl.menuOpen}" ng-controller="ApplicationController as appCtrl"><div class="grid-frame"><div class="grid-block vertical"><div class="grid-block shrink"><header class="title-bar dark"><div class="title left"><a class="brand" href="/"><img alt="Grant Klinsing" src="/images/logo.svg" /></a></div><div class="right"><nav><ul><li class="menu"><a ng-click="appCtrl.toggleMenu()"><span>Menu</span><div class="bars"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div></a></li><li class="articles"><a href="/posts.html"><i class="fa fa-book"></i><span>/ Articles</span></a></li><li class="github"><a href="http://github.com/kagd" target="_blank"><i class="fa fa-github"></i><span>/ kagd</span></a></li><li class="twitter"><a href="http://twitter.com/gklinsing" target="_blank"><i class="fa fa-twitter"></i><span>/ @gklinsing</span></a></li><li class="stack-overflow"><a href="http://careers.stackoverflow.com/gklinsing" target="_blank"><i class="fa fa-stack-overflow"></i><span>/ gklinsing</span></a></li></ul></nav></div></header></div><section class="grid-block" id="main" role="main"><div class="grid-block align-center"><div class="grid-content large-8 article-content"><div class="article-header"><a class="tag" href="/articles/tags/angular.html"><img src="/images/angular.svg" /></a><h1>UI Router Multiple Nested Child Views Example</h1><div class="date"> <span>2015 /</span>  <span>September 11</span> </div><hr /><div><strong>Article Downloads:</strong> <a target="_blank" href="../../09-11-ui-router-multiple-nested-child-views-example.zip">UI Router Example</a></div><div><strong>Article Demos:</strong> <a class="nil" target="_blank" href="/demos/2015/09-11-ui-router-multiple-nested-child-views-demo.html">UI Router Demo</a></div></div><div class="article-body"><p>Since you are here, I am assuming that you are wondering how to setup your angular
+app with the <a href="https://github.com/angular-ui/ui-router">UI Router</a> with child views.</p>
+
+<p>UI Router has a pretty simple setup for full page changes, but is definitely a
+little tricky when it comes to child views changes. Not because the concept is
+difficult, it&rsquo;s because the documentation leaves a lot to be desired. Luckily
+I have gone through the UI Router&rsquo;s wiki pages and have a simple example of child
+views in action.</p>
+
+<p></p>
+
+<p>Here is our base HTML. Really the only thing you will care about is near the bottom
+with the <code class="prettyprint">ui-view</code>s.</p>
+
+<pre><code class="prettyprint lang-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;UiRouter&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css&quot; media=&quot;screen&quot; charset=&quot;utf-8&quot;&gt;
+&lt;/head&gt;
+&lt;body ng-app=&quot;myApp&quot;&gt;
+
+  &lt;!-- Navigation --&gt;
+  &lt;div class=&quot;text-center&quot;&gt;
+    &lt;a ui-sref=&quot;app&quot;&gt;Root&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;div class=&quot;small-4 columns&quot;&gt;
+      &lt;ul class=&quot;side-nav&quot;&gt;
+        &lt;li&gt;&lt;a ui-sref=&quot;app.panelOne.childOne&quot;&gt;Panel 1 Child 1&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a ui-sref=&quot;app.panelOne.childTwo&quot;&gt;Panel 1 Child 2&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;small-4 columns end&quot;&gt;
+      &lt;ul class=&quot;side-nav&quot;&gt;
+        &lt;li&gt;&lt;a ui-sref=&quot;app.panelTwo.childOne&quot;&gt;Panel 2 Child 1&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a ui-sref=&quot;app.panelTwo.childTwo&quot;&gt;Panel 2 Child 2&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a ui-sref=&quot;app.panelTwo.childThree&quot;&gt;Change panel in a diff parent&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- UI Views --&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;div class=&quot;small-4 columns&quot;&gt;
+      &lt;div ui-view=&quot;panelOne&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;small-4 columns&quot;&gt;
+      &lt;div ui-view=&quot;panelTwo&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;small-4 columns&quot;&gt;
+      &lt;div ui-view=&quot;panelThree&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Scripts --&gt;
+  &lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;myapp.js&quot;&gt;&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>The <code class="prettyprint">ui-view</code>s are named so we can target the correct view when inserting the
+child views.</p>
+
+<p>The rest is handled by our js.</p>
+
+<pre><code class="prettyprint lang-js">angular.module(&#39;myApp&#39;, [&#39;ui.router&#39;]);
+
+var Config = function($stateProvider, $urlRouterProvider) {
+  $stateProvider.state(&#39;app&#39;, {
+    url: &quot;/&quot;,
+    views: {
+      &#39;panelOne&#39;: {
+        template: &quot;&lt;h1&gt;Panel 1&lt;/h1&gt; &lt;div ui-view=&#39;panelOneContent&#39;&gt;&lt;/div&gt;&quot;
+      },
+      &#39;panelTwo&#39;: {
+        template: &quot;&lt;h1&gt;Panel 2&lt;/h1&gt; &lt;div ui-view=&#39;panelTwoContent&#39;&gt;&lt;/div&gt;&quot;
+      },
+      &#39;panelThree&#39;: {
+        template: &quot;&lt;h1&gt;Panel 3&lt;/h1&gt;&quot;
+      }
+    }
+  })
+
+  // Panel One ================================================================
+  .state(&#39;app.panelOne&#39;, {
+    abstract: true,
+    url: &quot;panel1&quot;,
+    views: {
+      &#39;panelOneContent&#39;: {
+        template: &#39;&lt;div ui-view=&quot;content&quot;&gt;&lt;/div&gt;&#39;
+      }
+    }
+  })
+  .state(&#39;app.panelOne.childOne&#39;, {
+    url: &quot;/child1&quot;,
+    views: {
+      &#39;content&#39;: {
+        template: &#39;Panel 1 child 1&#39;
+      }
+    }
+  })
+  .state(&#39;app.panelOne.childTwo&#39;, {
+    url: &quot;/child2&quot;,
+    views: {
+      &#39;content&#39;: {
+        template: &#39;Panel 1 child 2&#39;
+      }
+    }
+  })
+
+  // Panel Two ================================================================
+  .state(&#39;app.panelTwo&#39;, {
+    abstract: true,
+    url: &quot;panel2&quot;,
+    views: {
+      &#39;panelTwoContent&#39;: {
+        template: &#39;&lt;div ui-view=&quot;content&quot;&gt;&lt;/div&gt;&#39;
+      }
+    }
+  })
+  .state(&#39;app.panelTwo.childOne&#39;, {
+    url: &quot;/child1&quot;,
+    views: {
+      &#39;content&#39;: {
+        template: &#39;Panel 2 child 1&#39;
+      }
+    }
+  })
+  .state(&#39;app.panelTwo.childTwo&#39;, {
+    url: &quot;/child2&quot;,
+    views: {
+      &#39;content&#39;: {
+        template: &#39;Panel 2 child 2&#39;
+      }
+    }
+  })
+  .state(&#39;app.panelTwo.childThree&#39;, {
+    url: &quot;/child3&quot;,
+    views: {
+      &#39;content&#39;: {
+        template: &#39;Panel 2 child 3&#39;
+      },
+      &#39;panelOne@&#39;: {
+        template: &#39;&lt;h2&gt;This one takes over Panel One&lt;/h2&gt;&#39;
+      }
+    }
+  });
+
+  $urlRouterProvider.otherwise(&quot;/&quot;);
+};
+
+angular.module(&#39;myApp&#39;).config(Config);
+Config.$inject = [&#39;$stateProvider&#39;, &#39;$urlRouterProvider&#39;];
+</code></pre>
+
+<p>Let&rsquo;s go over the js state by state.</p>
+
+<pre><code class="prettyprint lang-js">$stateProvider.state(&#39;app&#39;, {
+  url: &quot;/&quot;,
+  views: {
+    &#39;panelOne&#39;: {
+      template: &quot;&lt;h1&gt;Panel 1&lt;/h1&gt; &lt;div ui-view=&#39;panelOneContent&#39;&gt;&lt;/div&gt;&quot;
+    },
+    &#39;panelTwo&#39;: {
+      template: &quot;&lt;h1&gt;Panel 2&lt;/h1&gt; &lt;div ui-view=&#39;panelTwoContent&#39;&gt;&lt;/div&gt;&quot;
+    },
+    &#39;panelThree&#39;: {
+      template: &quot;&lt;h1&gt;Panel 3&lt;/h1&gt;&quot;
+    }
+  }
+})
+</code></pre>
+
+<p><code class="prettyprint">panelOne</code>, <code class="prettyprint">panelTwo</code> and <code class="prettyprint">panelThree</code> match up to the named views we have in
+our HTML (<code class="prettyprint">&lt;div ui-view=&quot;panelOne&quot;&gt;&lt;/div&gt;</code>, <code class="prettyprint">&lt;div ui-view=&quot;panelTwo&quot;&gt;&lt;/div&gt;</code>  and
+<code class="prettyprint">&lt;div ui-view=&quot;panelThree&quot;&gt;&lt;/div&gt;</code>).</p>
+
+<p>The next state is just setup for adding child views to children.</p>
+
+<pre><code class="prettyprint lang-js">.state(&#39;app.panelOne&#39;, {
+  abstract: true,
+  url: &quot;panel1&quot;,
+  views: {
+    &#39;panelOneContent&#39;: {
+      template: &#39;&lt;div ui-view=&quot;content&quot;&gt;&lt;/div&gt;&#39;
+    }
+  }
+})
+</code></pre>
+
+<p><code class="prettyprint">panelOneContent</code> is the named view in the panelOne template</p>
+
+<pre><code class="prettyprint lang-js">&#39;panelOne&#39;: {
+  template: &quot;&lt;h1&gt;Panel 1&lt;/h1&gt; &lt;div ui-view=&#39;panelOneContent&#39;&gt;&lt;/div&gt;&quot;
+}
+</code></pre>
+
+<p>I will admit this step seems a counterintuitive. Why insert a ui-view inside
+another ui-view? Because this is the only way you can add children within children.
+UI Router doesn&rsquo;t know where to insert the view content without this step unfortunately.</p>
+
+<p>This next section does the same thing as the last except it is going to insert
+it&rsquo;s template in the <code class="prettyprint">app.panelOne</code> content named view.</p>
+
+<pre><code class="prettyprint lang-js">.state(&#39;app.panelTwo.childOne&#39;, {
+  url: &quot;/child1&quot;,
+  views: {
+    &#39;content&#39;: { // inserted into &#39;ui-view=&quot;content&quot;&#39; in app.panelOne
+      template: &#39;Panel 2 child 1&#39;
+    }
+  }
+})
+</code></pre>
+
+<p>The rest is just rinse and repeat, with one exception, <code class="prettyprint">app.panelTwo.childThree</code>.</p>
+
+<pre><code class="prettyprint lang-js">.state(&#39;app.panelTwo.childThree&#39;, {
+  url: &quot;/child3&quot;,
+  views: {
+    &#39;content&#39;: {
+      template: &#39;Panel 2 child 3&#39;
+    },
+    &#39;panelOne@&#39;: { // replaces panelOne content
+      template: &#39;&lt;h2&gt;This one takes over Panel One&lt;/h2&gt;&#39;
+    }
+  }
+});
+</code></pre>
+
+<p>In addition to updating the &lsquo;content&rsquo; view for panel 2, it also populates content
+into panelOne. It replaces <code class="prettyprint">&lt;h1&gt;Panel 1&lt;/h1&gt; &lt;div ui-view=&#39;panelOneContent&#39;&gt;&lt;/div&gt;</code>
+with <code class="prettyprint">&lt;h2&gt;This one takes over Panel One&lt;/h2&gt;</code>. This is acheived by telling UI Router
+to use the absolute path to panelOne with the appended <code class="prettyprint">@</code>.</p>
+
+<p>I will admit that this example is far from a real-life implementation, but it should
+show you how to use child views.</p>
+<hr /><div class="article-links"><h4>Article Links</h4><div><a class="btn btn-primary" target="_blank" href="../../09-11-ui-router-multiple-nested-child-views-example.zip">UI Router Example</a><a class="btn btn-primary" target="_blank" href="/demos/2015/09-11-ui-router-multiple-nested-child-views-demo.html">UI Router Demo</a></div></div><div id="disqus_thread"></div><script>/* * * CONFIGURATION VARIABLES * * */
+var disqus_shortname = 'kagdgithubio';
+var disqus_identifier = 'ui-router-multiple-nested-child-views-example';
+var disqus_title = 'UI Router Multiple Nested Child Views Example';
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript></div></div></div></section></div></div><div class="mobile-menu"><ul><li class="articles"><a href="/posts.html"><i class="fa fa-book"></i><span>/ Articles</span></a></li><li class="github"><a href="http://github.com/kagd" target="_blank"><i class="fa fa-github"></i><span>/ kagd</span></a></li><li class="twitter"><a href="http://twitter.com/gklinsing" target="_blank"><i class="fa fa-twitter"></i><span>/ @gklinsing</span></a></li><li class="stack-overflow"><a href="http://careers.stackoverflow.com/gklinsing" target="_blank"><i class="fa fa-stack-overflow"></i><span>/ gklinsing</span></a></li></ul></div><script src="/javascripts/application.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-67203020-1', 'auto');
+ga('send', 'pageview');</script></body></html>
