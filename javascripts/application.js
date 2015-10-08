@@ -25,7 +25,7 @@
 
 }).call(this);
 (function() {
-  angular.module('kagd').constant('API_HOST', 'http://localhost:5000/');
+  angular.module('kagd').constant('API_HOST', '/');
 
 }).call(this);
 (function() {

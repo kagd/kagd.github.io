@@ -8157,3 +8157,9 @@ h1, h2 {
 /* line 19, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_post.scss */
 .articles h1 {
   margin: 0; }
+/* line 23, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_post.scss */
+.articles .article-links {
+  margin-bottom: 1rem; }
+  /* line 26, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_post.scss */
+  .articles .article-links h5 {
+    font-weight: bold; }
