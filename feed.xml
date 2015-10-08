@@ -5,10 +5,26 @@
   <id>http://blog.url.com/articles</id>
   <link href="http://blog.url.com/articles"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2015-09-25T16:33:00-06:00</updated>
+  <updated>2015-10-07T17:23:00-06:00</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>How to fix OpenSSL::SSL::SSLError: certificate verify failed</title>
+    <link rel="alternate" href="http://blog.url.com/articles/2015/10/07/how-to-fix-openssl-ssl-sslerror-certificate-verify-failed.html"/>
+    <id>http://blog.url.com/articles/2015/10/07/how-to-fix-openssl-ssl-sslerror-certificate-verify-failed.html</id>
+    <published>2015-10-07T17:23:00-06:00</published>
+    <updated>2015-10-07T23:29:13-06:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;If you are using RVM, make sure to install Ruby versions without binaries. I&amp;rsquo;m
+not sure why this works, but it does. The crappy part is that you have to do this
+on every version bump of Ruby&amp;hellip; boo.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class="prettyprint"&gt;rvm install ruby-2.2.2 --without-binaries&lt;/code&gt;&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Javascript Object Key Transformation Helpers</title>
     <link rel="alternate" href="http://blog.url.com/articles/2015/09/25/javascript-object-key-transformation-helpers.html"/>
@@ -675,182 +691,6 @@ en:
     show:
       headline: User show page
 &lt;/code&gt;&lt;/pre&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Rails Form Objects</title>
-    <link rel="alternate" href="http://blog.url.com/articles/2015/09/04/rails-form-objects.html"/>
-    <id>http://blog.url.com/articles/2015/09/04/rails-form-objects.html</id>
-    <published>2015-09-04T02:22:00-06:00</published>
-    <updated>2015-10-07T22:41:34-06:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;p&gt;Form objects are a pretty simple. If you are familiar with ActiveRecord models, then you
-can work with form objects. Essentially, a form object is a non-persisted model. They
-allow you to run validations on specific properties of a separate, persisted model.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2&gt;Why should I use a form object?&lt;/h2&gt;
-
-&lt;p&gt;Form objects are a great solution when you have a model that has a bunch of if/else
-logic on validations. For instance, if you have an admin section that allows for
-the creation of a &lt;code class="prettyprint"&gt;User&lt;/code&gt; model. Here is that model:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;# located /app/models/user.rb
-class User &amp;lt; ActiveRecord::Base
-  validates :first_name,
-            :last_name,
-            :phone_number,
-            :email,
-            :password,
-            :password_confirmation,
-            presence: true
-end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The admin can create the entire user so all of the validations should be run on save.&lt;/p&gt;
-
-&lt;p&gt;Now, let&amp;rsquo;s assume that there are non-admins that can update an user but don&amp;rsquo;t have the
-rights to change emails and passwords. You could do something like:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;# located /app/models/user.rb
-class User &amp;lt; ActiveRecord::Base
-  attr_accessor :admin_update
-  validates :email,
-            :password,
-            :password_confirmation,
-            presence: true,
-            if: Proc.new{ admin_update == true  }
-
-  validates :first_name,
-            :last_name,
-            :phone_number
-            presence: true
-end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;We added an &lt;code class="prettyprint"&gt;attr_accessor&lt;/code&gt; to create a non-persisted property that we check each time
-to require &lt;code class="prettyprint"&gt;:email&lt;/code&gt;, &lt;code class="prettyprint"&gt;:password&lt;/code&gt; and &lt;code class="prettyprint"&gt;:password_confirmation&lt;/code&gt; if being updated by an admin.&lt;/p&gt;
-
-&lt;p&gt;There are two down side here. You have now created logic in your base model that has nothing
-to do with the model itself. It has to do with your business logic. And, you now
-have to do this &lt;code class="prettyprint"&gt;user.admin_update = true&lt;/code&gt; in any section updating the user by an admin.
-This may be a bad example since email and password is typically only updated in one or
-two spots anyway, but you can see my point.&lt;/p&gt;
-
-&lt;h2&gt;Get to the Form Ojects Already!&lt;/h2&gt;
-
-&lt;p&gt;So, rather than creating a bunch of spaghetti logic within your models, use a form object.
-Non-admins can only update &lt;code class="prettyprint"&gt;:first_name&lt;/code&gt;, &lt;code class="prettyprint"&gt;:last_name&lt;/code&gt;, and &lt;code class="prettyprint"&gt;:phone_number&lt;/code&gt;, so those
-are the only attributes within the form object.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;# located /app/forms/user.rb
-module Forms
-  class User
-    include ActiveModel::Model
-
-    attr_accessor :first_name, :last_name, :phone_number
-    validates :first_name, :last_name, :phone_number, presence: true
-    validates :phone_number,
-              length: {
-                is: 10
-              },
-              numericality: {
-                only_integer: true
-              }
-
-    def initialize(attrs={})
-      attrs.each do |key, value|
-        send(&amp;quot;#{key}=&amp;quot;, value)
-      end
-    end
-
-    def attributes
-      {
-        first_name: first_name,
-        last_name: last_name,
-        phone_number: phone_number
-      }
-    end
-
-    def save_to(user)
-      if valid?
-        user.assign_attributes attributes
-        user.save validate: false
-      else
-        false
-      end
-    end
-  end
-end
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;There is a little bit that we should go over here.&lt;/p&gt;
-
-&lt;p&gt;First, we just set up a simple Ruby object and include &lt;code class="prettyprint"&gt;ActiveModel::Model&lt;/code&gt;. This
-is what give us our validations.&lt;/p&gt;
-
-&lt;p&gt;Next we setup our non-persisted attributes with &lt;code class="prettyprint"&gt;attr_accessor&lt;/code&gt;. After that, a few
-validations. Both of which should look familiar to you if you work with Rails.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class="prettyprint"&gt;initialize&lt;/code&gt; is just iterating over each attribute passed in and setting it on the
-form object. This is similar to how &lt;code class="prettyprint"&gt;User.build&lt;/code&gt; works. Here is an example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;user = User.find params[:id]
-form = Forms::User.new first_name: user.first_name, last_name: user.last_name
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Unfortunately, since we are just using &lt;code class="prettyprint"&gt;attr_accessor&lt;/code&gt; we don&amp;rsquo;t have anyway to
-get the collection of attributes as a hash. So we have to define the attributes
-method.&lt;/p&gt;
-
-&lt;p&gt;And finally, &lt;code class="prettyprint"&gt;save_to&lt;/code&gt; allows us to save our valid form object back to the parent
-user. Notice we use &lt;code class="prettyprint"&gt;validate: false&lt;/code&gt; because we don&amp;rsquo;t want to trigger an email
-validation when the current non-admin can&amp;rsquo;t do anything about it.&lt;/p&gt;
-
-&lt;h2&gt;Examples&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;user = User.find params[:id]
-form = Forms::User.new phone_number: &amp;#39;5555555555&amp;#39;
-form.save_to user #=&amp;gt; false
-form.errors #=&amp;gt; #&amp;lt;ActiveModel::Errors:0x007fd5c8814020 @base=#&amp;lt;Forms::User:0x007fd5c884cc90 @phone_number=&amp;quot;5555555555&amp;quot;, @validation_context=nil, @errors=#&amp;lt;ActiveModel::Errors:0x007fd5c8814020 ...&amp;gt;&amp;gt;, @messages={:first_name=&amp;gt;[&amp;quot;can&amp;#39;t be blank&amp;quot;], :last_name=&amp;gt;[&amp;quot;can&amp;#39;t be blank&amp;quot;]}&amp;gt;
-form.first_name = &amp;#39;Grant&amp;#39;
-form.last_name = &amp;#39;Klinsing&amp;#39;
-form.valid? #=&amp;gt; true
-form.save_to user #=&amp;gt; true
-user.first_name #=&amp;gt; &amp;quot;Grant&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;Validation Callbacks&lt;/h2&gt;
-
-&lt;p&gt;In most cases you will only need to add &lt;code class="prettyprint"&gt;include ActiveModel::Model&lt;/code&gt;.
-If you would like to run &lt;code class="prettyprint"&gt;before_validation&lt;/code&gt; and/or &lt;code class="prettyprint"&gt;after_validation&lt;/code&gt; just include
-&lt;code class="prettyprint"&gt;ActiveModel::Validations::Callbacks&lt;/code&gt; after &lt;code class="prettyprint"&gt;include ActiveModel::Model&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;# located /app/forms/user.rb
-module Forms
-  class User
-    include ActiveModel::Model
-    include ActiveModel::Validations::Callbacks
-    #...
-    before_validation :clean_phone_number
-    #...
-
-    private #-------------------------------------------------------
-
-    def clean_phone_number
-      @phone_number = @phone_number.scan(/\d+/).join(&amp;#39;&amp;#39;)
-    end
-  end
-end
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now our &lt;code class="prettyprint"&gt;clean_phone_number&lt;/code&gt; method allow phone_number to only be validated against
-the numbers so our numericality check will not fail.&lt;/p&gt;
 </content>
   </entry>
 </feed>
