@@ -5,10 +5,40 @@
   <id>http://blog.url.com/articles</id>
   <link href="http://blog.url.com/articles"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2015-10-30T09:02:00-05:00</updated>
+  <updated>2015-10-30T22:14:00-05:00</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>Ruby Fibonacci Sequence Generator</title>
+    <link rel="alternate" href="http://blog.url.com/articles/2015/10/30/ruby-fibonacci-sequence-generator.html"/>
+    <id>http://blog.url.com/articles/2015/10/30/ruby-fibonacci-sequence-generator.html</id>
+    <published>2015-10-30T22:14:00-05:00</published>
+    <updated>2015-10-30T22:17:45-05:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;Just a simple function to generate a Fibonacci sequence to a defined number of places.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;def fibonacci_sequence(number_of_places)
+  base_number = 0
+  added_number = 1
+
+  (1..number_of_places).map do |num|
+    base_number_tmp = base_number
+    base_number = added_number
+    added_number = base_number_tmp + added_number
+  end
+end
+
+def reverse_fibonacci_sequence(number_of_places)
+  fibonacci_sequence(number_of_places).reverse
+end
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+  </entry>
   <entry>
     <title>Setup static site with Nginx &amp; Capistrano on Digital Ocean</title>
     <link rel="alternate" href="http://blog.url.com/articles/2015/10/30/setup-static-site-with-nginx-capistrano-on-digital-ocean.html"/>
@@ -529,257 +559,6 @@ I chose simplicity.&lt;/p&gt;
 
 &lt;p&gt;This will interpolate your Rails model errors when they are returned from the server
 and apply the Bootstrap &lt;code class="prettyprint"&gt;has-error&lt;/code&gt; class to the markup to highlight the error.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>UI Router Multiple Nested Child Views Example</title>
-    <link rel="alternate" href="http://blog.url.com/articles/2015/09/11/ui-router-multiple-nested-child-views-example.html"/>
-    <id>http://blog.url.com/articles/2015/09/11/ui-router-multiple-nested-child-views-example.html</id>
-    <published>2015-09-11T06:18:00-05:00</published>
-    <updated>2015-10-07T23:41:34-05:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;p&gt;Since you are here, I am assuming that you are wondering how to setup your angular
-app with the &lt;a href="https://github.com/angular-ui/ui-router"&gt;UI Router&lt;/a&gt; with child views.&lt;/p&gt;
-
-&lt;p&gt;UI Router has a pretty simple setup for full page changes, but is definitely a
-little tricky when it comes to child views changes. Not because the concept is
-difficult, it&amp;rsquo;s because the documentation leaves a lot to be desired. Luckily
-I have gone through the UI Router&amp;rsquo;s wiki pages and have a simple example of child
-views in action.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Here is our base HTML. Really the only thing you will care about is near the bottom
-with the &lt;code class="prettyprint"&gt;ui-view&lt;/code&gt;s.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-html"&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;head&amp;gt;
-  &amp;lt;title&amp;gt;UiRouter&amp;lt;/title&amp;gt;
-  &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css&amp;quot; media=&amp;quot;screen&amp;quot; charset=&amp;quot;utf-8&amp;quot;&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body ng-app=&amp;quot;myApp&amp;quot;&amp;gt;
-
-  &amp;lt;!-- Navigation --&amp;gt;
-  &amp;lt;div class=&amp;quot;text-center&amp;quot;&amp;gt;
-    &amp;lt;a ui-sref=&amp;quot;app&amp;quot;&amp;gt;Root&amp;lt;/a&amp;gt;
-  &amp;lt;/div&amp;gt;
-  &amp;lt;div class=&amp;quot;row&amp;quot;&amp;gt;
-    &amp;lt;div class=&amp;quot;small-4 columns&amp;quot;&amp;gt;
-      &amp;lt;ul class=&amp;quot;side-nav&amp;quot;&amp;gt;
-        &amp;lt;li&amp;gt;&amp;lt;a ui-sref=&amp;quot;app.panelOne.childOne&amp;quot;&amp;gt;Panel 1 Child 1&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
-        &amp;lt;li&amp;gt;&amp;lt;a ui-sref=&amp;quot;app.panelOne.childTwo&amp;quot;&amp;gt;Panel 1 Child 2&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
-      &amp;lt;/ul&amp;gt;
-    &amp;lt;/div&amp;gt;
-    &amp;lt;div class=&amp;quot;small-4 columns end&amp;quot;&amp;gt;
-      &amp;lt;ul class=&amp;quot;side-nav&amp;quot;&amp;gt;
-        &amp;lt;li&amp;gt;&amp;lt;a ui-sref=&amp;quot;app.panelTwo.childOne&amp;quot;&amp;gt;Panel 2 Child 1&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
-        &amp;lt;li&amp;gt;&amp;lt;a ui-sref=&amp;quot;app.panelTwo.childTwo&amp;quot;&amp;gt;Panel 2 Child 2&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
-        &amp;lt;li&amp;gt;&amp;lt;a ui-sref=&amp;quot;app.panelTwo.childThree&amp;quot;&amp;gt;Change panel in a diff parent&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
-      &amp;lt;/ul&amp;gt;
-    &amp;lt;/div&amp;gt;
-  &amp;lt;/div&amp;gt;
-
-  &amp;lt;!-- UI Views --&amp;gt;
-  &amp;lt;div class=&amp;quot;row&amp;quot;&amp;gt;
-    &amp;lt;div class=&amp;quot;small-4 columns&amp;quot;&amp;gt;
-      &amp;lt;div ui-view=&amp;quot;panelOne&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
-    &amp;lt;/div&amp;gt;
-    &amp;lt;div class=&amp;quot;small-4 columns&amp;quot;&amp;gt;
-      &amp;lt;div ui-view=&amp;quot;panelTwo&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
-    &amp;lt;/div&amp;gt;
-    &amp;lt;div class=&amp;quot;small-4 columns&amp;quot;&amp;gt;
-      &amp;lt;div ui-view=&amp;quot;panelThree&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
-    &amp;lt;/div&amp;gt;
-  &amp;lt;/div&amp;gt;
-
-  &amp;lt;!-- Scripts --&amp;gt;
-  &amp;lt;script src=&amp;quot;https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-  &amp;lt;script src=&amp;quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-  &amp;lt;script src=&amp;quot;myapp.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The &lt;code class="prettyprint"&gt;ui-view&lt;/code&gt;s are named so we can target the correct view when inserting the
-child views.&lt;/p&gt;
-
-&lt;p&gt;The rest is handled by our js.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-js"&gt;angular.module(&amp;#39;myApp&amp;#39;, [&amp;#39;ui.router&amp;#39;]);
-
-var Config = function($stateProvider, $urlRouterProvider) {
-  $stateProvider.state(&amp;#39;app&amp;#39;, {
-    url: &amp;quot;/&amp;quot;,
-    views: {
-      &amp;#39;panelOne&amp;#39;: {
-        template: &amp;quot;&amp;lt;h1&amp;gt;Panel 1&amp;lt;/h1&amp;gt; &amp;lt;div ui-view=&amp;#39;panelOneContent&amp;#39;&amp;gt;&amp;lt;/div&amp;gt;&amp;quot;
-      },
-      &amp;#39;panelTwo&amp;#39;: {
-        template: &amp;quot;&amp;lt;h1&amp;gt;Panel 2&amp;lt;/h1&amp;gt; &amp;lt;div ui-view=&amp;#39;panelTwoContent&amp;#39;&amp;gt;&amp;lt;/div&amp;gt;&amp;quot;
-      },
-      &amp;#39;panelThree&amp;#39;: {
-        template: &amp;quot;&amp;lt;h1&amp;gt;Panel 3&amp;lt;/h1&amp;gt;&amp;quot;
-      }
-    }
-  })
-
-  // Panel One ================================================================
-  .state(&amp;#39;app.panelOne&amp;#39;, {
-    abstract: true,
-    url: &amp;quot;panel1&amp;quot;,
-    views: {
-      &amp;#39;panelOneContent&amp;#39;: {
-        template: &amp;#39;&amp;lt;div ui-view=&amp;quot;content&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&amp;#39;
-      }
-    }
-  })
-  .state(&amp;#39;app.panelOne.childOne&amp;#39;, {
-    url: &amp;quot;/child1&amp;quot;,
-    views: {
-      &amp;#39;content&amp;#39;: {
-        template: &amp;#39;Panel 1 child 1&amp;#39;
-      }
-    }
-  })
-  .state(&amp;#39;app.panelOne.childTwo&amp;#39;, {
-    url: &amp;quot;/child2&amp;quot;,
-    views: {
-      &amp;#39;content&amp;#39;: {
-        template: &amp;#39;Panel 1 child 2&amp;#39;
-      }
-    }
-  })
-
-  // Panel Two ================================================================
-  .state(&amp;#39;app.panelTwo&amp;#39;, {
-    abstract: true,
-    url: &amp;quot;panel2&amp;quot;,
-    views: {
-      &amp;#39;panelTwoContent&amp;#39;: {
-        template: &amp;#39;&amp;lt;div ui-view=&amp;quot;content&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&amp;#39;
-      }
-    }
-  })
-  .state(&amp;#39;app.panelTwo.childOne&amp;#39;, {
-    url: &amp;quot;/child1&amp;quot;,
-    views: {
-      &amp;#39;content&amp;#39;: {
-        template: &amp;#39;Panel 2 child 1&amp;#39;
-      }
-    }
-  })
-  .state(&amp;#39;app.panelTwo.childTwo&amp;#39;, {
-    url: &amp;quot;/child2&amp;quot;,
-    views: {
-      &amp;#39;content&amp;#39;: {
-        template: &amp;#39;Panel 2 child 2&amp;#39;
-      }
-    }
-  })
-  .state(&amp;#39;app.panelTwo.childThree&amp;#39;, {
-    url: &amp;quot;/child3&amp;quot;,
-    views: {
-      &amp;#39;content&amp;#39;: {
-        template: &amp;#39;Panel 2 child 3&amp;#39;
-      },
-      &amp;#39;panelOne@&amp;#39;: {
-        template: &amp;#39;&amp;lt;h2&amp;gt;This one takes over Panel One&amp;lt;/h2&amp;gt;&amp;#39;
-      }
-    }
-  });
-
-  $urlRouterProvider.otherwise(&amp;quot;/&amp;quot;);
-};
-
-angular.module(&amp;#39;myApp&amp;#39;).config(Config);
-Config.$inject = [&amp;#39;$stateProvider&amp;#39;, &amp;#39;$urlRouterProvider&amp;#39;];
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Let&amp;rsquo;s go over the js state by state.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-js"&gt;$stateProvider.state(&amp;#39;app&amp;#39;, {
-  url: &amp;quot;/&amp;quot;,
-  views: {
-    &amp;#39;panelOne&amp;#39;: {
-      template: &amp;quot;&amp;lt;h1&amp;gt;Panel 1&amp;lt;/h1&amp;gt; &amp;lt;div ui-view=&amp;#39;panelOneContent&amp;#39;&amp;gt;&amp;lt;/div&amp;gt;&amp;quot;
-    },
-    &amp;#39;panelTwo&amp;#39;: {
-      template: &amp;quot;&amp;lt;h1&amp;gt;Panel 2&amp;lt;/h1&amp;gt; &amp;lt;div ui-view=&amp;#39;panelTwoContent&amp;#39;&amp;gt;&amp;lt;/div&amp;gt;&amp;quot;
-    },
-    &amp;#39;panelThree&amp;#39;: {
-      template: &amp;quot;&amp;lt;h1&amp;gt;Panel 3&amp;lt;/h1&amp;gt;&amp;quot;
-    }
-  }
-})
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;code class="prettyprint"&gt;panelOne&lt;/code&gt;, &lt;code class="prettyprint"&gt;panelTwo&lt;/code&gt; and &lt;code class="prettyprint"&gt;panelThree&lt;/code&gt; match up to the named views we have in
-our HTML (&lt;code class="prettyprint"&gt;&amp;lt;div ui-view=&amp;quot;panelOne&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;, &lt;code class="prettyprint"&gt;&amp;lt;div ui-view=&amp;quot;panelTwo&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;  and
-&lt;code class="prettyprint"&gt;&amp;lt;div ui-view=&amp;quot;panelThree&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;).&lt;/p&gt;
-
-&lt;p&gt;The next state is just setup for adding child views to children.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-js"&gt;.state(&amp;#39;app.panelOne&amp;#39;, {
-  abstract: true,
-  url: &amp;quot;panel1&amp;quot;,
-  views: {
-    &amp;#39;panelOneContent&amp;#39;: {
-      template: &amp;#39;&amp;lt;div ui-view=&amp;quot;content&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&amp;#39;
-    }
-  }
-})
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;code class="prettyprint"&gt;panelOneContent&lt;/code&gt; is the named view in the panelOne template&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-js"&gt;&amp;#39;panelOne&amp;#39;: {
-  template: &amp;quot;&amp;lt;h1&amp;gt;Panel 1&amp;lt;/h1&amp;gt; &amp;lt;div ui-view=&amp;#39;panelOneContent&amp;#39;&amp;gt;&amp;lt;/div&amp;gt;&amp;quot;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;I will admit this step seems a counterintuitive. Why insert a ui-view inside
-another ui-view? Because this is the only way you can add children within children.
-UI Router doesn&amp;rsquo;t know where to insert the view content without this step unfortunately.&lt;/p&gt;
-
-&lt;p&gt;This next section does the same thing as the last except it is going to insert
-it&amp;rsquo;s template in the &lt;code class="prettyprint"&gt;app.panelOne&lt;/code&gt; content named view.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-js"&gt;.state(&amp;#39;app.panelTwo.childOne&amp;#39;, {
-  url: &amp;quot;/child1&amp;quot;,
-  views: {
-    &amp;#39;content&amp;#39;: { // inserted into &amp;#39;ui-view=&amp;quot;content&amp;quot;&amp;#39; in app.panelOne
-      template: &amp;#39;Panel 2 child 1&amp;#39;
-    }
-  }
-})
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The rest is just rinse and repeat, with one exception, &lt;code class="prettyprint"&gt;app.panelTwo.childThree&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-js"&gt;.state(&amp;#39;app.panelTwo.childThree&amp;#39;, {
-  url: &amp;quot;/child3&amp;quot;,
-  views: {
-    &amp;#39;content&amp;#39;: {
-      template: &amp;#39;Panel 2 child 3&amp;#39;
-    },
-    &amp;#39;panelOne@&amp;#39;: { // replaces panelOne content
-      template: &amp;#39;&amp;lt;h2&amp;gt;This one takes over Panel One&amp;lt;/h2&amp;gt;&amp;#39;
-    }
-  }
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;In addition to updating the &amp;lsquo;content&amp;rsquo; view for panel 2, it also populates content
-into panelOne. It replaces &lt;code class="prettyprint"&gt;&amp;lt;h1&amp;gt;Panel 1&amp;lt;/h1&amp;gt; &amp;lt;div ui-view=&amp;#39;panelOneContent&amp;#39;&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;
-with &lt;code class="prettyprint"&gt;&amp;lt;h2&amp;gt;This one takes over Panel One&amp;lt;/h2&amp;gt;&lt;/code&gt;. This is acheived by telling UI Router
-to use the absolute path to panelOne with the appended &lt;code class="prettyprint"&gt;@&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;I will admit that this example is far from a real-life implementation, but it should
-show you how to use child views.&lt;/p&gt;
 </content>
   </entry>
 </feed>
