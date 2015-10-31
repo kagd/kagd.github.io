@@ -8154,12 +8154,21 @@ h1, h2 {
 /* line 15, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_post.scss */
 .articles .article-header {
   margin-bottom: 2rem; }
-/* line 19, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_post.scss */
-.articles h1 {
-  margin: 0; }
+  /* line 18, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_post.scss */
+  .articles .article-header h1 {
+    margin-top: 0; }
 /* line 23, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_post.scss */
+.articles h1 {
+  margin: 2rem 0 0; }
+/* line 27, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_post.scss */
 .articles .article-links {
   margin-bottom: 1rem; }
-  /* line 26, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_post.scss */
+  /* line 30, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_post.scss */
   .articles .article-links h5 {
     font-weight: bold; }
+/* line 35, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_post.scss */
+.articles pre {
+  margin-bottom: 1rem; }
+/* line 39, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_post.scss */
+.articles #disqus_thread {
+  margin-top: 3rem; }
