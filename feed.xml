@@ -5,16 +5,38 @@
   <id>http://blog.url.com/articles</id>
   <link href="http://blog.url.com/articles"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2015-10-30T22:14:00-05:00</updated>
+  <updated>2015-11-04T20:46:00-07:00</updated>
   <author>
     <name>Blog Author</name>
   </author>
   <entry>
+    <title>Installing the PG Gem with PostgresApp</title>
+    <link rel="alternate" href="http://blog.url.com/articles/2015/11/04/installing-the-pg-gem-with-postgresapp.html"/>
+    <id>http://blog.url.com/articles/2015/11/04/installing-the-pg-gem-with-postgresapp.html</id>
+    <published>2015-11-04T20:46:00-07:00</published>
+    <updated>2015-11-04T21:32:30-07:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;If you are having problem installing the pg gem and are using the Postgres app there
+is a good chance that the gem can&amp;rsquo;t find the correct configuration for Postgres since
+the config file is not availabe in &lt;code class="prettyprint"&gt;$PATH&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Try installing the gem with the command below, remembering to change the version
+number to your installed version.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-bash"&gt;gem install pg -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/9.4/bin/pg_config
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+  </entry>
+  <entry>
     <title>Ruby Fibonacci Sequence Generator</title>
     <link rel="alternate" href="http://blog.url.com/articles/2015/10/30/ruby-fibonacci-sequence-generator.html"/>
     <id>http://blog.url.com/articles/2015/10/30/ruby-fibonacci-sequence-generator.html</id>
-    <published>2015-10-30T22:14:00-05:00</published>
-    <updated>2015-10-30T22:17:45-05:00</updated>
+    <published>2015-10-30T21:14:00-06:00</published>
+    <updated>2015-10-30T21:17:45-06:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -43,8 +65,8 @@ end
     <title>Setup static site with Nginx &amp; Capistrano on Digital Ocean</title>
     <link rel="alternate" href="http://blog.url.com/articles/2015/10/30/setup-static-site-with-nginx-capistrano-on-digital-ocean.html"/>
     <id>http://blog.url.com/articles/2015/10/30/setup-static-site-with-nginx-capistrano-on-digital-ocean.html</id>
-    <published>2015-10-30T09:02:00-05:00</published>
-    <updated>2015-10-30T19:53:06-05:00</updated>
+    <published>2015-10-30T08:02:00-06:00</published>
+    <updated>2015-10-30T18:53:06-06:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -212,8 +234,8 @@ them.&lt;/p&gt;
     <title>How to fix OpenSSL::SSL::SSLError: certificate verify failed</title>
     <link rel="alternate" href="http://blog.url.com/articles/2015/10/07/how-to-fix-openssl-ssl-sslerror-certificate-verify-failed.html"/>
     <id>http://blog.url.com/articles/2015/10/07/how-to-fix-openssl-ssl-sslerror-certificate-verify-failed.html</id>
-    <published>2015-10-07T18:23:00-05:00</published>
-    <updated>2015-10-08T00:29:13-05:00</updated>
+    <published>2015-10-07T17:23:00-06:00</published>
+    <updated>2015-10-07T23:29:13-06:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -228,8 +250,8 @@ on every version bump of Ruby&amp;hellip; boo.&lt;/p&gt;
     <title>Javascript Object Key Transformation Helpers</title>
     <link rel="alternate" href="http://blog.url.com/articles/2015/09/25/javascript-object-key-transformation-helpers.html"/>
     <id>http://blog.url.com/articles/2015/09/25/javascript-object-key-transformation-helpers.html</id>
-    <published>2015-09-25T17:33:00-05:00</published>
-    <updated>2015-10-07T23:41:34-05:00</updated>
+    <published>2015-09-25T16:33:00-06:00</published>
+    <updated>2015-10-07T22:41:34-06:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -416,8 +438,8 @@ JsonHelpers.$inject = [&amp;#39;StringHelpers&amp;#39;, &amp;#39;_&amp;#39;]
     <title>OSX Keep SSH Session Alive</title>
     <link rel="alternate" href="http://blog.url.com/articles/2015/09/19/osx-keep-ssh-session-alive.html"/>
     <id>http://blog.url.com/articles/2015/09/19/osx-keep-ssh-session-alive.html</id>
-    <published>2015-09-19T23:43:00-05:00</published>
-    <updated>2015-10-07T23:41:34-05:00</updated>
+    <published>2015-09-19T22:43:00-06:00</published>
+    <updated>2015-10-07T22:41:34-06:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -429,136 +451,6 @@ that indicates that your computer is not trying to keep the connection alive
 the aforementioned packet. Try putting 120 or 240, if it is still killing your
 connection, you can go lower, maybe to 5, if with that number it doesn&amp;rsquo;t happen,
 maybe it is your router who is dumping the connection to free memory.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Angular Form Validations from Rails Model Errors</title>
-    <link rel="alternate" href="http://blog.url.com/articles/2015/09/15/angular-form-validations-from-rails-model-errors.html"/>
-    <id>http://blog.url.com/articles/2015/09/15/angular-form-validations-from-rails-model-errors.html</id>
-    <published>2015-09-16T00:25:00-05:00</published>
-    <updated>2015-10-07T23:41:34-05:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;p&gt;I love Rails for it&amp;rsquo;s baked in model validations. I love Angular for the simplicity.
-Together, you can keep your data validations on the server and update the angular
-forms with something that is familiar to Rails devs, convention over configuration.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;First, let&amp;rsquo;s start with the Rails model.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-ruby"&gt;class InventoryItem &amp;lt; ActiveRecord::Base
-  validates :price, presence: true
-end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;We have a &lt;code class="prettyprint"&gt;InventoryItem&lt;/code&gt; model that has a validation for presence. Since you are
-familiar with Rails validations, you know that if try to save your flight without
-a price you will get an error that looks like this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-ruby"&gt;inventory_item = InventoryItem.new
-inventory_item.valid? #=&amp;gt; false
-inventory_item.errors.messages #=&amp;gt;  {:price=&amp;gt;[&amp;quot;can&amp;#39;t be blank&amp;quot;]}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;We just have to pass the error hash back to the UI as json.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-ruby"&gt;class InventoryItemController &amp;lt; ApplicationController
-  def create
-    @inventory_item = InventoryItem.new params_for_create
-
-    if @inventory_item.save
-      # return the item
-      render json: @inventory_item
-    else
-      # Return the inventory_item errors
-      render json: { errors: @inventory_item.errors.messages }, status: :conflict
-    end
-  end
-
-  private #-------------------------
-
-  def params_for_create
-    params[:inventory_item]
-    params.required(:inventory_item).permit(:price)
-  end
-end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now let&amp;rsquo;s create the Angular controller and view that will handle the error
-response.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-coffee"&gt;angular.module(&amp;#39;myApp&amp;#39;, [&amp;#39;error-helpers&amp;#39;]) # error-helpers will be defined in just a bit
-
-# Define controller
-InventoryItemController = ($http, ErrorHelpers)-&amp;gt;
-  ctrl = @
-  # bind the methods from ErrorHelpers.setupErrorHelpers to this controller
-  ErrorHelpers.setupErrorHelpers.call(ctrl)
-  # Setup new model
-  ctrl.inventoryItem = {
-    price: null
-  }
-
-  ctrl.onSubmit = -&amp;gt;
-    # clear any errors that were set on a previous submit
-    ctrl.clearErrors()
-
-    $http.post &amp;#39;/api/inventory_items&amp;#39;, ctrl.inventoryItem
-      .then (response) -&amp;gt;
-        # do whatever you need to
-      .catch (response) -&amp;gt;
-        # populate the errors object
-        ctrl.populateErrors(response.data.errors)
-
-angular.module(&amp;#39;myApp&amp;#39;).controller &amp;#39;InventoryItemController&amp;#39;, InventoryItemController
-InventoryItemController.$inject = [&amp;#39;$http&amp;#39;, &amp;#39;ErrorHelpers&amp;#39;]
-
-# Define ErrorHelpers
-ErrorHelpers = -&amp;gt;
-  helper = @
-  helper.setupErrorHelpers = -&amp;gt;
-    binding = @
-    binding.errors = {}
-
-    binding.populateErrors = (errors) -&amp;gt;
-      for own key, value of errors
-        binding.errors[key] = value
-
-    binding.clearErrors = -&amp;gt;
-      for own key, value of binding.errors
-        delete binding.errors[key]
-
-  return helper
-
-angular.module(&amp;#39;error-helpers&amp;#39;, [])
-  .service &amp;#39;ErrorHelpers&amp;#39;, ErrorHelpers
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;For the HTML I will just use some Bootstrap markup:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-html"&gt;&amp;lt;form ng-submit=&amp;quot;itemCtrl.onSubmit()&amp;quot; ng-controller=&amp;quot;InventoryItemController as itemCtrl&amp;quot;&amp;gt;
-  &amp;lt;!--
-    when itemCtrl.errors.price is present add &amp;#39;has-class&amp;#39; to .form-group
-  --&amp;gt;
-  &amp;lt;div class=&amp;quot;form-group&amp;quot; ng-class=&amp;quot;{ &amp;#39;has-error&amp;#39;: itemCtrl.errors.price }&amp;quot;&amp;gt;
-    &amp;lt;label for=&amp;quot;price&amp;quot;&amp;gt;Item Price&amp;lt;/label&amp;gt;
-    &amp;lt;input type=&amp;quot;text&amp;quot; id=&amp;quot;price&amp;quot; ng-model=&amp;quot;itemCtrl.inventoryItem.price&amp;quot;&amp;gt;
-    &amp;lt;!--
-      when itemCtrl.errors.price is present display .help-block
-    --&amp;gt;
-    &amp;lt;p class=&amp;quot;help-block&amp;quot; ng-if=&amp;quot;itemCtrl.errors.price&amp;quot;&amp;gt;{{ itemCtrl.errors.price.join(&amp;#39;, &amp;#39;) }}&amp;lt;/p&amp;gt;
-  &amp;lt;/div&amp;gt;
-&amp;lt;/form&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This could definitely use a directive but rather than abstract it for this example,
-I chose simplicity.&lt;/p&gt;
-
-&lt;p&gt;This will interpolate your Rails model errors when they are returned from the server
-and apply the Bootstrap &lt;code class="prettyprint"&gt;has-error&lt;/code&gt; class to the markup to highlight the error.&lt;/p&gt;
 </content>
   </entry>
 </feed>
