@@ -5,10 +5,93 @@
   <id>http://blog.url.com/articles</id>
   <link href="http://blog.url.com/articles"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2015-11-04T22:23:00-07:00</updated>
+  <updated>2015-11-05T00:20:00-07:00</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>Simulate Cursor Typing with Angular</title>
+    <link rel="alternate" href="http://blog.url.com/articles/2015/11/05/simulate-cursor-typing-with-angular.html"/>
+    <id>http://blog.url.com/articles/2015/11/05/simulate-cursor-typing-with-angular.html</id>
+    <published>2015-11-05T00:20:00-07:00</published>
+    <updated>2015-11-05T00:25:04-07:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;Create the illusion of dynamic typing with a simple Angular directive.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Here it is in action. (You may need to reload the page to see it fully)&lt;/p&gt;
+
+&lt;pre&gt;
+&lt;h3 livetype="javascript"&gt;&lt;/h3&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;This can be accomplished with a simple directive&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-coffee"&gt;Directive = ($timeout) -&amp;gt;
+  getRandomMs = (min, max) -&amp;gt;
+    Math.floor(Math.random() * (max - min)) + min
+
+  link = (scope) -&amp;gt;
+    scope.string = &amp;#39;&amp;#39;
+
+    # Split the string into an array
+    chars = scope.livetype.split(&amp;#39;&amp;#39;)
+
+    # the loop to create the typing illusion
+    chars.reduce (lastMs, currentChar, idx) -&amp;gt;
+      newMs = lastMs + getRandomMs(50, 750)
+
+      $timeout -&amp;gt;
+        scope.string += currentChar
+      , newMs
+
+      return newMs
+    , 0
+
+  {
+    link: link
+    restrict: &amp;#39;A&amp;#39;
+    scope:
+      livetype: &amp;#39;@livetype&amp;#39;
+    template: &amp;#39;{{ string }}&amp;lt;span class=&amp;quot;livetype-cursor&amp;quot;&amp;gt;|&amp;lt;/span&amp;gt;&amp;#39;
+  }
+
+angular.module(&amp;#39;liveType&amp;#39;, []).directive &amp;#39;livetype&amp;#39;, Directive
+Directive.$inject = [&amp;#39;$timeout&amp;#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The HTML&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-html"&gt;&amp;lt;h4 livetype=&amp;quot;javascript&amp;quot;&amp;gt;&amp;lt;/h4&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And don&amp;rsquo;t forget out the CSS for the cursor blink&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint lang-css"&gt;@keyframes livetype-cursor-blink {
+  0%   { opacity: 0; }
+  50%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+.livetype-cursor {
+  animation: livetype-cursor-blink 750ms infinite;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;style type="text/css"&gt;
+@keyframes livetype-cursor-loop {
+  0%   { opacity: 0; }
+  50%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+.livetype-cursor {
+  animation: livetype-cursor-loop 750ms infinite;
+}
+&lt;/style&gt;
+</content>
+  </entry>
   <entry>
     <title>75 points &amp; 75 rebounds in 4 games... sick!</title>
     <link rel="alternate" href="http://blog.url.com/articles/2015/11/04/75-points-75-rebounds-in-4-games-sick.html"/>
@@ -258,194 +341,6 @@ not sure why this works, but it does. The crappy part is that you have to do thi
 on every version bump of Ruby&amp;hellip; boo.&lt;/p&gt;
 
 &lt;p&gt;&lt;code class="prettyprint"&gt;rvm install ruby-2.2.2 --without-binaries&lt;/code&gt;&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Javascript Object Key Transformation Helpers</title>
-    <link rel="alternate" href="http://blog.url.com/articles/2015/09/25/javascript-object-key-transformation-helpers.html"/>
-    <id>http://blog.url.com/articles/2015/09/25/javascript-object-key-transformation-helpers.html</id>
-    <published>2015-09-25T16:33:00-06:00</published>
-    <updated>2015-10-07T22:41:34-06:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;p&gt;There are multiple times when I get data back from the server that is snake_case
-and I need it to be camelCase in my Javascript. Here are a couple of helpers I
-use to transform Javascript keys.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;I should note that these helpers are using lodash and an object called StringHelpers
-to manipulate the keys.&lt;/p&gt;
-
-&lt;p&gt;Here is the StringHelpers module&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-coffee"&gt;StringHelpers =
-  # Capitalize the first letter of the string
-  capitalize: (word) -&amp;gt;
-    word.charAt(0).toUpperCase() + word.slice(1)
-
-  # Convert the first char to lowercase
-  uncapitalize: (word) -&amp;gt;
-    word.charAt(0).toLowerCase() + word.slice(1)
-
-  # Titleize a string
-  ## foo_bar =&amp;gt; Foo Bar
-  ## BarFoo =&amp;gt; Bar Foo
-  titleize: (string) -&amp;gt;
-    cleanTitle = string.replace(/[ \-_]+/g, &amp;#39; &amp;#39;);
-    words = cleanTitle.replace(/([A-Z])/g, &amp;quot; $&amp;amp;&amp;quot;).trim().split(&amp;#39; &amp;#39;)
-    capitalizedWords = words.map (word) -&amp;gt;
-      capitalize(word)
-
-    capitalizedWords.join(&amp;#39; &amp;#39;)
-
-  # Converts CamelCase to snake_case
-  ## FooBar =&amp;gt; foo_bar
-  ## fooBar =&amp;gt; foo_bar
-  underscore: (string) -&amp;gt;
-    newString = string.replace /([A-Z])/g, ($1) -&amp;gt;
-      &amp;quot;_#{ $1.toLowerCase() }&amp;quot;
-    newString.replace(/^_/, &amp;#39;&amp;#39;).replace(/-/g, &amp;#39;_&amp;#39;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;Convert JS Object Keys to Camel Case (camelCase)&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-coffee"&gt;objectKeysToCamelCase = (object) -&amp;gt;
-  newObj = null
-
-  if _.isArray(object)
-    newObj = object.map (item) -&amp;gt;
-      objectKeysToCamelCase item
-
-  else if _.isObject(object)
-    newObj = {}
-    _.forEach object, (value, key) -&amp;gt;
-      newKey = StringHelpers.uncapitalize(StringHelpers.titleize(key).replace(/\s+/g,&amp;#39;&amp;#39;))
-      newObj[newKey] = objectKeysToCamelCase(value)
-
-  else
-    newObj = object
-
-  return newObj
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;Convert JS Object Keys to Snake Case (snake_case)&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-coffee"&gt;objectKeysToSnakeCase = (object) -&amp;gt;
-  newObj = null
-
-  if _.isArray(object)
-    newObj = object.map (item) -&amp;gt;
-      objectKeysToSnakeCase item
-
-  else if _.isObject(object)
-    newObj = {}
-    _.forEach object, (value, key) -&amp;gt;
-      newKey = StringHelpers.underscore(key).replace(/\s+/g,&amp;#39;&amp;#39;)
-      newObj[newKey] = objectKeysToSnakeCase(value)
-
-  else
-    newObj = object
-
-  return newObj
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;And All Together in Angular Modules&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-coffee"&gt;# Lodash Module
-angular.module(&amp;#39;lodash&amp;#39;, [])
-  .factory &amp;#39;_&amp;#39;, -&amp;gt;
-    window._
-
-# StringHelpers Module
-StringHelpers = -&amp;gt;
-  # Capitalize the first letter of the string
-  capitalize = (word) -&amp;gt;
-    word.charAt(0).toUpperCase() + word.slice(1)
-
-  # Convert the first char to lowercase
-  uncapitalize = (word) -&amp;gt;
-    word.charAt(0).toLowerCase() + word.slice(1)
-
-  # Titleize a string
-  ## foo_bar =&amp;gt; Foo Bar
-  ## BarFoo =&amp;gt; Bar Foo
-  titleize = (string) -&amp;gt;
-    cleanTitle = string.replace(/[ \-_]+/g, &amp;#39; &amp;#39;);
-    words = cleanTitle.replace(/([A-Z])/g, &amp;quot; $&amp;amp;&amp;quot;).trim().split(&amp;#39; &amp;#39;)
-    capitalizedWords = words.map (word) -&amp;gt;
-      capitalize(word)
-
-    capitalizedWords.join(&amp;#39; &amp;#39;)
-
-  # Converts CamelCase to snake_case
-  ## FooBar =&amp;gt; foo_bar
-  ## fooBar =&amp;gt; foo_bar
-  underscore = (string) -&amp;gt;
-    newString = string.replace /([A-Z])/g, ($1) -&amp;gt;
-      &amp;quot;_#{ $1.toLowerCase() }&amp;quot;
-    newString.replace(/^_/, &amp;#39;&amp;#39;).replace(/-/g, &amp;#39;_&amp;#39;)
-
-  return {
-    capitalize: capitalize
-    uncapitalize: uncapitalize
-    titleize: titleize
-    underscore: underscore
-  }
-
-angular.module(&amp;#39;string-helpers&amp;#39;, [])
-  .factory &amp;#39;StringHelpers&amp;#39;, StringHelpers
-
-# StringHelpers Module
-JsonHelpers = (StringHelpers, _) -&amp;gt;
-
-  objectKeysToCamelCase = (object) -&amp;gt;
-    newObj = null
-
-    if _.isArray(object)
-      newObj = object.map (item) -&amp;gt;
-        objectKeysToCamelCase item
-
-    else if _.isObject(object)
-      newObj = {}
-      _.forEach object, (value, key) -&amp;gt;
-        newKey = StringHelpers.uncapitalize(StringHelpers.titleize(key).replace(/\s+/g,&amp;#39;&amp;#39;))
-        newObj[newKey] = objectKeysToCamelCase(value)
-
-    else
-      newObj = object
-
-    return newObj
-
-  objectKeysToSnakeCase = (object) -&amp;gt;
-    newObj = null
-
-    if _.isArray(object)
-      newObj = object.map (item) -&amp;gt;
-        objectKeysToSnakeCase item
-
-    else if _.isObject(object)
-      newObj = {}
-      _.forEach object, (value, key) -&amp;gt;
-        newKey = StringHelpers.underscore(key).replace(/\s+/g,&amp;#39;&amp;#39;)
-        newObj[newKey] = objectKeysToSnakeCase(value)
-
-    else
-      newObj = object
-
-    return newObj
-
-  return {
-    objectKeysToCamelCase: objectKeysToCamelCase,
-    objectKeysToSnakeCase: objectKeysToSnakeCase
-  }
-
-angular.module(&amp;#39;json-helpers&amp;#39;, [&amp;#39;string-helpers&amp;#39;, &amp;#39;lodash&amp;#39;])
-  .factory &amp;#39;JsonHelpers&amp;#39;, JsonHelpers
-
-JsonHelpers.$inject = [&amp;#39;StringHelpers&amp;#39;, &amp;#39;_&amp;#39;]
-&lt;/code&gt;&lt;/pre&gt;
 </content>
   </entry>
 </feed>
