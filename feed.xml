@@ -5,10 +5,24 @@
   <id>http://blog.url.com/articles</id>
   <link href="http://blog.url.com/articles"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2015-11-04T20:46:00-07:00</updated>
+  <updated>2015-11-04T22:23:00-07:00</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>75 points &amp; 75 rebounds in 4 games... sick!</title>
+    <link rel="alternate" href="http://blog.url.com/articles/2015/11/04/75-points-75-rebounds-in-4-games-sick.html"/>
+    <id>http://blog.url.com/articles/2015/11/04/75-points-75-rebounds-in-4-games-sick.html</id>
+    <published>2015-11-04T22:23:00-07:00</published>
+    <updated>2015-11-04T22:31:00-07:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;blockquote class="twitter-tweet" lang="en"&gt;&lt;p lang="en" dir="ltr"&gt;NERD NOTES: Andre Drummond is only player since 1976 with at least 75 Pts &amp;amp; 75 Reb in the first 4 games of a season. &lt;a href="https://t.co/33TvPkdug2"&gt;pic.twitter.com/33TvPkdug2&lt;/a&gt;&lt;/p&gt;&amp;mdash; Mike &amp;amp; Mike (@MikeAndMike) &lt;a href="https://twitter.com/MikeAndMike/status/661888253688217600"&gt;November 4, 2015&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src="//platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
+</content>
+  </entry>
   <entry>
     <title>Installing the PG Gem with PostgresApp</title>
     <link rel="alternate" href="http://blog.url.com/articles/2015/11/04/installing-the-pg-gem-with-postgresapp.html"/>
@@ -432,25 +446,6 @@ angular.module(&amp;#39;json-helpers&amp;#39;, [&amp;#39;string-helpers&amp;#39;
 
 JsonHelpers.$inject = [&amp;#39;StringHelpers&amp;#39;, &amp;#39;_&amp;#39;]
 &lt;/code&gt;&lt;/pre&gt;
-</content>
-  </entry>
-  <entry>
-    <title>OSX Keep SSH Session Alive</title>
-    <link rel="alternate" href="http://blog.url.com/articles/2015/09/19/osx-keep-ssh-session-alive.html"/>
-    <id>http://blog.url.com/articles/2015/09/19/osx-keep-ssh-session-alive.html</id>
-    <published>2015-09-19T22:43:00-06:00</published>
-    <updated>2015-10-07T22:41:34-06:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;p&gt;For keeping the connection alive, you can check in &lt;code class="prettyprint"&gt;/etc/ssh_config&lt;/code&gt; the line where
-it says &lt;code class="prettyprint"&gt;ServerAliveInterval&lt;/code&gt;, that tells you how often (in seconds) your computer
-is gonna send a null packet to keep the connection alive. If you have a 0 in there
-that indicates that your computer is not trying to keep the connection alive
-(it is disabled), otherwise it tells you how often (in seconds) it is sending
-the aforementioned packet. Try putting 120 or 240, if it is still killing your
-connection, you can go lower, maybe to 5, if with that number it doesn&amp;rsquo;t happen,
-maybe it is your router who is dumping the connection to free memory.&lt;/p&gt;
 </content>
   </entry>
 </feed>
