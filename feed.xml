@@ -332,7 +332,7 @@ them.&lt;/p&gt;
     <link rel="alternate" href="http://blog.url.com/articles/2015/10/07/how-to-fix-openssl-ssl-sslerror-certificate-verify-failed.html"/>
     <id>http://blog.url.com/articles/2015/10/07/how-to-fix-openssl-ssl-sslerror-certificate-verify-failed.html</id>
     <published>2015-10-07T17:23:00-06:00</published>
-    <updated>2015-10-07T23:29:13-06:00</updated>
+    <updated>2016-01-04T13:35:49-07:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -341,6 +341,22 @@ not sure why this works, but it does. The crappy part is that you have to do thi
 on every version bump of Ruby&amp;hellip; boo.&lt;/p&gt;
 
 &lt;p&gt;&lt;code class="prettyprint"&gt;rvm install ruby-2.2.2 --without-binaries&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2&gt;Update&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;January 4, 2015&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;During my last install the Rails console was finding an old cert because it was
+not looking at the correct directory.&lt;/p&gt;
+
+&lt;p&gt;Run this in both an IRB and under your Rails console to verify that they are
+the same values.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint"&gt;require &amp;quot;openssl&amp;quot;
+puts OpenSSL::OPENSSL_VERSION
+puts &amp;quot;SSL_CERT_FILE: %s&amp;quot; % OpenSSL::X509::DEFAULT_CERT_FILE
+puts &amp;quot;SSL_CERT_DIR: %s&amp;quot; % OpenSSL::X509::DEFAULT_CERT_DIR
+&lt;/code&gt;&lt;/pre&gt;
 </content>
   </entry>
 </feed>

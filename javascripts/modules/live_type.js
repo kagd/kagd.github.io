@@ -24,7 +24,7 @@
       restrict: 'A',
       template: '{{ string }}<span class="livetype-cursor">|</span>',
       scope: {
-        livetype: '@livetype'
+        livetype: '@'
       }
     };
   };

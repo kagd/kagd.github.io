@@ -34,7 +34,7 @@
     };
   };
 
-  angular.module('string-helpers', []).factory('stringHelpers', Helpers);
+  angular.module('stringHelpers', []).factory('stringHelpers', Helpers);
 
 }).call(this);
 (function() {
@@ -90,7 +90,7 @@
     };
   };
 
-  angular.module('json-helpers', ['string-helpers']).factory('jsonHelpers', Helpers);
+  angular.module('jsonHelpers', ['stringHelpers']).factory('jsonHelpers', Helpers);
 
   Helpers.$inject = ['stringHelpers'];
 

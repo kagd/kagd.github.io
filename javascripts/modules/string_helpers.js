@@ -34,6 +34,6 @@
     };
   };
 
-  angular.module('string-helpers', []).factory('stringHelpers', Helpers);
+  angular.module('stringHelpers', []).factory('stringHelpers', Helpers);
 
 }).call(this);
