@@ -1,27 +1,5 @@
 (function() {
-  var ApplicationController;
-
-  angular.module('kagd', ['foundation', 'serviceHelpers', 'perfect_scrollbar', 'liveType']);
-
-  ApplicationController = function() {
-    var ctrl;
-    ctrl = this;
-    ctrl.menuOpen = false;
-    ctrl.toggleMenu = function() {
-      return ctrl.menuOpen = !ctrl.menuOpen;
-    };
-    ctrl.closeMenu = function() {
-      return ctrl.menuOpen = false;
-    };
-  };
-
-  angular.module('kagd').controller('ApplicationController', ApplicationController);
-
-  angular.module('kagd').run(function($templateCache) {
-    $templateCache.put('components/actionsheet/actionsheet.html', '<div class="action-sheet-container" ng-transclude></div>');
-    $templateCache.put('components/actionsheet/actionsheet-button.html', '<div> <a href="#" class="button" ng-if="title.length > 0">{{ title }}</a> <div ng-transclude></div> </div>');
-    return $templateCache.put('components/actionsheet/actionsheet-content.html', '<div class="action-sheet {{ position }}" ng-class="{\'is-active\': active}"> <div ng-transclude></div> </div>');
-  });
+  angular.module('kagd', ['serviceHelpers', 'perfect_scrollbar', 'liveType']);
 
 }).call(this);
 (function() {
@@ -64,7 +42,7 @@
     };
   };
 
-  angular.module('string-helpers', []).factory('stringHelpers', Helpers);
+  angular.module('stringHelpers', []).factory('stringHelpers', Helpers);
 
 }).call(this);
 (function() {
@@ -120,7 +98,7 @@
     };
   };
 
-  angular.module('json-helpers', ['string-helpers']).factory('jsonHelpers', Helpers);
+  angular.module('jsonHelpers', ['stringHelpers']).factory('jsonHelpers', Helpers);
 
   Helpers.$inject = ['stringHelpers'];
 
@@ -151,7 +129,7 @@
       restrict: 'A',
       template: '{{ string }}<span class="livetype-cursor">|</span>',
       scope: {
-        livetype: '@livetype'
+        livetype: '@'
       }
     };
   };
@@ -189,9 +167,62 @@
     };
   };
 
-  angular.module('serviceHelpers', ['json-helpers']).factory('serviceHelpers', ServiceHelpers);
+  angular.module('serviceHelpers', ['jsonHelpers']).factory('serviceHelpers', ServiceHelpers);
 
   ServiceHelpers.$inject = ['jsonHelpers'];
+
+}).call(this);
+(function() {
+  var Directive;
+
+  Directive = function($rootScope) {
+    var link;
+    link = function(scope, element) {
+      var menuOpen;
+      menuOpen = false;
+      return element.on('click', function() {
+        var message;
+        menuOpen = !menuOpen;
+        message = menuOpen ? 'open' : 'close';
+        return $rootScope.$broadcast('menuToggle', message);
+      });
+    };
+    return {
+      restrict: 'EA',
+      link: link
+    };
+  };
+
+  angular.module('kagd').directive('menuButton', Directive);
+
+  Directive.$inject = ['$rootScope'];
+
+}).call(this);
+(function() {
+  var Directive;
+
+  Directive = function($rootScope) {
+    var link;
+    link = function(scope, ele) {
+      return $rootScope.$on('menuToggle', function(event, type) {
+        var menuOpen;
+        if (type === 'open') {
+          menuOpen = true;
+        } else if (type === 'close') {
+          menuOpen = false;
+        }
+        return ele.toggleClass('menu-open', menuOpen);
+      });
+    };
+    return {
+      restrict: 'EA',
+      link: link
+    };
+  };
+
+  angular.module('kagd').directive('menuClasses', Directive);
+
+  Directive.$inject = ['$rootScope'];
 
 }).call(this);
 (function() {

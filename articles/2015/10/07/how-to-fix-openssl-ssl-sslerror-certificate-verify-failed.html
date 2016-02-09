@@ -6,7 +6,7 @@ on every version bump of Ruby&hellip; boo.</p>
 
 <h2>Update</h2>
 
-<p><em>January 4, 2015</em></p>
+<p><em>February 9, 2015</em></p>
 
 <p>During my last install the Rails console was finding an old cert because it was
 not looking at the correct directory.</p>
@@ -18,6 +18,13 @@ the same values.</p>
 puts OpenSSL::OPENSSL_VERSION
 puts &quot;SSL_CERT_FILE: %s&quot; % OpenSSL::X509::DEFAULT_CERT_FILE
 puts &quot;SSL_CERT_DIR: %s&quot; % OpenSSL::X509::DEFAULT_CERT_DIR
+</code></pre>
+
+<p>If they are different values, you may need to add this to your development environment
+file:</p>
+
+<pre><code class="prettyprint">SSL_CERT_FILE=/usr/local/etc/openssl/cert.pem
+SSL_CERT_DIR=/usr/local/etc/openssl/certs
 </code></pre>
 <div id="disqus_thread"></div><script>/* * * CONFIGURATION VARIABLES * * */
 var disqus_shortname = 'kagdgithubio';

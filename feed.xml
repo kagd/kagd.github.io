@@ -332,7 +332,7 @@ them.&lt;/p&gt;
     <link rel="alternate" href="http://blog.url.com/articles/2015/10/07/how-to-fix-openssl-ssl-sslerror-certificate-verify-failed.html"/>
     <id>http://blog.url.com/articles/2015/10/07/how-to-fix-openssl-ssl-sslerror-certificate-verify-failed.html</id>
     <published>2015-10-07T17:23:00-06:00</published>
-    <updated>2016-01-04T13:35:49-07:00</updated>
+    <updated>2016-02-09T13:19:27-07:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -344,7 +344,7 @@ on every version bump of Ruby&amp;hellip; boo.&lt;/p&gt;
 
 &lt;h2&gt;Update&lt;/h2&gt;
 
-&lt;p&gt;&lt;em&gt;January 4, 2015&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;February 9, 2015&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;During my last install the Rails console was finding an old cert because it was
 not looking at the correct directory.&lt;/p&gt;
@@ -356,6 +356,13 @@ the same values.&lt;/p&gt;
 puts OpenSSL::OPENSSL_VERSION
 puts &amp;quot;SSL_CERT_FILE: %s&amp;quot; % OpenSSL::X509::DEFAULT_CERT_FILE
 puts &amp;quot;SSL_CERT_DIR: %s&amp;quot; % OpenSSL::X509::DEFAULT_CERT_DIR
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If they are different values, you may need to add this to your development environment
+file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint"&gt;SSL_CERT_FILE=/usr/local/etc/openssl/cert.pem
+SSL_CERT_DIR=/usr/local/etc/openssl/certs
 &lt;/code&gt;&lt;/pre&gt;
 </content>
   </entry>
