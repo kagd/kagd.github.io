@@ -1,12 +1,4 @@
 (function() {
-  angular.module('kagd', ['serviceHelpers', 'perfect_scrollbar', 'liveType']);
-
-}).call(this);
-(function() {
-  angular.module('kagd').constant('API_HOST', '/');
-
-}).call(this);
-(function() {
   'use strict';
   var Helpers;
 
@@ -104,42 +96,6 @@
 
 }).call(this);
 (function() {
-  var Directive;
-
-  Directive = function($timeout) {
-    var getRandomMs, link;
-    getRandomMs = function(min, max) {
-      return Math.floor(Math.random() * (max - min)) + min;
-    };
-    link = function(scope) {
-      var chars;
-      scope.string = '';
-      chars = scope.livetype.split('');
-      return chars.reduce(function(lastMs, currentChar, idx) {
-        var newMs;
-        newMs = lastMs + getRandomMs(50, 750);
-        $timeout(function() {
-          return scope.string += currentChar;
-        }, newMs);
-        return newMs;
-      }, 0);
-    };
-    return {
-      link: link,
-      restrict: 'A',
-      template: '{{ string }}<span class="livetype-cursor">|</span>',
-      scope: {
-        livetype: '@'
-      }
-    };
-  };
-
-  angular.module('liveType', []).directive('livetype', Directive);
-
-  Directive.$inject = ['$timeout'];
-
-}).call(this);
-(function() {
   var ServiceHelpers,
     hasProp = {}.hasOwnProperty;
 
@@ -170,123 +126,6 @@
   angular.module('serviceHelpers', ['jsonHelpers']).factory('serviceHelpers', ServiceHelpers);
 
   ServiceHelpers.$inject = ['jsonHelpers'];
-
-}).call(this);
-(function() {
-  var Directive;
-
-  Directive = function($rootScope) {
-    var link;
-    link = function(scope, element) {
-      var menuOpen;
-      menuOpen = false;
-      return element.on('click', function() {
-        var message;
-        menuOpen = !menuOpen;
-        message = menuOpen ? 'open' : 'close';
-        return $rootScope.$broadcast('menuToggle', message);
-      });
-    };
-    return {
-      restrict: 'EA',
-      link: link
-    };
-  };
-
-  angular.module('kagd').directive('menuButton', Directive);
-
-  Directive.$inject = ['$rootScope'];
-
-}).call(this);
-(function() {
-  var Directive;
-
-  Directive = function($rootScope) {
-    var link;
-    link = function(scope, ele) {
-      return $rootScope.$on('menuToggle', function(event, type) {
-        var menuOpen;
-        if (type === 'open') {
-          menuOpen = true;
-        } else if (type === 'close') {
-          menuOpen = false;
-        }
-        return ele.toggleClass('menu-open', menuOpen);
-      });
-    };
-    return {
-      restrict: 'EA',
-      link: link
-    };
-  };
-
-  angular.module('kagd').directive('menuClasses', Directive);
-
-  Directive.$inject = ['$rootScope'];
-
-}).call(this);
-(function() {
-  var Controller;
-
-  Controller = function(diabloService) {
-    var container, ctrl, response;
-    ctrl = this;
-    response = diabloService.get();
-    ctrl.heroes = response.heroes;
-    ctrl.profile = response.profile;
-    ctrl.heroClasses = function(hero) {
-      return hero["class"] + "-" + hero.gender;
-    };
-    container = document.getElementById('heroes-wrapper');
-    Ps.initialize(container);
-  };
-
-  Controller.$inject = ['diabloService'];
-
-  angular.module('kagd').component('kagdDiablo', {
-    templateUrl: '/templates/diablo/diablo_component.html',
-    controller: Controller
-  });
-
-}).call(this);
-(function() {
-  var Factory;
-
-  Factory = function() {
-    var heroes, profile;
-    heroes = [];
-    profile = {};
-    return {
-      heroes: heroes,
-      profile: profile
-    };
-  };
-
-  angular.module('kagd').factory('diabloFactory', Factory);
-
-}).call(this);
-(function() {
-  var Service;
-
-  Service = function($http, diabloFactory, serviceHelpers, API_HOST) {
-    var service;
-    service = this;
-    service.get = function() {
-      $http.get(API_HOST + "api/diablo").then(function(response) {
-        serviceHelpers.populateObjectFromResponse(diabloFactory.heroes, response.data.heroes);
-        return serviceHelpers.populateObjectFromResponse(diabloFactory.profile, response.data.profile);
-      });
-      return {
-        heroes: diabloFactory.heroes,
-        profile: diabloFactory.profile
-      };
-    };
-    return service;
-  };
-
-  angular.module('kagd').service('diabloService', Service);
-
-  Service.$inject = ['$http', 'diabloFactory', 'serviceHelpers', 'API_HOST'];
 
 }).call(this);
 (function() {
@@ -332,19 +171,5 @@
     templateUrl: '/templates/github/github_component.html',
     controller: Controller
   });
-
-}).call(this);
-(function() {
-  var Factory;
-
-  Factory = function() {
-    var stats;
-    stats = {};
-    return {
-      stats: stats
-    };
-  };
-
-  angular.module('kagd').factory('githubFactory', Factory);
 
 }).call(this);

@@ -14,8 +14,11 @@
     Ps.initialize(container);
   };
 
-  angular.module('kagd').controller('DiabloController', Controller);
-
   Controller.$inject = ['diabloService'];
+
+  angular.module('kagd').component('kagdDiablo', {
+    templateUrl: '/templates/diablo/diablo_component.html',
+    controller: Controller
+  });
 
 }).call(this);
