@@ -153,7 +153,7 @@
 (function() {
   var Controller;
 
-  Controller = function(githubService) {
+  Controller = function(githubService, $sce) {
     var ctrl, response;
     ctrl = this;
     response = githubService.get();
@@ -163,9 +163,12 @@
         return sha.slice(0, 10);
       }
     };
+    ctrl.lastCommitMessage = function() {
+      return $sce.trustAsHtml("\"" + ctrl.stats.lastCommit.message + "\"");
+    };
   };
 
-  Controller.$inject = ['githubService'];
+  Controller.$inject = ['githubService', '$sce'];
 
   angular.module('kagd').component('kagdGithub', {
     templateUrl: '/templates/github/github_component.html',

@@ -1,7 +1,7 @@
 (function() {
   var Controller;
 
-  Controller = function(diabloService) {
+  Controller = function(diabloService, Ps) {
     var container, ctrl, response;
     ctrl = this;
     response = diabloService.get();
@@ -11,10 +11,12 @@
       return hero["class"] + "-" + hero.gender;
     };
     container = document.getElementById('heroes-wrapper');
-    Ps.initialize(container);
+    ctrl.$onInit = function() {
+      return Ps.initialize(container);
+    };
   };
 
-  Controller.$inject = ['diabloService'];
+  Controller.$inject = ['diabloService', 'Ps'];
 
   angular.module('kagd').component('kagdDiablo', {
     templateUrl: '/templates/diablo/diablo_component.html',

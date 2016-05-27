@@ -1,5 +1,5 @@
 (function() {
-  angular.module('kagd', ['serviceHelpers', 'perfect_scrollbar', 'liveType']);
+  angular.module('kagd', ['serviceHelpers', 'perfect_scrollbar', 'liveType', 'perfectScrollbar']);
 
 }).call(this);
 (function() {
@@ -140,6 +140,12 @@
 
 }).call(this);
 (function() {
+  angular.module('perfectScrollbar', []).factory('Ps', function() {
+    return window.Ps;
+  });
+
+}).call(this);
+(function() {
   var ServiceHelpers,
     hasProp = {}.hasOwnProperty;
 
@@ -228,7 +234,7 @@
 (function() {
   var Controller;
 
-  Controller = function(diabloService) {
+  Controller = function(diabloService, Ps) {
     var container, ctrl, response;
     ctrl = this;
     response = diabloService.get();
@@ -238,10 +244,12 @@
       return hero["class"] + "-" + hero.gender;
     };
     container = document.getElementById('heroes-wrapper');
-    Ps.initialize(container);
+    ctrl.$onInit = function() {
+      return Ps.initialize(container);
+    };
   };
 
-  Controller.$inject = ['diabloService'];
+  Controller.$inject = ['diabloService', 'Ps'];
 
   angular.module('kagd').component('kagdDiablo', {
     templateUrl: '/templates/diablo/diablo_component.html',
@@ -314,7 +322,7 @@
 (function() {
   var Controller;
 
-  Controller = function(githubService) {
+  Controller = function(githubService, $sce) {
     var ctrl, response;
     ctrl = this;
     response = githubService.get();
@@ -324,9 +332,12 @@
         return sha.slice(0, 10);
       }
     };
+    ctrl.lastCommitMessage = function() {
+      return $sce.trustAsHtml("\"" + ctrl.stats.lastCommit.message + "\"");
+    };
   };
 
-  Controller.$inject = ['githubService'];
+  Controller.$inject = ['githubService', '$sce'];
 
   angular.module('kagd').component('kagdGithub', {
     templateUrl: '/templates/github/github_component.html',
