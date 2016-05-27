@@ -7836,76 +7836,98 @@ h1, h2 {
       border-radius: 4px;
       box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
       display: inline-block;
+      opacity: 0.7;
       margin-left: 1rem;
       margin-right: 1rem;
       padding-top: 65px;
       position: relative;
-      width: 83px; }
-    /* line 89, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+      width: 83px;
+      -moz-transition: box-shadow 150ms ease-in-out, opacity 150ms ease-in-out;
+      -o-transition: box-shadow 150ms ease-in-out, opacity 150ms ease-in-out;
+      -webkit-transition: box-shadow 150ms ease-in-out, opacity 150ms ease-in-out;
+      transition: box-shadow 150ms ease-in-out, opacity 150ms ease-in-out; }
+      /* line 91, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+      .index .diablo-pane .heroes .hero:hover {
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+        opacity: 1;
+        text-decoration: none; }
+        /* line 96, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+        .index .diablo-pane .heroes .hero:hover .weapon {
+          top: -1.7rem;
+          -moz-transform: rotate(-15deg);
+          -ms-transform: rotate(-15deg);
+          -webkit-transform: rotate(-15deg);
+          transform: rotate(-15deg); }
+    /* line 103, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .name {
       background-color: #000;
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 4px;
       color: #fff;
       display: block;
-      padding: 3px;
+      font-size: 0.85714rem;
+      padding: 5px 3px;
       text-align: center; }
-    /* line 99, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 114, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .barbarian-male {
       background-position: 0 0; }
-    /* line 102, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 117, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .barbarian-female {
       background-position: -83px 0; }
-    /* line 105, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 120, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .wizard-male {
       background-position: -83px -264px; }
-    /* line 108, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 123, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .wizard-female {
       background-position: -83px -264px; }
-    /* line 111, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 126, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .demon-hunter-male {
       background-position: 0 -66px; }
-    /* line 114, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 129, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .demon-hunter-female {
       background-position: -83px -66px; }
-    /* line 117, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 132, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .crusader-male {
       background-position: 0 -330px; }
-    /* line 120, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 135, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .crusader-female {
       background-position: -83px -330px; }
-    /* line 123, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 138, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .witch-doctor-male {
       background-position: 0 -198px; }
-    /* line 126, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 141, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .witch-doctor-female {
       background-position: -83px -198px; }
-    /* line 129, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 144, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .monk-male {
       background-position: 0 -132px; }
-    /* line 132, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 147, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .monk-female {
       background-position: -83px -132px; }
-  /* line 137, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+  /* line 152, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
   .index .diablo-pane .seasonal,
   .index .diablo-pane .hardcore {
     font-size: 1.28571rem;
     right: 5px;
     position: absolute;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); }
-  /* line 145, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+  /* line 160, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
   .index .diablo-pane .seasonal {
     color: #40bf40;
     top: 5px; }
-  /* line 150, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+  /* line 165, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
   .index .diablo-pane .hardcore {
     color: #d12f37;
     top: 45px; }
-  /* line 155, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+  /* line 170, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
   .index .diablo-pane .weapon {
     left: -2rem;
     position: absolute;
-    top: -1.5rem; }
+    top: -1.5rem;
+    -moz-transition: top 150ms ease-out, -moz-transform 150ms ease-out;
+    -o-transition: top 150ms ease-out, -o-transform 150ms ease-out;
+    -webkit-transition: top 150ms ease-out, -webkit-transform 150ms ease-out;
+    transition: top 150ms ease-out, transform 150ms ease-out; }
   @media only screen and (min-width: 54.85714em) {
     /* line 1, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane {
