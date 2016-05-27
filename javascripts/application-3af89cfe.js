@@ -1,9 +1,5 @@
 (function() {
-  angular.module('kagd', ['serviceHelpers', 'perfect_scrollbar', 'liveType', 'perfectScrollbar']);
-
-}).call(this);
-(function() {
-  angular.module('kagd').constant('API_HOST', '/');
+  angular.module('kagd', ['serviceHelpers', 'perfect_scrollbar', 'liveType', 'perfectScrollbar']).constant('API_HOST', window.env.API_HOST);
 
 }).call(this);
 (function() {

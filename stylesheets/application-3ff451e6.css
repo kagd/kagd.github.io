@@ -4965,8 +4965,8 @@ blockquote p {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("/fonts/font-awesome/fontawesome-webfont.eot");
-  src: url("/fonts/font-awesome/fontawesome-webfont.eot?#iefix") format("embedded-opentype"), url("/fonts/font-awesome/fontawesome-webfont.woff2") format("woff2"), url("/fonts/font-awesome/fontawesome-webfont.woff") format("woff"), url("/fonts/font-awesome/fontawesome-webfont.ttf") format("truetype"), url("/fonts/font-awesome/fontawesome-webfont.svg#fontawesomeregular") format("svg");
+  src: url("/fonts/font-awesome/fontawesome-webfont-b3c2f08e.eot");
+  src: url("/fonts/font-awesome/fontawesome-webfont-b3c2f08e.eot?#iefix") format("embedded-opentype"), url("/fonts/font-awesome/fontawesome-webfont-574ea269.woff2") format("woff2"), url("/fonts/font-awesome/fontawesome-webfont-50797040.woff") format("woff"), url("/fonts/font-awesome/fontawesome-webfont-27cf1f2e.ttf") format("truetype"), url("/fonts/font-awesome/fontawesome-webfont-2b3c8ba7.svg#fontawesomeregular") format("svg");
   font-weight: normal;
   font-style: normal; }
 /* line 4, /Users/gklinsing/.rvm/gems/ruby-2.2.1@kagdgithub/gems/font-awesome-sass-4.4.0/assets/stylesheets/font-awesome/_core.scss */
@@ -7825,7 +7825,7 @@ h1, h2 {
 
 /* line 1, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
 .index .diablo-pane {
-  background: #4d4d4d url("/images/icon_diablo.svg") no-repeat 1.75rem 0.75rem;
+  background: #4d4d4d url("/images/icon_diablo-679be759.svg") no-repeat 1.75rem 0.75rem;
   background-size: 50px 50px;
   border-bottom: 1px solid #262626;
   border-top: 1px solid #262626;
