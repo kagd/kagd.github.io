@@ -1,10 +1,20 @@
-@charset "UTF-8";/* perfect-scrollbar v0.6.3 */
+@charset "UTF-8";/* perfect-scrollbar v0.6.11 */
 
 .ps-container {
   -ms-touch-action: none;
-  overflow: hidden !important; }
-  .ps-container.ps-active-x > .ps-scrollbar-x-rail, .ps-container.ps-active-y > .ps-scrollbar-y-rail {
-    display: block; }
+  touch-action: none;
+  overflow: hidden !important;
+  -ms-overflow-style: none; }
+  @supports (-ms-overflow-style: none) {
+    .ps-container {
+      overflow: auto !important; } }
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .ps-container {
+      overflow: auto !important; } }
+  .ps-container.ps-active-x > .ps-scrollbar-x-rail,
+  .ps-container.ps-active-y > .ps-scrollbar-y-rail {
+    display: block;
+    background-color: transparent; }
   .ps-container.ps-in-scrolling {
     pointer-events: none; }
     .ps-container.ps-in-scrolling.ps-x > .ps-scrollbar-x-rail {
@@ -23,7 +33,6 @@
     /* please don't change 'position' */
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
     border-radius: 4px;
     opacity: 0;
     -webkit-transition: background-color .2s linear, opacity .2s linear;
@@ -39,7 +48,6 @@
       background-color: #aaa;
       -webkit-border-radius: 4px;
       -moz-border-radius: 4px;
-      -ms-border-radius: 4px;
       border-radius: 4px;
       -webkit-transition: background-color .2s linear;
       -moz-transition: background-color .2s linear;
@@ -54,7 +62,6 @@
     /* please don't change 'position' */
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
     border-radius: 4px;
     opacity: 0;
     -webkit-transition: background-color .2s linear, opacity .2s linear;
@@ -70,7 +77,6 @@
       background-color: #aaa;
       -webkit-border-radius: 4px;
       -moz-border-radius: 4px;
-      -ms-border-radius: 4px;
       border-radius: 4px;
       -webkit-transition: background-color .2s linear;
       -moz-transition: background-color .2s linear;
@@ -91,7 +97,8 @@
       opacity: 0.9; }
       .ps-container:hover.ps-in-scrolling.ps-y > .ps-scrollbar-y-rail > .ps-scrollbar-y {
         background-color: #999; }
-  .ps-container:hover > .ps-scrollbar-x-rail, .ps-container:hover > .ps-scrollbar-y-rail {
+  .ps-container:hover > .ps-scrollbar-x-rail,
+  .ps-container:hover > .ps-scrollbar-y-rail {
     opacity: 0.6; }
   .ps-container:hover > .ps-scrollbar-x-rail:hover {
     background-color: #eee;
@@ -104,11 +111,11 @@
     .ps-container:hover > .ps-scrollbar-y-rail:hover > .ps-scrollbar-y {
       background-color: #999; }
 
-/*! normalize.css v3.0.1 | MIT License | git.io/normalize */
+/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 /**
  * 1. Set default font family to sans-serif.
- * 2. Prevent iOS text size adjust after orientation change, without disabling
- *    user zoom.
+ * 2. Prevent iOS and IE text size adjust after device orientation change,
+ *    without disabling user zoom.
  */
 /* line 9, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 html {
@@ -130,10 +137,11 @@ body {
    ========================================================================== */
 /**
  * Correct `block` display not defined for any HTML5 element in IE 8/9.
- * Correct `block` display not defined for `details` or `summary` in IE 10/11 and Firefox.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11
+ * and Firefox.
  * Correct `block` display not defined for `main` in IE 11.
  */
-/* line 32, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 33, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 article,
 aside,
 details,
@@ -143,6 +151,7 @@ footer,
 header,
 hgroup,
 main,
+menu,
 nav,
 section,
 summary {
@@ -152,7 +161,7 @@ summary {
  * 1. Correct `inline-block` display not defined in IE 8/9.
  * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
  */
-/* line 52, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 54, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 audio,
 canvas,
 progress,
@@ -166,16 +175,16 @@ video {
  * Prevent modern browsers from displaying `audio` without controls.
  * Remove excess height in iOS 5 devices.
  */
-/* line 65, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 67, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 audio:not([controls]) {
   display: none;
   height: 0; }
 
 /**
  * Address `[hidden]` styling not present in IE 8/9/10.
- * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.
+ * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.
  */
-/* line 75, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 77, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 [hidden],
 template {
   display: none; }
@@ -185,14 +194,15 @@ template {
 /**
  * Remove the gray background color from active links in IE 10.
  */
-/* line 87, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 89, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 a {
-  background: transparent; }
+  background-color: transparent; }
 
 /**
- * Improve readability when focused and also mouse hovered in all browsers.
+ * Improve readability of focused elements when they are also in an
+ * active/hover state.
  */
-/* line 95, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 98, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 a:active,
 a:hover {
   outline: 0; }
@@ -202,14 +212,14 @@ a:hover {
 /**
  * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
  */
-/* line 107, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 110, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 abbr[title] {
   border-bottom: 1px dotted; }
 
 /**
  * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
  */
-/* line 115, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 118, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 b,
 strong {
   font-weight: bold; }
@@ -217,7 +227,7 @@ strong {
 /**
  * Address styling not present in Safari and Chrome.
  */
-/* line 124, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 127, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 dfn {
   font-style: italic; }
 
@@ -225,7 +235,7 @@ dfn {
  * Address variable `h1` font-size and margin within `section` and `article`
  * contexts in Firefox 4+, Safari, and Chrome.
  */
-/* line 133, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 136, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 h1 {
   font-size: 2em;
   margin: 0.67em 0; }
@@ -233,7 +243,7 @@ h1 {
 /**
  * Address styling not present in IE 8/9.
  */
-/* line 142, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 145, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 mark {
   background: #ff0;
   color: #000; }
@@ -241,14 +251,14 @@ mark {
 /**
  * Address inconsistent and variable font size in all browsers.
  */
-/* line 151, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 154, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 small {
   font-size: 80%; }
 
 /**
  * Prevent `sub` and `sup` affecting `line-height` in all browsers.
  */
-/* line 159, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 162, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 sub,
 sup {
   font-size: 75%;
@@ -256,11 +266,11 @@ sup {
   position: relative;
   vertical-align: baseline; }
 
-/* line 167, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 170, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 sup {
   top: -0.5em; }
 
-/* line 171, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 174, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 sub {
   bottom: -0.25em; }
 
@@ -269,14 +279,14 @@ sub {
 /**
  * Remove border when inside `a` element in IE 8/9/10.
  */
-/* line 182, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 185, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 img {
   border: 0; }
 
 /**
  * Correct overflow not hidden in IE 9/10/11.
  */
-/* line 190, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 193, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 svg:not(:root) {
   overflow: hidden; }
 
@@ -285,30 +295,29 @@ svg:not(:root) {
 /**
  * Address margin not present in IE 8/9 and Safari.
  */
-/* line 201, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 204, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 figure {
   margin: 1em 40px; }
 
 /**
  * Address differences between Firefox and other browsers.
  */
-/* line 209, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 212, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 hr {
-  -moz-box-sizing: content-box;
   box-sizing: content-box;
   height: 0; }
 
 /**
  * Contain overflow in all browsers.
  */
-/* line 219, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 221, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 pre {
   overflow: auto; }
 
 /**
  * Address odd `em`-unit font size rendering in all browsers.
  */
-/* line 227, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 229, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 code,
 kbd,
 pre,
@@ -328,7 +337,7 @@ samp {
  * 2. Correct font properties not being inherited.
  * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
  */
-/* line 250, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 252, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 button,
 input,
 optgroup,
@@ -344,7 +353,7 @@ textarea {
 /**
  * Address `overflow` set to `hidden` in IE 8/9/10/11.
  */
-/* line 264, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 266, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 button {
   overflow: visible; }
 
@@ -354,7 +363,7 @@ button {
  * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
  * Correct `select` style inheritance in Firefox.
  */
-/* line 275, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 277, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 button,
 select {
   text-transform: none; }
@@ -366,7 +375,7 @@ select {
  * 3. Improve usability and consistency of cursor style between image-type
  *    `input` and others.
  */
-/* line 288, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 290, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 button,
 html input[type="button"],
 input[type="reset"],
@@ -379,7 +388,7 @@ input[type="submit"] {
 /**
  * Re-set default cursor for disabled elements.
  */
-/* line 300, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 302, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 button[disabled],
 html input[disabled] {
   cursor: default; }
@@ -387,7 +396,7 @@ html input[disabled] {
 /**
  * Remove inner padding and border in Firefox 4+.
  */
-/* line 309, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 311, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 button::-moz-focus-inner,
 input::-moz-focus-inner {
   border: 0;
@@ -397,7 +406,7 @@ input::-moz-focus-inner {
  * Address Firefox 4+ setting `line-height` on `input` using `!important` in
  * the UA stylesheet.
  */
-/* line 320, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 322, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 input {
   line-height: normal; }
 
@@ -408,7 +417,7 @@ input {
  * 1. Address box sizing set to `content-box` in IE 8/9/10.
  * 2. Remove excess padding in IE 8/9/10.
  */
-/* line 332, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 334, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 input[type="checkbox"],
 input[type="radio"] {
   box-sizing: border-box;
@@ -421,31 +430,28 @@ input[type="radio"] {
  * `font-size` values of the `input`, it causes the cursor style of the
  * decrement button to change from `default` to `text`.
  */
-/* line 344, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 346, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   height: auto; }
 
 /**
  * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
- * 2. Address `box-sizing` set to `border-box` in Safari and Chrome
- *    (include `-moz` to future-proof).
+ * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.
  */
-/* line 355, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 356, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 input[type="search"] {
   -webkit-appearance: textfield;
   /* 1 */
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  /* 2 */
-  box-sizing: content-box; }
+  box-sizing: content-box;
+  /* 2 */ }
 
 /**
  * Remove inner padding and search cancel button in Safari and Chrome on OS X.
  * Safari (but not Chrome) clips the cancel button when the search input has
  * padding (and `textfield` appearance).
  */
-/* line 368, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 367, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none; }
@@ -453,7 +459,7 @@ input[type="search"]::-webkit-search-decoration {
 /**
  * Define consistent border, margin, and padding.
  */
-/* line 377, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 376, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 fieldset {
   border: 1px solid #c0c0c0;
   margin: 0 2px;
@@ -463,7 +469,7 @@ fieldset {
  * 1. Correct `color` not being inherited in IE 8/9/10/11.
  * 2. Remove padding so people aren't caught out if they zero out fieldsets.
  */
-/* line 388, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 387, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 legend {
   border: 0;
   /* 1 */
@@ -473,7 +479,7 @@ legend {
 /**
  * Remove default vertical scrollbar in IE 8/9/10/11.
  */
-/* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 396, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 textarea {
   overflow: auto; }
 
@@ -481,7 +487,7 @@ textarea {
  * Don't inherit the `font-weight` (applied by a rule above).
  * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
  */
-/* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 optgroup {
   font-weight: bold; }
 
@@ -490,19 +496,19 @@ optgroup {
 /**
  * Remove most spacing between table cells.
  */
-/* line 417, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 416, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-/* line 422, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
+/* line 421, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/vendor/_normalize.scss */
 td,
 th {
   padding: 0; }
 
 /* line 149, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/helpers/_breakpoints.scss */
 meta.foundation-version {
-  font-family: "1.1.0"; }
+  font-family: "1.2.0"; }
 
 /* line 152, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/helpers/_breakpoints.scss */
 meta.foundation-mq {
@@ -1387,7 +1393,7 @@ ul.thumbnails > li {
    - Range slider
    - Progress bars and meters
 */
-/* line 78, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 79, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 input[type="text"], input[type="password"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"], input[type="color"], textarea {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -1403,50 +1409,50 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
   font-size: 1rem;
   -webkit-font-smoothing: antialiased;
   vertical-align: middle; }
-  /* line 97, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 98, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   input[type="text"]:hover, input[type="password"]:hover, input[type="date"]:hover, input[type="datetime"]:hover, input[type="datetime-local"]:hover, input[type="month"]:hover, input[type="week"]:hover, input[type="email"]:hover, input[type="number"]:hover, input[type="search"]:hover, input[type="tel"]:hover, input[type="time"]:hover, input[type="url"]:hover, input[type="color"]:hover, textarea:hover {
     border: 1px solid #bbb;
     background: #fff;
     color: #000; }
-  /* line 102, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 103, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   input[type="text"]:focus, input[type="password"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="week"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="time"]:focus, input[type="url"]:focus, input[type="color"]:focus, textarea:focus {
     outline: 0;
     border: 1px solid #999;
     background: #fff;
     color: #000; }
-  /* line 109, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 110, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   label > input[type="text"], label > input[type="password"], label > input[type="date"], label > input[type="datetime"], label > input[type="datetime-local"], label > input[type="month"], label > input[type="week"], label > input[type="email"], label > input[type="number"], label > input[type="search"], label > input[type="tel"], label > input[type="time"], label > input[type="url"], label > input[type="color"], label > textarea {
     margin-top: 0.5rem; }
 
-/* line 115, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 116, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 input[type="search"] {
   box-sizing: border-box; }
 
-/* line 121, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
-input.disabled, input[disabled], input[readonly], fieldset[disabled] input {
+/* line 122, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+input.disabled, input[disabled], input[readonly], fieldset[disabled] input, textarea.disabled, textarea[disabled], textarea[readonly], fieldset[disabled] textarea {
   cursor: not-allowed; }
-  /* line 127, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
-  input.disabled, input.disabled:hover, input[disabled], input[disabled]:hover, input[readonly], input[readonly]:hover, fieldset[disabled] input, fieldset[disabled] input:hover {
+  /* line 128, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  input.disabled, input.disabled:hover, input[disabled], input[disabled]:hover, input[readonly], input[readonly]:hover, fieldset[disabled] input, fieldset[disabled] input:hover, textarea.disabled, textarea.disabled:hover, textarea[disabled], textarea[disabled]:hover, textarea[readonly], textarea[readonly]:hover, fieldset[disabled] textarea, fieldset[disabled] textarea:hover {
     background-color: #f2f2f2; }
 
-/* line 135, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 136, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 label {
   display: block;
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
   color: #333; }
-  /* line 141, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 142, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   label > input, label > textarea {
     margin-top: 0.5rem; }
 
-/* line 148, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 149, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 input[type="checkbox"], input[type="radio"] {
   width: 1rem;
   height: 1rem; }
-  /* line 153, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 154, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   label > input[type="checkbox"], label > input[type="radio"] {
     margin-right: 0.25rem; }
-  /* line 158, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 159, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   input[type="checkbox"] + label, input[type="radio"] + label {
     display: inline-block;
     margin-left: 0.5rem;
@@ -1454,20 +1460,20 @@ input[type="checkbox"], input[type="radio"] {
     margin-bottom: 0;
     vertical-align: baseline; }
 
-/* line 170, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 171, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 .inline-label {
   display: flex;
   flex-flow: row nowrap;
   align-items: stretch;
   margin-bottom: 1rem; }
-  /* line 177, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 178, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   label > .inline-label {
     margin-top: 0.5rem; }
-  /* line 182, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 183, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   .inline-label > input, .inline-label > select {
     flex: 1;
     margin: 0; }
-  /* line 188, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 189, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   .inline-label > .form-label {
     flex: 0 0 auto;
     background: #eee;
@@ -1476,13 +1482,13 @@ input[type="checkbox"], input[type="radio"] {
     padding: 0 0.5rem;
     display: flex;
     align-items: center; }
-    /* line 197, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+    /* line 198, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
     .inline-label > .form-label:first-child {
       border-right: 0; }
-    /* line 198, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+    /* line 199, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
     .inline-label > .form-label:last-child {
       border-left: 0; }
-  /* line 201, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 202, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   .inline-label > a,
   .inline-label > button,
   .inline-label > input[type="button"],
@@ -1495,13 +1501,13 @@ input[type="checkbox"], input[type="radio"] {
     margin: 0;
     border-radius: 0; }
 
-/* line 217, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 218, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 textarea {
   height: auto;
   width: 100%;
   min-height: 50px; }
 
-/* line 225, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 226, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -1514,20 +1520,20 @@ select {
   color: #000;
   border-radius: 0;
   border: 1px solid #ccc;
-  background: #fafafa url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="24" viewBox="0 0 32 24"><polygon points="0,0 32,0 16,24" style="fill: black"></polygon></svg>') right 10px center no-repeat;
+  background: #fafafa url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20version%3D%221.1%22%20width%3D%2232%22%20height%3D%2224%22%20viewBox%3D%220%200%2032%2024%22%3E%3Cpolygon%20points%3D%220%2C0%2032%2C0%2016%2C24%22%20style%3D%22fill%3A%20black%22%3E%3C/polygon%3E%3C/svg%3E") right 10px center no-repeat;
   background-size: 8px 8px;
   padding-right: 1.625rem; }
-  /* line 251, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 252, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   select:hover {
     background-color: #f0f0f0; }
-  /* line 255, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 256, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   select:focus {
     outline: 0; }
-  /* line 260, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 261, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   select::-ms-expand {
     display: none; }
 
-/* line 267, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 268, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 input[type="range"] {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -1539,33 +1545,33 @@ input[type="range"] {
   margin-bottom: 0.25rem;
   border: 0;
   line-height: 1; }
-  /* line 284, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 285, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   input[type="range"]:focus {
     outline: 0; }
-  /* line 289, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 290, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   input[type="range"]::-webkit-slider-runnable-track {
     height: 1rem;
     background: #ddd; }
-  /* line 293, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 294, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     background: #00558b;
     width: 1.5rem;
     height: 1.5rem;
     margin-top: -0.25rem; }
-  /* line 304, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 305, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   input[type="range"]::-moz-range-track {
     -moz-appearance: none;
     height: 1rem;
     background: #ccc; }
-  /* line 309, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 310, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   input[type="range"]::-moz-range-thumb {
     -moz-appearance: none;
     background: #00558b;
     width: 1.5rem;
     height: 1.5rem;
     margin-top: -0.25rem; }
-  /* line 320, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 321, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   input[type="range"]::-ms-track {
     height: 1rem;
     background: #ddd;
@@ -1574,28 +1580,28 @@ input[type="range"] {
     overflow: visible;
     border-top: 0.25rem solid #fff;
     border-bottom: 0.25rem solid #fff; }
-  /* line 329, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 330, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   input[type="range"]::-ms-thumb {
     background: #00558b;
     width: 1.5rem;
     height: 1.5rem;
     border: 0; }
-  /* line 338, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 339, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   input[type="range"]::-ms-fill-lower, input[type="range"]::-ms-fill-upper {
     background: #ddd; }
 
-/* line 342, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 343, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 output {
   line-height: 1.5rem;
   vertical-align: middle;
   margin-left: 0.5em; }
 
-/* line 354, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 355, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   background: #00558b; }
 
-/* line 362, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 363, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 progress, meter {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -1606,59 +1612,59 @@ progress, meter {
   background: #ccc;
   border: 0; }
 
-/* line 379, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 380, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 progress::-webkit-progress-bar {
   background: #ccc; }
-/* line 385, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 386, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 progress::-webkit-progress-value {
   background: #00558b; }
-/* line 391, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 392, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 progress::-moz-progress-bar {
   background: #00558b; }
-/* line 400, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 progress.high::-webkit-progress-value {
   background: #43AC6A; }
-/* line 403, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 404, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 progress.high::-moz-progress-bar {
   background: #43AC6A; }
-/* line 400, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 progress.medium::-webkit-progress-value {
   background: #e7cf00; }
-/* line 403, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 404, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 progress.medium::-moz-progress-bar {
   background: #e7cf00; }
-/* line 400, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 progress.low::-webkit-progress-value {
   background: #F04124; }
-/* line 403, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 404, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 progress.low::-moz-progress-bar {
   background: #F04124; }
 
-/* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+/* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
 meter {
   background: #ccc; }
-  /* line 411, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 412, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   meter::-webkit-meter-bar {
     background: #ccc; }
-  /* line 422, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 423, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   meter::-webkit-meter-optimum-value {
     background: #43AC6A; }
-  /* line 428, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 429, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   meter::-webkit-meter-suboptimum-value {
     background: #e7cf00; }
-  /* line 434, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 435, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   meter::-webkit-meter-even-less-good-value {
     background: #F04124; }
-  /* line 443, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 444, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   meter::-moz-meter-bar {
     background: #00558b; }
-  /* line 449, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 450, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   meter:-moz-meter-optimum::-moz-meter-bar {
     background: #43AC6A; }
-  /* line 452, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 453, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   meter:-moz-meter-sub-optimum::-moz-meter-bar {
     background: #e7cf00; }
-  /* line 455, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
+  /* line 456, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_forms.scss */
   meter:-moz-meter-sub-sub-optimum::-moz-meter-bar {
     background: #F04124; }
 
@@ -1801,66 +1807,67 @@ meter {
 /*
   Blocks are containers for actual content. They're the "columns" of Foundation for Apps.
 */
-/* line 290, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 289, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .vertical.grid-frame, .vertical.grid-block, .vertical.small-grid-block, .vertical.medium-grid-block, .vertical.large-grid-block, .vertical.xlarge-grid-block {
   flex-flow: column nowrap;
   align-items: stretch; }
-/* line 293, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 292, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-vertical.grid-frame, .small-vertical.grid-block, .small-vertical.small-grid-block, .small-vertical.medium-grid-block, .small-vertical.large-grid-block, .small-vertical.xlarge-grid-block {
   flex-flow: column nowrap;
   align-items: stretch; }
-/* line 294, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 293, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-horizontal.grid-frame, .small-horizontal.grid-block, .small-horizontal.small-grid-block, .small-horizontal.medium-grid-block, .small-horizontal.large-grid-block, .small-horizontal.xlarge-grid-block {
   flex-flow: row wrap; }
 @media only screen and (min-width: 34.28571em) {
-  /* line 293, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 292, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-vertical.grid-frame, .medium-vertical.grid-block, .medium-vertical.small-grid-block, .medium-vertical.medium-grid-block, .medium-vertical.large-grid-block, .medium-vertical.xlarge-grid-block {
     flex-flow: column nowrap;
     align-items: stretch; }
-  /* line 294, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 293, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-horizontal.grid-frame, .medium-horizontal.grid-block, .medium-horizontal.small-grid-block, .medium-horizontal.medium-grid-block, .medium-horizontal.large-grid-block, .medium-horizontal.xlarge-grid-block {
     flex-flow: row wrap; } }
 @media only screen and (min-width: 54.85714em) {
-  /* line 293, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 292, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-vertical.grid-frame, .large-vertical.grid-block, .large-vertical.small-grid-block, .large-vertical.medium-grid-block, .large-vertical.large-grid-block, .large-vertical.xlarge-grid-block {
     flex-flow: column nowrap;
     align-items: stretch; }
-  /* line 294, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 293, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-horizontal.grid-frame, .large-horizontal.grid-block, .large-horizontal.small-grid-block, .large-horizontal.medium-grid-block, .large-horizontal.large-grid-block, .large-horizontal.xlarge-grid-block {
     flex-flow: row wrap; } }
 @media only screen and (min-width: 70.85714em) {
-  /* line 293, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 292, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-vertical.grid-frame, .xlarge-vertical.grid-block, .xlarge-vertical.small-grid-block, .xlarge-vertical.medium-grid-block, .xlarge-vertical.large-grid-block, .xlarge-vertical.xlarge-grid-block {
     flex-flow: column nowrap;
     align-items: stretch; }
-  /* line 294, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 293, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-horizontal.grid-frame, .xlarge-horizontal.grid-block, .xlarge-horizontal.small-grid-block, .xlarge-horizontal.medium-grid-block, .xlarge-horizontal.large-grid-block, .xlarge-horizontal.xlarge-grid-block {
     flex-flow: row wrap; } }
-/* line 299, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 298, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .align-right.grid-frame, .align-right.grid-block, .align-right.small-grid-block, .align-right.medium-grid-block, .align-right.large-grid-block, .align-right.xlarge-grid-block {
   justify-content: flex-end; }
-/* line 300, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 299, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .align-center.grid-frame, .align-center.grid-block, .align-center.small-grid-block, .align-center.medium-grid-block, .align-center.large-grid-block, .align-center.xlarge-grid-block {
   justify-content: center; }
-/* line 301, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 300, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .align-justify.grid-frame, .align-justify.grid-block, .align-justify.small-grid-block, .align-justify.medium-grid-block, .align-justify.large-grid-block, .align-justify.xlarge-grid-block {
   justify-content: space-between; }
-/* line 302, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 301, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .align-spaced.grid-frame, .align-spaced.grid-block, .align-spaced.small-grid-block, .align-spaced.medium-grid-block, .align-spaced.large-grid-block, .align-spaced.xlarge-grid-block {
   justify-content: space-around; }
-/* line 305, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 304, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .wrap.grid-frame, .wrap.grid-block, .wrap.small-grid-block, .wrap.medium-grid-block, .wrap.large-grid-block, .wrap.xlarge-grid-block {
   flex-wrap: wrap;
   align-items: flex-start; }
 
-/* line 311, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 310, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .shrink.grid-block, .shrink.grid-content, .shrink.small-grid-block, .shrink.small-grid-content, .shrink.medium-grid-block, .shrink.medium-grid-content, .shrink.large-grid-block, .shrink.large-grid-content, .shrink.xlarge-grid-block, .shrink.xlarge-grid-content {
-  flex: 0 0 auto; }
-/* line 314, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  flex: 0 0 auto;
+  overflow: visible; }
+/* line 313, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .noscroll.grid-block, .noscroll.grid-content, .noscroll.small-grid-block, .noscroll.small-grid-content, .noscroll.medium-grid-block, .noscroll.medium-grid-content, .noscroll.large-grid-block, .noscroll.large-grid-content, .noscroll.xlarge-grid-block, .noscroll.xlarge-grid-content {
-  overflow: hidden; }
+  overflow: visible; }
 
-/* line 323, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 322, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .grid-frame {
   display: flex;
   height: 100vh;
@@ -1874,10 +1881,10 @@ meter {
   justify-content: flex-start;
   order: 0; }
 
-/* line 327, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 326, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .grid-block {
   display: flex;
-  height: 100vh;
+  height: auto;
   position: relative;
   overflow: hidden;
   backface-visibility: hidden;
@@ -1887,12 +1894,11 @@ meter {
   align-items: stretch;
   justify-content: flex-start;
   order: 0;
-  height: auto;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar; }
 
-/* line 332, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 331, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .grid-content {
   display: block;
   padding: 0 1rem;
@@ -1900,40 +1906,40 @@ meter {
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   flex: 1 1 auto; }
-  /* line 336, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 335, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .grid-content.collapse {
     padding: 0; }
-  /* line 341, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 340, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .grid-content .grid-block {
     margin-left: -1rem;
     margin-right: -1rem;
     flex-wrap: wrap;
     overflow: visible; }
-    /* line 348, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 347, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .grid-content .grid-block.nowrap {
       flex-wrap: nowrap;
       align-items: stretch; }
-    /* line 352, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 351, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .grid-content .grid-block .grid-content {
       overflow: visible; }
 
-/* line 357, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 356, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .grid-container {
   max-width: 56.25rem;
   margin: 0 auto; }
-  /* line 360, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 359, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .grid-container.contain-left {
     max-width: 56.25rem;
     margin: 0 auto 0 0; }
-  /* line 361, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 360, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .grid-container.contain-right {
     max-width: 56.25rem;
     margin: 0 0 0 auto; }
 
-/* line 366, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 365, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-grid-block {
   display: flex;
-  height: 100vh;
+  height: auto;
   position: relative;
   overflow: hidden;
   backface-visibility: hidden;
@@ -1943,11 +1949,10 @@ meter {
   align-items: stretch;
   justify-content: flex-start;
   order: 0;
-  height: auto;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar; }
-  /* line 374, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 373, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .small-grid-block.panel {
     transform: none;
     position: relative;
@@ -1961,7 +1966,7 @@ meter {
     bottom: auto;
     left: auto; }
 
-/* line 377, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 376, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-grid-content {
   display: block;
   padding: 0 1rem;
@@ -1969,7 +1974,7 @@ meter {
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   flex: 1 1 auto; }
-  /* line 384, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 383, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .small-grid-content.panel {
     transform: none;
     position: relative;
@@ -1984,10 +1989,10 @@ meter {
     left: auto; }
 
 @media only screen and (min-width: 34.28571em) {
-  /* line 366, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 365, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-grid-block {
     display: flex;
-    height: 100vh;
+    height: auto;
     position: relative;
     overflow: hidden;
     backface-visibility: hidden;
@@ -1997,11 +2002,10 @@ meter {
     align-items: stretch;
     justify-content: flex-start;
     order: 0;
-    height: auto;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar; }
-    /* line 374, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 373, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .medium-grid-block.panel {
       transform: none;
       position: relative;
@@ -2016,7 +2020,7 @@ meter {
       left: auto; } }
 
 @media only screen and (min-width: 34.28571em) {
-  /* line 377, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 376, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-grid-content {
     display: block;
     padding: 0 1rem;
@@ -2024,7 +2028,7 @@ meter {
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     flex: 1 1 auto; }
-    /* line 384, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 383, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .medium-grid-content.panel {
       transform: none;
       position: relative;
@@ -2039,10 +2043,10 @@ meter {
       left: auto; } }
 
 @media only screen and (min-width: 54.85714em) {
-  /* line 366, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 365, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-grid-block {
     display: flex;
-    height: 100vh;
+    height: auto;
     position: relative;
     overflow: hidden;
     backface-visibility: hidden;
@@ -2052,11 +2056,10 @@ meter {
     align-items: stretch;
     justify-content: flex-start;
     order: 0;
-    height: auto;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar; }
-    /* line 374, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 373, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .large-grid-block.panel {
       transform: none;
       position: relative;
@@ -2071,7 +2074,7 @@ meter {
       left: auto; } }
 
 @media only screen and (min-width: 54.85714em) {
-  /* line 377, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 376, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-grid-content {
     display: block;
     padding: 0 1rem;
@@ -2079,7 +2082,7 @@ meter {
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     flex: 1 1 auto; }
-    /* line 384, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 383, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .large-grid-content.panel {
       transform: none;
       position: relative;
@@ -2094,10 +2097,10 @@ meter {
       left: auto; } }
 
 @media only screen and (min-width: 70.85714em) {
-  /* line 366, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 365, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-grid-block {
     display: flex;
-    height: 100vh;
+    height: auto;
     position: relative;
     overflow: hidden;
     backface-visibility: hidden;
@@ -2107,11 +2110,10 @@ meter {
     align-items: stretch;
     justify-content: flex-start;
     order: 0;
-    height: auto;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar; }
-    /* line 374, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 373, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .xlarge-grid-block.panel {
       transform: none;
       position: relative;
@@ -2126,7 +2128,7 @@ meter {
       left: auto; } }
 
 @media only screen and (min-width: 70.85714em) {
-  /* line 377, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 376, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-grid-content {
     display: block;
     padding: 0 1rem;
@@ -2134,7 +2136,7 @@ meter {
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     flex: 1 1 auto; }
-    /* line 384, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 383, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .xlarge-grid-content.panel {
       transform: none;
       position: relative;
@@ -2148,1159 +2150,1207 @@ meter {
       bottom: auto;
       left: auto; } }
 
-/* line 392, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 391, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .order-1 {
   order: 1; }
 
-/* line 392, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 391, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .order-2 {
   order: 2; }
 
-/* line 392, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 391, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .order-3 {
   order: 3; }
 
-/* line 392, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 391, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .order-4 {
   order: 4; }
 
-/* line 392, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 391, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .order-5 {
   order: 5; }
 
-/* line 392, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 391, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .order-6 {
   order: 6; }
 
-/* line 392, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 391, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .order-7 {
   order: 7; }
 
-/* line 392, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 391, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .order-8 {
   order: 8; }
 
-/* line 392, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 391, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .order-9 {
   order: 9; }
 
-/* line 392, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 391, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .order-10 {
   order: 10; }
 
-/* line 392, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 391, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .order-11 {
   order: 11; }
 
-/* line 392, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 391, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .order-12 {
   order: 12; }
 
-/* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-1 {
   flex: 0 0 8.33333%;
   max-width: 8.33333%; }
 
-/* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-order-1 {
   order: 1; }
 
-/* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-offset-1 {
   margin-left: 8.33333%; }
 
-/* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-up-1 {
   flex-flow: row wrap;
   overflow: visible;
   list-style-type: none; }
-  /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .small-up-1 > li, .small-up-1 > div, .small-up-1 > section {
     padding: 0 1rem 1rem;
-    flex: 0 0 100%; }
+    flex: 0 0 100%;
+    max-width: 100%; }
 
-/* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-2 {
   flex: 0 0 16.66667%;
   max-width: 16.66667%; }
 
-/* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-order-2 {
   order: 2; }
 
-/* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-offset-2 {
   margin-left: 16.66667%; }
 
-/* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-up-2 {
   flex-flow: row wrap;
   overflow: visible;
   list-style-type: none; }
-  /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .small-up-2 > li, .small-up-2 > div, .small-up-2 > section {
     padding: 0 1rem 1rem;
-    flex: 0 0 50%; }
+    flex: 0 0 50%;
+    max-width: 50%; }
 
-/* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-3 {
   flex: 0 0 25%;
   max-width: 25%; }
 
-/* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-order-3 {
   order: 3; }
 
-/* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-offset-3 {
   margin-left: 25%; }
 
-/* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-up-3 {
   flex-flow: row wrap;
   overflow: visible;
   list-style-type: none; }
-  /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .small-up-3 > li, .small-up-3 > div, .small-up-3 > section {
     padding: 0 1rem 1rem;
-    flex: 0 0 33.33333%; }
+    flex: 0 0 33.33333%;
+    max-width: 33.33333%; }
 
-/* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-4 {
   flex: 0 0 33.33333%;
   max-width: 33.33333%; }
 
-/* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-order-4 {
   order: 4; }
 
-/* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-offset-4 {
   margin-left: 33.33333%; }
 
-/* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-up-4 {
   flex-flow: row wrap;
   overflow: visible;
   list-style-type: none; }
-  /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .small-up-4 > li, .small-up-4 > div, .small-up-4 > section {
     padding: 0 1rem 1rem;
-    flex: 0 0 25%; }
+    flex: 0 0 25%;
+    max-width: 25%; }
 
-/* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-5 {
   flex: 0 0 41.66667%;
   max-width: 41.66667%; }
 
-/* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-order-5 {
   order: 5; }
 
-/* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-offset-5 {
   margin-left: 41.66667%; }
 
-/* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-up-5 {
   flex-flow: row wrap;
   overflow: visible;
   list-style-type: none; }
-  /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .small-up-5 > li, .small-up-5 > div, .small-up-5 > section {
     padding: 0 1rem 1rem;
-    flex: 0 0 20%; }
+    flex: 0 0 20%;
+    max-width: 20%; }
 
-/* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-6 {
   flex: 0 0 50%;
   max-width: 50%; }
 
-/* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-order-6 {
   order: 6; }
 
-/* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-offset-6 {
   margin-left: 50%; }
 
-/* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-up-6 {
   flex-flow: row wrap;
   overflow: visible;
   list-style-type: none; }
-  /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .small-up-6 > li, .small-up-6 > div, .small-up-6 > section {
     padding: 0 1rem 1rem;
-    flex: 0 0 16.66667%; }
+    flex: 0 0 16.66667%;
+    max-width: 16.66667%; }
 
-/* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-7 {
   flex: 0 0 58.33333%;
   max-width: 58.33333%; }
 
-/* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-order-7 {
   order: 7; }
 
-/* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-offset-7 {
   margin-left: 58.33333%; }
 
-/* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-up-7 {
   flex-flow: row wrap;
   overflow: visible;
   list-style-type: none; }
-  /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .small-up-7 > li, .small-up-7 > div, .small-up-7 > section {
     padding: 0 1rem 1rem;
-    flex: 0 0 14.28571%; }
+    flex: 0 0 14.28571%;
+    max-width: 14.28571%; }
 
-/* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-8 {
   flex: 0 0 66.66667%;
   max-width: 66.66667%; }
 
-/* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-order-8 {
   order: 8; }
 
-/* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-offset-8 {
   margin-left: 66.66667%; }
 
-/* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-up-8 {
   flex-flow: row wrap;
   overflow: visible;
   list-style-type: none; }
-  /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .small-up-8 > li, .small-up-8 > div, .small-up-8 > section {
     padding: 0 1rem 1rem;
-    flex: 0 0 12.5%; }
+    flex: 0 0 12.5%;
+    max-width: 12.5%; }
 
-/* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-9 {
   flex: 0 0 75%;
   max-width: 75%; }
 
-/* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-order-9 {
   order: 9; }
 
-/* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-offset-9 {
   margin-left: 75%; }
 
-/* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-up-9 {
   flex-flow: row wrap;
   overflow: visible;
   list-style-type: none; }
-  /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .small-up-9 > li, .small-up-9 > div, .small-up-9 > section {
     padding: 0 1rem 1rem;
-    flex: 0 0 11.11111%; }
+    flex: 0 0 11.11111%;
+    max-width: 11.11111%; }
 
-/* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-10 {
   flex: 0 0 83.33333%;
   max-width: 83.33333%; }
 
-/* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-order-10 {
   order: 10; }
 
-/* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-offset-10 {
   margin-left: 83.33333%; }
 
-/* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-up-10 {
   flex-flow: row wrap;
   overflow: visible;
   list-style-type: none; }
-  /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .small-up-10 > li, .small-up-10 > div, .small-up-10 > section {
     padding: 0 1rem 1rem;
-    flex: 0 0 10%; }
+    flex: 0 0 10%;
+    max-width: 10%; }
 
-/* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-11 {
   flex: 0 0 91.66667%;
   max-width: 91.66667%; }
 
-/* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-order-11 {
   order: 11; }
 
-/* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-offset-11 {
   margin-left: 91.66667%; }
 
-/* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-up-11 {
   flex-flow: row wrap;
   overflow: visible;
   list-style-type: none; }
-  /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .small-up-11 > li, .small-up-11 > div, .small-up-11 > section {
     padding: 0 1rem 1rem;
-    flex: 0 0 9.09091%; }
+    flex: 0 0 9.09091%;
+    max-width: 9.09091%; }
 
-/* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-12 {
   flex: 0 0 100%;
   max-width: 100%; }
 
-/* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-order-12 {
   order: 12; }
 
-/* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-offset-12 {
   margin-left: 100%; }
 
-/* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+/* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .small-up-12 {
   flex-flow: row wrap;
   overflow: visible;
   list-style-type: none; }
-  /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .small-up-12 > li, .small-up-12 > div, .small-up-12 > section {
     padding: 0 1rem 1rem;
-    flex: 0 0 8.33333%; }
+    flex: 0 0 8.33333%;
+    max-width: 8.33333%; }
 
 @media only screen and (min-width: 34.28571em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-1 {
     flex: 0 0 8.33333%;
     max-width: 8.33333%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-order-1 {
     order: 1; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-offset-1 {
     margin-left: 8.33333%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-up-1 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .medium-up-1 > li, .medium-up-1 > div, .medium-up-1 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 100%; } }
+      flex: 0 0 100%;
+      max-width: 100%; } }
 @media only screen and (min-width: 34.28571em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-2 {
     flex: 0 0 16.66667%;
     max-width: 16.66667%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-order-2 {
     order: 2; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-offset-2 {
     margin-left: 16.66667%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-up-2 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .medium-up-2 > li, .medium-up-2 > div, .medium-up-2 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 50%; } }
+      flex: 0 0 50%;
+      max-width: 50%; } }
 @media only screen and (min-width: 34.28571em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-3 {
     flex: 0 0 25%;
     max-width: 25%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-order-3 {
     order: 3; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-offset-3 {
     margin-left: 25%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-up-3 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .medium-up-3 > li, .medium-up-3 > div, .medium-up-3 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 33.33333%; } }
+      flex: 0 0 33.33333%;
+      max-width: 33.33333%; } }
 @media only screen and (min-width: 34.28571em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-4 {
     flex: 0 0 33.33333%;
     max-width: 33.33333%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-order-4 {
     order: 4; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-offset-4 {
     margin-left: 33.33333%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-up-4 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .medium-up-4 > li, .medium-up-4 > div, .medium-up-4 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 25%; } }
+      flex: 0 0 25%;
+      max-width: 25%; } }
 @media only screen and (min-width: 34.28571em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-5 {
     flex: 0 0 41.66667%;
     max-width: 41.66667%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-order-5 {
     order: 5; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-offset-5 {
     margin-left: 41.66667%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-up-5 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .medium-up-5 > li, .medium-up-5 > div, .medium-up-5 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 20%; } }
+      flex: 0 0 20%;
+      max-width: 20%; } }
 @media only screen and (min-width: 34.28571em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-6 {
     flex: 0 0 50%;
     max-width: 50%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-order-6 {
     order: 6; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-offset-6 {
     margin-left: 50%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-up-6 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .medium-up-6 > li, .medium-up-6 > div, .medium-up-6 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 16.66667%; } }
+      flex: 0 0 16.66667%;
+      max-width: 16.66667%; } }
 @media only screen and (min-width: 34.28571em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-7 {
     flex: 0 0 58.33333%;
     max-width: 58.33333%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-order-7 {
     order: 7; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-offset-7 {
     margin-left: 58.33333%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-up-7 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .medium-up-7 > li, .medium-up-7 > div, .medium-up-7 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 14.28571%; } }
+      flex: 0 0 14.28571%;
+      max-width: 14.28571%; } }
 @media only screen and (min-width: 34.28571em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-8 {
     flex: 0 0 66.66667%;
     max-width: 66.66667%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-order-8 {
     order: 8; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-offset-8 {
     margin-left: 66.66667%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-up-8 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .medium-up-8 > li, .medium-up-8 > div, .medium-up-8 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 12.5%; } }
+      flex: 0 0 12.5%;
+      max-width: 12.5%; } }
 @media only screen and (min-width: 34.28571em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-9 {
     flex: 0 0 75%;
     max-width: 75%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-order-9 {
     order: 9; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-offset-9 {
     margin-left: 75%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-up-9 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .medium-up-9 > li, .medium-up-9 > div, .medium-up-9 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 11.11111%; } }
+      flex: 0 0 11.11111%;
+      max-width: 11.11111%; } }
 @media only screen and (min-width: 34.28571em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-10 {
     flex: 0 0 83.33333%;
     max-width: 83.33333%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-order-10 {
     order: 10; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-offset-10 {
     margin-left: 83.33333%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-up-10 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .medium-up-10 > li, .medium-up-10 > div, .medium-up-10 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 10%; } }
+      flex: 0 0 10%;
+      max-width: 10%; } }
 @media only screen and (min-width: 34.28571em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-11 {
     flex: 0 0 91.66667%;
     max-width: 91.66667%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-order-11 {
     order: 11; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-offset-11 {
     margin-left: 91.66667%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-up-11 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .medium-up-11 > li, .medium-up-11 > div, .medium-up-11 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 9.09091%; } }
+      flex: 0 0 9.09091%;
+      max-width: 9.09091%; } }
 @media only screen and (min-width: 34.28571em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-12 {
     flex: 0 0 100%;
     max-width: 100%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-order-12 {
     order: 12; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-offset-12 {
     margin-left: 100%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .medium-up-12 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .medium-up-12 > li, .medium-up-12 > div, .medium-up-12 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 8.33333%; } }
+      flex: 0 0 8.33333%;
+      max-width: 8.33333%; } }
 @media only screen and (min-width: 54.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-1 {
     flex: 0 0 8.33333%;
     max-width: 8.33333%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-order-1 {
     order: 1; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-offset-1 {
     margin-left: 8.33333%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-up-1 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .large-up-1 > li, .large-up-1 > div, .large-up-1 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 100%; } }
+      flex: 0 0 100%;
+      max-width: 100%; } }
 @media only screen and (min-width: 54.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-2 {
     flex: 0 0 16.66667%;
     max-width: 16.66667%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-order-2 {
     order: 2; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-offset-2 {
     margin-left: 16.66667%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-up-2 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .large-up-2 > li, .large-up-2 > div, .large-up-2 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 50%; } }
+      flex: 0 0 50%;
+      max-width: 50%; } }
 @media only screen and (min-width: 54.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-3 {
     flex: 0 0 25%;
     max-width: 25%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-order-3 {
     order: 3; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-offset-3 {
     margin-left: 25%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-up-3 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .large-up-3 > li, .large-up-3 > div, .large-up-3 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 33.33333%; } }
+      flex: 0 0 33.33333%;
+      max-width: 33.33333%; } }
 @media only screen and (min-width: 54.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-4 {
     flex: 0 0 33.33333%;
     max-width: 33.33333%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-order-4 {
     order: 4; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-offset-4 {
     margin-left: 33.33333%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-up-4 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .large-up-4 > li, .large-up-4 > div, .large-up-4 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 25%; } }
+      flex: 0 0 25%;
+      max-width: 25%; } }
 @media only screen and (min-width: 54.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-5 {
     flex: 0 0 41.66667%;
     max-width: 41.66667%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-order-5 {
     order: 5; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-offset-5 {
     margin-left: 41.66667%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-up-5 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .large-up-5 > li, .large-up-5 > div, .large-up-5 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 20%; } }
+      flex: 0 0 20%;
+      max-width: 20%; } }
 @media only screen and (min-width: 54.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-6 {
     flex: 0 0 50%;
     max-width: 50%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-order-6 {
     order: 6; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-offset-6 {
     margin-left: 50%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-up-6 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .large-up-6 > li, .large-up-6 > div, .large-up-6 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 16.66667%; } }
+      flex: 0 0 16.66667%;
+      max-width: 16.66667%; } }
 @media only screen and (min-width: 54.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-7 {
     flex: 0 0 58.33333%;
     max-width: 58.33333%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-order-7 {
     order: 7; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-offset-7 {
     margin-left: 58.33333%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-up-7 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .large-up-7 > li, .large-up-7 > div, .large-up-7 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 14.28571%; } }
+      flex: 0 0 14.28571%;
+      max-width: 14.28571%; } }
 @media only screen and (min-width: 54.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-8 {
     flex: 0 0 66.66667%;
     max-width: 66.66667%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-order-8 {
     order: 8; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-offset-8 {
     margin-left: 66.66667%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-up-8 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .large-up-8 > li, .large-up-8 > div, .large-up-8 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 12.5%; } }
+      flex: 0 0 12.5%;
+      max-width: 12.5%; } }
 @media only screen and (min-width: 54.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-9 {
     flex: 0 0 75%;
     max-width: 75%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-order-9 {
     order: 9; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-offset-9 {
     margin-left: 75%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-up-9 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .large-up-9 > li, .large-up-9 > div, .large-up-9 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 11.11111%; } }
+      flex: 0 0 11.11111%;
+      max-width: 11.11111%; } }
 @media only screen and (min-width: 54.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-10 {
     flex: 0 0 83.33333%;
     max-width: 83.33333%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-order-10 {
     order: 10; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-offset-10 {
     margin-left: 83.33333%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-up-10 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .large-up-10 > li, .large-up-10 > div, .large-up-10 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 10%; } }
+      flex: 0 0 10%;
+      max-width: 10%; } }
 @media only screen and (min-width: 54.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-11 {
     flex: 0 0 91.66667%;
     max-width: 91.66667%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-order-11 {
     order: 11; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-offset-11 {
     margin-left: 91.66667%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-up-11 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .large-up-11 > li, .large-up-11 > div, .large-up-11 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 9.09091%; } }
+      flex: 0 0 9.09091%;
+      max-width: 9.09091%; } }
 @media only screen and (min-width: 54.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-12 {
     flex: 0 0 100%;
     max-width: 100%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-order-12 {
     order: 12; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-offset-12 {
     margin-left: 100%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .large-up-12 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .large-up-12 > li, .large-up-12 > div, .large-up-12 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 8.33333%; } }
+      flex: 0 0 8.33333%;
+      max-width: 8.33333%; } }
 @media only screen and (min-width: 70.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-1 {
     flex: 0 0 8.33333%;
     max-width: 8.33333%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-order-1 {
     order: 1; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-offset-1 {
     margin-left: 8.33333%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-up-1 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .xlarge-up-1 > li, .xlarge-up-1 > div, .xlarge-up-1 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 100%; } }
+      flex: 0 0 100%;
+      max-width: 100%; } }
 @media only screen and (min-width: 70.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-2 {
     flex: 0 0 16.66667%;
     max-width: 16.66667%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-order-2 {
     order: 2; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-offset-2 {
     margin-left: 16.66667%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-up-2 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .xlarge-up-2 > li, .xlarge-up-2 > div, .xlarge-up-2 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 50%; } }
+      flex: 0 0 50%;
+      max-width: 50%; } }
 @media only screen and (min-width: 70.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-3 {
     flex: 0 0 25%;
     max-width: 25%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-order-3 {
     order: 3; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-offset-3 {
     margin-left: 25%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-up-3 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .xlarge-up-3 > li, .xlarge-up-3 > div, .xlarge-up-3 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 33.33333%; } }
+      flex: 0 0 33.33333%;
+      max-width: 33.33333%; } }
 @media only screen and (min-width: 70.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-4 {
     flex: 0 0 33.33333%;
     max-width: 33.33333%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-order-4 {
     order: 4; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-offset-4 {
     margin-left: 33.33333%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-up-4 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .xlarge-up-4 > li, .xlarge-up-4 > div, .xlarge-up-4 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 25%; } }
+      flex: 0 0 25%;
+      max-width: 25%; } }
 @media only screen and (min-width: 70.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-5 {
     flex: 0 0 41.66667%;
     max-width: 41.66667%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-order-5 {
     order: 5; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-offset-5 {
     margin-left: 41.66667%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-up-5 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .xlarge-up-5 > li, .xlarge-up-5 > div, .xlarge-up-5 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 20%; } }
+      flex: 0 0 20%;
+      max-width: 20%; } }
 @media only screen and (min-width: 70.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-6 {
     flex: 0 0 50%;
     max-width: 50%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-order-6 {
     order: 6; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-offset-6 {
     margin-left: 50%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-up-6 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .xlarge-up-6 > li, .xlarge-up-6 > div, .xlarge-up-6 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 16.66667%; } }
+      flex: 0 0 16.66667%;
+      max-width: 16.66667%; } }
 @media only screen and (min-width: 70.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-7 {
     flex: 0 0 58.33333%;
     max-width: 58.33333%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-order-7 {
     order: 7; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-offset-7 {
     margin-left: 58.33333%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-up-7 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .xlarge-up-7 > li, .xlarge-up-7 > div, .xlarge-up-7 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 14.28571%; } }
+      flex: 0 0 14.28571%;
+      max-width: 14.28571%; } }
 @media only screen and (min-width: 70.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-8 {
     flex: 0 0 66.66667%;
     max-width: 66.66667%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-order-8 {
     order: 8; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-offset-8 {
     margin-left: 66.66667%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-up-8 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .xlarge-up-8 > li, .xlarge-up-8 > div, .xlarge-up-8 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 12.5%; } }
+      flex: 0 0 12.5%;
+      max-width: 12.5%; } }
 @media only screen and (min-width: 70.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-9 {
     flex: 0 0 75%;
     max-width: 75%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-order-9 {
     order: 9; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-offset-9 {
     margin-left: 75%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-up-9 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .xlarge-up-9 > li, .xlarge-up-9 > div, .xlarge-up-9 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 11.11111%; } }
+      flex: 0 0 11.11111%;
+      max-width: 11.11111%; } }
 @media only screen and (min-width: 70.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-10 {
     flex: 0 0 83.33333%;
     max-width: 83.33333%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-order-10 {
     order: 10; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-offset-10 {
     margin-left: 83.33333%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-up-10 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .xlarge-up-10 > li, .xlarge-up-10 > div, .xlarge-up-10 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 10%; } }
+      flex: 0 0 10%;
+      max-width: 10%; } }
 @media only screen and (min-width: 70.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-11 {
     flex: 0 0 91.66667%;
     max-width: 91.66667%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-order-11 {
     order: 11; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-offset-11 {
     margin-left: 91.66667%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-up-11 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .xlarge-up-11 > li, .xlarge-up-11 > div, .xlarge-up-11 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 9.09091%; } }
+      flex: 0 0 9.09091%;
+      max-width: 9.09091%; } }
 @media only screen and (min-width: 70.85714em) {
-  /* line 398, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 397, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-12 {
     flex: 0 0 100%;
     max-width: 100%; }
 
-  /* line 402, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 401, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-order-12 {
     order: 12; }
 
-  /* line 406, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 405, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-offset-12 {
     margin-left: 100%; }
 
-  /* line 410, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+  /* line 409, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
   .xlarge-up-12 {
     flex-flow: row wrap;
     overflow: visible;
     list-style-type: none; }
-    /* line 278, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+    /* line 276, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
     .xlarge-up-12 > li, .xlarge-up-12 > div, .xlarge-up-12 > section {
       padding: 0 1rem 1rem;
-      flex: 0 0 8.33333%; } }
-/* line 417, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
+      flex: 0 0 8.33333%;
+      max-width: 8.33333%; } }
+/* line 416, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_grid.scss */
 .grid-content .modal .grid-block {
   flex-wrap: nowrap; }
 
@@ -3516,30 +3566,6 @@ meter {
   Transitions
 */
 /* line 111, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
-.slideInDown.ng-enter, .slideInDown.ng-hide-remove {
-  transition-duration: 500ms;
-  transition-timing-function: ease;
-  transition-delay: 0;
-  transition-property: transform, opacity;
-  backface-visibility: hidden;
-  transform: translateY(-100%); }
-/* line 127, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
-.slideInDown.ng-enter.ng-enter-active, .slideInDown.ng-hide-remove.ng-hide-remove-active {
-  transform: translateX(0) translateY(0); }
-
-/* line 111, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
-.slideInLeft.ng-enter, .slideInLeft.ng-hide-remove {
-  transition-duration: 500ms;
-  transition-timing-function: ease;
-  transition-delay: 0;
-  transition-property: transform, opacity;
-  backface-visibility: hidden;
-  transform: translateX(100%); }
-/* line 127, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
-.slideInLeft.ng-enter.ng-enter-active, .slideInLeft.ng-hide-remove.ng-hide-remove-active {
-  transform: translateX(0) translateY(0); }
-
-/* line 111, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .slideInUp.ng-enter, .slideInUp.ng-hide-remove {
   transition-duration: 500ms;
   transition-timing-function: ease;
@@ -3564,7 +3590,31 @@ meter {
   transform: translateX(0) translateY(0); }
 
 /* line 111, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
-.slideOutBottom.ng-leave, .slideOutBottom.ng-hide-add {
+.slideInDown.ng-enter, .slideInDown.ng-hide-remove {
+  transition-duration: 500ms;
+  transition-timing-function: ease;
+  transition-delay: 0;
+  transition-property: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateY(-100%); }
+/* line 127, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+.slideInDown.ng-enter.ng-enter-active, .slideInDown.ng-hide-remove.ng-hide-remove-active {
+  transform: translateX(0) translateY(0); }
+
+/* line 111, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+.slideInLeft.ng-enter, .slideInLeft.ng-hide-remove {
+  transition-duration: 500ms;
+  transition-timing-function: ease;
+  transition-delay: 0;
+  transition-property: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateX(100%); }
+/* line 127, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+.slideInLeft.ng-enter.ng-enter-active, .slideInLeft.ng-hide-remove.ng-hide-remove-active {
+  transform: translateX(0) translateY(0); }
+
+/* line 111, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+.slideOutUp.ng-leave, .slideOutUp.ng-hide-add {
   transition-duration: 500ms;
   transition-timing-function: ease;
   transition-delay: 0;
@@ -3572,8 +3622,8 @@ meter {
   backface-visibility: hidden;
   transform: translateX(0) translateY(0); }
 /* line 127, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
-.slideOutBottom.ng-leave.ng-leave-active, .slideOutBottom.ng-hide-add.ng-hide-add-active {
-  transform: translateY(100%); }
+.slideOutUp.ng-leave.ng-leave-active, .slideOutUp.ng-hide-add.ng-hide-add-active {
+  transform: translateY(-100%); }
 
 /* line 111, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .slideOutRight.ng-leave, .slideOutRight.ng-hide-add {
@@ -3588,7 +3638,7 @@ meter {
   transform: translateX(100%); }
 
 /* line 111, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
-.slideOutUp.ng-leave, .slideOutUp.ng-hide-add {
+.slideOutDown.ng-leave, .slideOutDown.ng-hide-add {
   transition-duration: 500ms;
   transition-timing-function: ease;
   transition-delay: 0;
@@ -3596,8 +3646,8 @@ meter {
   backface-visibility: hidden;
   transform: translateX(0) translateY(0); }
 /* line 127, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
-.slideOutUp.ng-leave.ng-leave-active, .slideOutUp.ng-hide-add.ng-hide-add-active {
-  transform: translateY(-100%); }
+.slideOutDown.ng-leave.ng-leave-active, .slideOutDown.ng-hide-add.ng-hide-add-active {
+  transform: translateY(100%); }
 
 /* line 111, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .slideOutLeft.ng-leave, .slideOutLeft.ng-hide-add {
@@ -3829,6 +3879,9 @@ meter {
 
 /* line 111, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .spinIn.ng-enter, .spinIn.ng-hide-remove {
+  transition-duration: 500ms;
+  transition-timing-function: ease;
+  transition-delay: 0;
   transition-property: transform, opacity;
   transform: rotate(-270deg);
   opacity: 0; }
@@ -3839,6 +3892,9 @@ meter {
 
 /* line 111, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .spinOut.ng-leave, .spinOut.ng-hide-add {
+  transition-duration: 500ms;
+  transition-timing-function: ease;
+  transition-delay: 0;
   transition-property: transform, opacity;
   transform: rotate(0);
   opacity: 1; }
@@ -3849,6 +3905,9 @@ meter {
 
 /* line 111, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .spinInCCW.ng-enter, .spinInCCW.ng-hide-remove {
+  transition-duration: 500ms;
+  transition-timing-function: ease;
+  transition-delay: 0;
   transition-property: transform, opacity;
   transform: rotate(270deg);
   opacity: 0; }
@@ -3859,6 +3918,9 @@ meter {
 
 /* line 111, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .spinOutCCW.ng-leave, .spinOutCCW.ng-hide-add {
+  transition-duration: 500ms;
+  transition-timing-function: ease;
+  transition-delay: 0;
   transition-property: transform, opacity;
   transform: rotate(0);
   opacity: 1; }
@@ -3870,58 +3932,58 @@ meter {
 /*
   Transition modifiers
 */
-/* line 450, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 451, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .slow {
   transition-duration: 750ms !important; }
 
-/* line 451, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 452, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .fast {
   transition-duration: 250ms !important; }
 
-/* line 455, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 456, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .linear {
   transition-timing-function: linear !important; }
 
-/* line 455, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 456, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .ease {
   transition-timing-function: ease !important; }
 
-/* line 455, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 456, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .easeIn {
   transition-timing-function: ease-in !important; }
 
-/* line 455, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 456, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .easeOut {
   transition-timing-function: ease-out !important; }
 
-/* line 455, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 456, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .easeInOut {
   transition-timing-function: ease-in-out !important; }
 
-/* line 455, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 456, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .bounceIn {
   transition-timing-function: cubic-bezier(0.485, 0.155, 0.24, 1.245) !important; }
 
-/* line 455, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 456, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .bounceOut {
   transition-timing-function: cubic-bezier(0.485, 0.155, 0.515, 0.845) !important; }
 
-/* line 455, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 456, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .bounceInOut {
   transition-timing-function: cubic-bezier(0.76, -0.245, 0.24, 1.245) !important; }
 
-/* line 461, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 462, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .delay {
   transition-delay: 300ms !important; }
 
-/* line 462, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 463, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .long-delay {
   transition-delay: 700ms !important; }
 
 /*
   Animations
 */
-/* line 468, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 469, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .shake {
   animation-name: shake;
   animation-duration: 500ms;
@@ -3930,7 +3992,7 @@ meter {
   transform: translate3d(0, 0, 0);
   animation-delay: 0; }
 
-/* line 469, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 470, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .spin-cw {
   animation-name: spin-cw;
   animation-duration: 500ms;
@@ -3939,7 +4001,7 @@ meter {
   transform: translate3d(0, 0, 0);
   animation-delay: 0; }
 
-/* line 470, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 471, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .spin-ccw {
   animation-name: spin-ccw;
   animation-duration: 500ms;
@@ -3948,7 +4010,7 @@ meter {
   transform: translate3d(0, 0, 0);
   animation-delay: 0; }
 
-/* line 471, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 472, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .wiggle {
   animation-name: wiggle;
   animation-duration: 500ms;
@@ -3960,107 +4022,107 @@ meter {
 /*
   Animation modifiers
 */
-/* line 482, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 483, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .shake.infinite,
 .spin-cw.infinite,
 .spin-ccw.infinite,
 .wiggle.infinite {
   animation-iteration-count: infinite; }
-/* line 486, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 487, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .shake.linear,
 .spin-cw.linear,
 .spin-ccw.linear,
 .wiggle.linear {
   animation-timing-function: linear !important; }
-/* line 486, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 487, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .shake.ease,
 .spin-cw.ease,
 .spin-ccw.ease,
 .wiggle.ease {
   animation-timing-function: ease !important; }
-/* line 486, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 487, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .shake.easeIn,
 .spin-cw.easeIn,
 .spin-ccw.easeIn,
 .wiggle.easeIn {
   animation-timing-function: ease-in !important; }
-/* line 486, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 487, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .shake.easeOut,
 .spin-cw.easeOut,
 .spin-ccw.easeOut,
 .wiggle.easeOut {
   animation-timing-function: ease-out !important; }
-/* line 486, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 487, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .shake.easeInOut,
 .spin-cw.easeInOut,
 .spin-ccw.easeInOut,
 .wiggle.easeInOut {
   animation-timing-function: ease-in-out !important; }
-/* line 486, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 487, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .shake.bounceIn,
 .spin-cw.bounceIn,
 .spin-ccw.bounceIn,
 .wiggle.bounceIn {
   animation-timing-function: cubic-bezier(0.485, 0.155, 0.24, 1.245) !important; }
-/* line 486, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 487, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .shake.bounceOut,
 .spin-cw.bounceOut,
 .spin-ccw.bounceOut,
 .wiggle.bounceOut {
   animation-timing-function: cubic-bezier(0.485, 0.155, 0.515, 0.845) !important; }
-/* line 486, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 487, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .shake.bounceInOut,
 .spin-cw.bounceInOut,
 .spin-ccw.bounceInOut,
 .wiggle.bounceInOut {
   animation-timing-function: cubic-bezier(0.76, -0.245, 0.24, 1.245) !important; }
-/* line 492, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 493, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .shake.slow,
 .spin-cw.slow,
 .spin-ccw.slow,
 .wiggle.slow {
   animation-duration: 750ms !important; }
-/* line 493, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 494, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .shake.fast,
 .spin-cw.fast,
 .spin-ccw.fast,
 .wiggle.fast {
   animation-duration: 250ms !important; }
-/* line 496, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 497, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .shake.delay,
 .spin-cw.delay,
 .spin-ccw.delay,
 .wiggle.delay {
   animation-delay: 300ms !important; }
-/* line 497, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 498, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .shake.long-delay,
 .spin-cw.long-delay,
 .spin-ccw.long-delay,
 .wiggle.long-delay {
   animation-delay: 700ms !important; }
 
-/* line 499, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 500, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .stagger {
   transition-delay: 150ms;
   transition-duration: 0; }
 
-/* line 500, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 501, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .stort-stagger {
   transition-delay: 150ms;
   transition-duration: 0; }
 
-/* line 501, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 502, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .long-stagger {
   transition-delay: 150ms;
   transition-duration: 0; }
 
-/* line 508, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+/* line 509, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
 .position-absolute {
   overflow: hidden;
   position: relative; }
 
-/* line 515, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
-.ui-animation.ng-enter-active, .ui-animation.ng-leave-active {
+/* line 516, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/node_modules/foundation-apps/scss/components/_motion.scss */
+[ui-view].ng-enter-active, [ui-view].ng-leave-active {
   position: absolute !important;
   backface-visibility: hidden;
   -webkit-transform-style: preserve-3d;
@@ -7646,7 +7708,7 @@ h1, h2 {
     /* line 89, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_header.scss */
     .title-bar .bar:first-child {
       margin-top: 0; }
-  @media only screen and (min-width: 34.28571em) {
+  @media only screen and (min-width: 54.85714em) {
     /* line 95, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_header.scss */
     .title-bar li {
       display: inline-block;
@@ -7660,12 +7722,13 @@ h1, h2 {
 
 /* line 1, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_mobile_menu.scss */
 .mobile-menu {
-  background-color: #0f779f;
+  background-color: #d9d9d9;
+  box-shadow: 5px 5px 0px rgba(17, 137, 182, 0.5);
   height: 0;
-  overflow: hidden;
   right: 0;
   margin: 0 1.5rem 0 0;
   opacity: 0;
+  overflow: hidden;
   position: absolute;
   top: 67px;
   -moz-transition: all 250ms ease-in-out;
@@ -7682,7 +7745,7 @@ h1, h2 {
     display: block; }
   /* line 23, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_mobile_menu.scss */
   .mobile-menu a {
-    color: #fff;
+    color: #595959;
     display: block;
     font-size: 1.42857rem;
     font-weight: 300;
@@ -7690,19 +7753,19 @@ h1, h2 {
     padding: 1rem 1.2rem; }
     /* line 31, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_mobile_menu.scss */
     .mobile-menu a:hover, .mobile-menu a:focus {
-      color: #fff;
+      color: #4d4d4d;
       text-decoration: none; }
   /* line 38, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_mobile_menu.scss */
   .mobile-menu .fa {
     margin-right: 0.5rem; }
-  @media only screen and (min-width: 34.28571em) {
+  @media only screen and (min-width: 54.85714em) {
     /* line 1, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_mobile_menu.scss */
     .mobile-menu {
       display: none; } }
 
 /* line 48, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_mobile_menu.scss */
 .menu-open .mobile-menu {
-  height: 192px;
+  height: 250px;
   opacity: 1; }
 
 /* line 2, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_articles_list.scss */
@@ -7853,12 +7916,8 @@ h1, h2 {
         text-decoration: none; }
         /* line 96, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
         .index .diablo-pane .heroes .hero:hover .weapon {
-          top: -1.7rem;
-          -moz-transform: rotate(-15deg);
-          -ms-transform: rotate(-15deg);
-          -webkit-transform: rotate(-15deg);
-          transform: rotate(-15deg); }
-    /* line 103, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+          top: -1.7rem; }
+    /* line 102, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .name {
       background-color: #000;
       border-bottom-left-radius: 4px;
@@ -7868,66 +7927,66 @@ h1, h2 {
       font-size: 0.85714rem;
       padding: 5px 3px;
       text-align: center; }
-    /* line 114, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 113, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .barbarian-male {
       background-position: 0 0; }
-    /* line 117, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 116, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .barbarian-female {
       background-position: -83px 0; }
-    /* line 120, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 119, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .wizard-male {
       background-position: -83px -264px; }
-    /* line 123, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 122, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .wizard-female {
       background-position: -83px -264px; }
-    /* line 126, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 125, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .demon-hunter-male {
       background-position: 0 -66px; }
-    /* line 129, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 128, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .demon-hunter-female {
       background-position: -83px -66px; }
-    /* line 132, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 131, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .crusader-male {
       background-position: 0 -330px; }
-    /* line 135, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 134, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .crusader-female {
       background-position: -83px -330px; }
-    /* line 138, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 137, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .witch-doctor-male {
       background-position: 0 -198px; }
-    /* line 141, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 140, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .witch-doctor-female {
       background-position: -83px -198px; }
-    /* line 144, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 143, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .monk-male {
       background-position: 0 -132px; }
-    /* line 147, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 146, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane .heroes .monk-female {
       background-position: -83px -132px; }
-  /* line 152, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+  /* line 151, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
   .index .diablo-pane .seasonal,
   .index .diablo-pane .hardcore {
     font-size: 1.28571rem;
     right: 5px;
     position: absolute;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); }
-  /* line 160, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+  /* line 159, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
   .index .diablo-pane .seasonal {
     color: #40bf40;
     top: 5px; }
-  /* line 165, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+  /* line 164, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
   .index .diablo-pane .hardcore {
     color: #d12f37;
     top: 45px; }
-  /* line 170, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+  /* line 169, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
   .index .diablo-pane .weapon {
     left: -2rem;
     position: absolute;
     top: -1.5rem;
-    -moz-transition: top 150ms ease-out, -moz-transform 150ms ease-out;
-    -o-transition: top 150ms ease-out, -o-transform 150ms ease-out;
-    -webkit-transition: top 150ms ease-out, -webkit-transform 150ms ease-out;
-    transition: top 150ms ease-out, transform 150ms ease-out; }
+    -moz-transition: top 150ms ease-out;
+    -o-transition: top 150ms ease-out;
+    -webkit-transition: top 150ms ease-out;
+    transition: top 150ms ease-out; }
   @media only screen and (min-width: 54.85714em) {
     /* line 1, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     .index .diablo-pane {
@@ -8194,3 +8253,33 @@ h1, h2 {
 /* line 39, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_post.scss */
 .articles #disqus_thread {
   margin-top: 3rem; }
+
+/* line 2, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_tags_actionsheet_component.scss */
+kagd-tags-actionsheet .actionsheet {
+  position: relative;
+  z-index: 20; }
+/* line 7, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_tags_actionsheet_component.scss */
+kagd-tags-actionsheet li {
+  border-bottom: 1px solid #e6e6e6; }
+  /* line 10, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_tags_actionsheet_component.scss */
+  kagd-tags-actionsheet li:last-child {
+    border-bottom: none; }
+/* line 15, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_tags_actionsheet_component.scss */
+kagd-tags-actionsheet ul {
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.05);
+  border: 2px solid #e6e6e6;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  right: -10px;
+  position: absolute;
+  top: 5px;
+  width: 180px; }
+  /* line 26, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_tags_actionsheet_component.scss */
+  kagd-tags-actionsheet ul a {
+    background-color: whitesmoke;
+    display: block;
+    padding: 5px 8px; }
+/* line 33, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/_tags_actionsheet_component.scss */
+kagd-tags-actionsheet .badge.secondary {
+  background-color: #e3e3e3; }
