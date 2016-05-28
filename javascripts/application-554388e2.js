@@ -1,5 +1,5 @@
 (function() {
-  angular.module('kagd', ['serviceHelpers', 'perfect_scrollbar', 'liveType', 'perfectScrollbar']).constant('API_HOST', window.env.API_HOST);
+  angular.module('kagd', ['serviceHelpers', 'perfect_scrollbar', 'liveType', 'perfectScrollbar', 'kagd.activity']).constant('API_HOST', window.env.API_HOST);
 
 }).call(this);
 (function() {
@@ -230,22 +230,29 @@
 (function() {
   var Controller;
 
-  Controller = function(diabloService, Ps) {
-    var container, ctrl, response;
+  Controller = function(diabloService, Ps, activityService, $timeout) {
+    var ctrl;
     ctrl = this;
-    response = diabloService.get();
-    ctrl.heroes = response.heroes;
-    ctrl.profile = response.profile;
+    ctrl.activity = activityService.init();
+    ctrl.activity.start();
+    diabloService.get().then(function(response) {
+      ctrl.heroes = response.data.heroes;
+      ctrl.profile = response.data.profile;
+      ctrl.activity.stop();
+      return $timeout(function() {
+        var container;
+        container = document.getElementById('heroes-wrapper');
+        return Ps.initialize(container);
+      }, 100);
+    })["finally"](function() {
+      return ctrl.activity.stop();
+    });
     ctrl.heroClasses = function(hero) {
       return hero["class"] + "-" + hero.gender;
     };
-    container = document.getElementById('heroes-wrapper');
-    ctrl.$onInit = function() {
-      return Ps.initialize(container);
-    };
   };
 
-  Controller.$inject = ['diabloService', 'Ps'];
+  Controller.$inject = ['diabloService', 'Ps', 'activityService', '$timeout'];
 
   angular.module('kagd').component('kagdDiablo', {
     templateUrl: '/templates/diablo/diablo_component.html',
@@ -254,75 +261,52 @@
 
 }).call(this);
 (function() {
-  var Factory;
-
-  Factory = function() {
-    var heroes, profile;
-    heroes = [];
-    profile = {};
-    return {
-      heroes: heroes,
-      profile: profile
-    };
-  };
-
-  angular.module('kagd').factory('diabloFactory', Factory);
-
-}).call(this);
-(function() {
   var Service;
 
-  Service = function($http, diabloFactory, serviceHelpers, API_HOST) {
+  Service = function($http, API_HOST) {
     var service;
     service = this;
     service.get = function() {
-      $http.get(API_HOST + "api/diablo").then(function(response) {
-        serviceHelpers.populateObjectFromResponse(diabloFactory.heroes, response.data.heroes);
-        return serviceHelpers.populateObjectFromResponse(diabloFactory.profile, response.data.profile);
-      });
-      return {
-        heroes: diabloFactory.heroes,
-        profile: diabloFactory.profile
-      };
+      return $http.get(API_HOST + "api/diablo");
     };
     return service;
   };
 
   angular.module('kagd').service('diabloService', Service);
 
-  Service.$inject = ['$http', 'diabloFactory', 'serviceHelpers', 'API_HOST'];
+  Service.$inject = ['$http', 'API_HOST'];
 
 }).call(this);
 (function() {
   var Service;
 
-  Service = function($http, githubFactory, serviceHelpers, API_HOST) {
+  Service = function($http, API_HOST) {
     var service;
     service = this;
     service.get = function() {
-      $http.get(API_HOST + "api/github").then(function(response) {
-        return serviceHelpers.populateObjectFromResponse(githubFactory.stats, response.data);
-      });
-      return {
-        stats: githubFactory.stats
-      };
+      return $http.get(API_HOST + "api/github");
     };
     return service;
   };
 
   angular.module('kagd').service('githubService', Service);
 
-  Service.$inject = ['$http', 'githubFactory', 'serviceHelpers', 'API_HOST'];
+  Service.$inject = ['$http', 'API_HOST'];
 
 }).call(this);
 (function() {
   var Controller;
 
-  Controller = function(githubService, $sce) {
-    var ctrl, response;
+  Controller = function(githubService, $sce, activityService) {
+    var ctrl;
     ctrl = this;
-    response = githubService.get();
-    ctrl.stats = response.stats;
+    ctrl.activity = activityService.init();
+    ctrl.activity.start();
+    githubService.get().then(function(response) {
+      return ctrl.stats = response.data;
+    })["finally"](function() {
+      return ctrl.activity.stop();
+    });
     ctrl.shortSha = function(sha) {
       if (sha) {
         return sha.slice(0, 10);
@@ -333,7 +317,7 @@
     };
   };
 
-  Controller.$inject = ['githubService', '$sce'];
+  Controller.$inject = ['githubService', '$sce', 'activityService'];
 
   angular.module('kagd').component('kagdGithub', {
     templateUrl: '/templates/github/github_component.html',
@@ -342,17 +326,47 @@
 
 }).call(this);
 (function() {
-  var Factory;
+  var Controller;
 
-  Factory = function() {
-    var stats;
-    stats = {};
-    return {
-      stats: stats
+  Controller = function($http, $sce, activityService) {
+    var ctrl;
+    ctrl = this;
+    ctrl.answers = [];
+    ctrl.questions = [];
+    ctrl.activity = activityService.init();
+    ctrl.toHTML = function(str) {
+      return $sce.trustAsHtml(str);
     };
+    ctrl.activity.start();
+    $http.get('https://api.stackexchange.com/2.2/users/1329299/answers?key=U4DMV*8nvpm3EOpvf69Rxw((&site=stackoverflow&order=desc&sort=activity&filter=default').then(function(response) {
+      var ids;
+      ctrl.answers = response.data.items;
+      ids = ctrl.answers.map(function(answer) {
+        return answer.question_id;
+      });
+      return $http.get("https://api.stackexchange.com/2.2/questions/" + (ids.join(';')) + "?order=desc&sort=activity&site=stackoverflow").then(function(response) {
+        ctrl.questions = response.data.items;
+        return ctrl.questions.forEach(function(question) {
+          return ctrl.answers.forEach(function(answer) {
+            if (answer.question_id === question.question_id) {
+              return question.answer = answer;
+            }
+          });
+        });
+      })["finally"](function() {
+        return ctrl.activity.stop();
+      });
+    })["finally"](function() {
+      return ctrl.activity.stop();
+    });
   };
 
-  angular.module('kagd').factory('githubFactory', Factory);
+  Controller.$inject = ['$http', '$sce', 'activityService'];
+
+  angular.module('kagd').component('kagdStackOverflow', {
+    templateUrl: '/templates/stack_overflow/stack_overflow_component.html',
+    controller: Controller
+  });
 
 }).call(this);
 (function() {
@@ -370,6 +384,115 @@
   angular.module('kagd').component('kagdTagsActionsheet', {
     templateUrl: '/templates/tags_actionsheet/tags_actionsheet_component.html',
     controller: Controller
+  });
+
+}).call(this);
+(function() {
+  angular.module('kagd.activity', []);
+
+}).call(this);
+(function() {
+  var Controller;
+
+  Controller = function($scope, activityService) {
+    var ctrl;
+    ctrl = this;
+    ctrl.active = activityService.isActive;
+    return null;
+  };
+
+  Controller.$inject = ['$scope', 'activityService'];
+
+  angular.module('kagd.activity').component('kagdActivity', {
+    bindings: {
+      id: '=id'
+    },
+    controller: Controller,
+    template: '<div class="activity-container" ng-if="$ctrl.active( $ctrl.id )"> <span class="bar"></span> </div>'
+  });
+
+}).call(this);
+(function() {
+  var Factory;
+
+  Factory = function() {
+    var _store, end, get, start;
+    _store = {};
+    get = function(id) {
+      return _store[id] === true;
+    };
+    start = function(id) {
+      return _store[id] = true;
+    };
+    end = function(id) {
+      return _store[id] = false;
+    };
+    return {
+      get: get,
+      start: start,
+      end: end,
+      init: end
+    };
+  };
+
+  angular.module('kagd.activity').factory('activityFactory', Factory);
+
+}).call(this);
+(function() {
+  var Service;
+
+  Service = function(activityFactory, ACTIVITY_EVENTS, $rootScope) {
+    var ActivityIndicator, _broadcast, _service;
+    _service = this;
+    ActivityIndicator = function(id) {
+      var indicator;
+      indicator = this;
+      indicator.id = id;
+      indicator.start = function() {
+        return _service.start(id);
+      };
+      indicator.stop = function() {
+        return _service.end(id);
+      };
+      indicator.isActive = function() {
+        return _service.isActive(id);
+      };
+      return this;
+    };
+    _service.init = function(id) {
+      var _id;
+      _id = id || (Math.random() * (100000 - 10000) + 10000).toString();
+      activityFactory.init(_id);
+      return new ActivityIndicator(_id);
+    };
+    _service.start = function(id) {
+      activityFactory.start(id);
+      return _broadcast(ACTIVITY_EVENTS.init, id);
+    };
+    _service.isActive = function(id) {
+      return activityFactory.get(id);
+    };
+    _service.end = function(id) {
+      activityFactory.end(id);
+      return _broadcast(ACTIVITY_EVENTS.complete, id);
+    };
+    _broadcast = function(eventName, id) {
+      return $rootScope.$broadcast(eventName, {
+        id: id
+      });
+    };
+    return _service;
+  };
+
+  Service.$inject = ['activityFactory', 'ACTIVITY_EVENTS', '$rootScope'];
+
+  angular.module('kagd.activity').service('activityService', Service);
+
+}).call(this);
+(function() {
+  angular.module('kagd.activity').constant('ACTIVITY_EVENTS', {
+    init: 'activity:init',
+    complete: 'activity:complete'
   });
 
 }).call(this);

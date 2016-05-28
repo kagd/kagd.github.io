@@ -131,22 +131,17 @@
 (function() {
   var Service;
 
-  Service = function($http, githubFactory, serviceHelpers, API_HOST) {
+  Service = function($http, API_HOST) {
     var service;
     service = this;
     service.get = function() {
-      $http.get(API_HOST + "api/github").then(function(response) {
-        return serviceHelpers.populateObjectFromResponse(githubFactory.stats, response.data);
-      });
-      return {
-        stats: githubFactory.stats
-      };
+      return $http.get(API_HOST + "api/diablo");
     };
     return service;
   };
 
-  angular.module('kagd').service('githubService', Service);
+  angular.module('kagd').service('diabloService', Service);
 
-  Service.$inject = ['$http', 'githubFactory', 'serviceHelpers', 'API_HOST'];
+  Service.$inject = ['$http', 'API_HOST'];
 
 }).call(this);

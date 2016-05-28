@@ -131,24 +131,48 @@
 (function() {
   var Service;
 
-  Service = function($http, diabloFactory, serviceHelpers, API_HOST) {
+  Service = function($http, API_HOST) {
     var service;
     service = this;
     service.get = function() {
-      $http.get(API_HOST + "api/diablo").then(function(response) {
-        serviceHelpers.populateObjectFromResponse(diabloFactory.heroes, response.data.heroes);
-        return serviceHelpers.populateObjectFromResponse(diabloFactory.profile, response.data.profile);
-      });
-      return {
-        heroes: diabloFactory.heroes,
-        profile: diabloFactory.profile
-      };
+      return $http.get(API_HOST + "api/github");
     };
     return service;
   };
 
-  angular.module('kagd').service('diabloService', Service);
+  angular.module('kagd').service('githubService', Service);
 
-  Service.$inject = ['$http', 'diabloFactory', 'serviceHelpers', 'API_HOST'];
+  Service.$inject = ['$http', 'API_HOST'];
+
+}).call(this);
+(function() {
+  var Controller;
+
+  Controller = function(githubService, $sce, activityService) {
+    var ctrl;
+    ctrl = this;
+    ctrl.activity = activityService.init();
+    ctrl.activity.start();
+    githubService.get().then(function(response) {
+      return ctrl.stats = response.data;
+    })["finally"](function() {
+      return ctrl.activity.stop();
+    });
+    ctrl.shortSha = function(sha) {
+      if (sha) {
+        return sha.slice(0, 10);
+      }
+    };
+    ctrl.lastCommitMessage = function() {
+      return $sce.trustAsHtml("\"" + ctrl.stats.lastCommit.message + "\"");
+    };
+  };
+
+  Controller.$inject = ['githubService', '$sce', 'activityService'];
+
+  angular.module('kagd').component('kagdGithub', {
+    templateUrl: '/templates/github/github_component.html',
+    controller: Controller
+  });
 
 }).call(this);

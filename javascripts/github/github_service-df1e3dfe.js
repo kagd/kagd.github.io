@@ -131,48 +131,17 @@
 (function() {
   var Service;
 
-  Service = function($http, githubFactory, serviceHelpers, API_HOST) {
+  Service = function($http, API_HOST) {
     var service;
     service = this;
     service.get = function() {
-      $http.get(API_HOST + "api/github").then(function(response) {
-        return serviceHelpers.populateObjectFromResponse(githubFactory.stats, response.data);
-      });
-      return {
-        stats: githubFactory.stats
-      };
+      return $http.get(API_HOST + "api/github");
     };
     return service;
   };
 
   angular.module('kagd').service('githubService', Service);
 
-  Service.$inject = ['$http', 'githubFactory', 'serviceHelpers', 'API_HOST'];
-
-}).call(this);
-(function() {
-  var Controller;
-
-  Controller = function(githubService, $sce) {
-    var ctrl, response;
-    ctrl = this;
-    response = githubService.get();
-    ctrl.stats = response.stats;
-    ctrl.shortSha = function(sha) {
-      if (sha) {
-        return sha.slice(0, 10);
-      }
-    };
-    ctrl.lastCommitMessage = function() {
-      return $sce.trustAsHtml("\"" + ctrl.stats.lastCommit.message + "\"");
-    };
-  };
-
-  Controller.$inject = ['githubService', '$sce'];
-
-  angular.module('kagd').component('kagdGithub', {
-    templateUrl: '/templates/github/github_component.html',
-    controller: Controller
-  });
+  Service.$inject = ['$http', 'API_HOST'];
 
 }).call(this);
