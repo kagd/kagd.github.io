@@ -313,7 +313,7 @@
       }
     };
     ctrl.lastCommitMessage = function() {
-      return $sce.trustAsHtml("\"" + ctrl.stats.lastCommit.message + "\"");
+      return $sce.trustAsHtml("\"" + ctrl.stats.last_commit.message + "\"");
     };
   };
 
