@@ -5,10 +5,59 @@
   <id>http://blog.url.com/articles</id>
   <link href="http://blog.url.com/articles"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2015-11-05T00:20:00-07:00</updated>
+  <updated>2016-06-16T10:03:00-06:00</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>Error while installing therubyracer gem</title>
+    <link rel="alternate" href="http://blog.url.com/articles/2016/06/16/error-while-installing-therubyracer-gem.html"/>
+    <id>http://blog.url.com/articles/2016/06/16/error-while-installing-therubyracer-gem.html</id>
+    <published>2016-06-16T10:03:00-06:00</published>
+    <updated>2016-06-21T23:53:10-06:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;This article is related to &lt;a href="/articles/2016/06/16/error-while-installing-libv8-gem.html"&gt;Error while installing libv8 gem&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you ran into this error &lt;code class="prettyprint"&gt;ERROR: Failed to build gem native extension&lt;/code&gt; or
+something the like, I found a solution.&lt;/p&gt;
+
+&lt;p&gt;You can use the Libv8 from the brew instead of the one from gem. You can do that by following commands:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint"&gt;$ gem uninstall libv8
+$ brew install v8
+$ gem install therubyracer
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Reference:
+&lt;a href="http://stackoverflow.com/questions/11598655/therubyracer-install-error"&gt;http://stackoverflow.com/questions/11598655/therubyracer-install-error&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Error while installing libv8 gem</title>
+    <link rel="alternate" href="http://blog.url.com/articles/2016/06/16/error-while-installing-libv8-gem.html"/>
+    <id>http://blog.url.com/articles/2016/06/16/error-while-installing-libv8-gem.html</id>
+    <published>2016-06-16T09:55:00-06:00</published>
+    <updated>2016-06-16T09:59:45-06:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;While installing libv8 gem during a bundle install I ran into this error:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="prettyprint"&gt;Gem::Ext::BuildError: ERROR: Failed to build gem native extension.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is due to the fact that OS X 10.9+ is using version 4.8 of GCC. This is not
+supported officially in older versions of libv8.&lt;/p&gt;
+
+&lt;p&gt;Here is the fix:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class="prettyprint"&gt;gem install libv8 -v &amp;#39;3.16.14.13&amp;#39; -- --with-system-v8&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Reference: &lt;a href="http://stackoverflow.com/questions/19577759/installing-libv8-gem-on-os-x-10-9"&gt;http://stackoverflow.com/questions/19577759/installing-libv8-gem-on-os-x-10-9&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Simulate Cursor Typing with Angular</title>
     <link rel="alternate" href="http://blog.url.com/articles/2015/11/05/simulate-cursor-typing-with-angular.html"/>
@@ -155,214 +204,6 @@ end
 def reverse_fibonacci_sequence(number_of_places)
   fibonacci_sequence(number_of_places).reverse
 end
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Setup static site with Nginx &amp; Capistrano on Digital Ocean</title>
-    <link rel="alternate" href="http://blog.url.com/articles/2015/10/30/setup-static-site-with-nginx-capistrano-on-digital-ocean.html"/>
-    <id>http://blog.url.com/articles/2015/10/30/setup-static-site-with-nginx-capistrano-on-digital-ocean.html</id>
-    <published>2015-10-30T08:02:00-06:00</published>
-    <updated>2015-10-30T18:53:06-06:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;p&gt;Setting up a static site on Digital Ocean is pretty simple. First we will create a
-user that will run the Capistrano deployment. Then, setup SSH, install Nginx, and
-finally run Capistrano. Let&amp;rsquo;s get started!&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; All commands should be run as root unless specified. The Digital Ocean
-instance setup here is for Ubuntu.&lt;/p&gt;
-
-&lt;h1&gt;Setup Deploy User&lt;/h1&gt;
-
-&lt;p&gt;First let&amp;rsquo;s SSH into the Digital Ocean server and add a new user called &lt;em&gt;deploy&lt;/em&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-bash"&gt;adduser deploy
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Then to add your new user to the sudo group&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-bash"&gt;gpasswd -a deploy sudo
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now the &lt;em&gt;deploy&lt;/em&gt; user can run commands with super user privileges!&lt;/p&gt;
-
-&lt;p&gt;Switch to new user for the following commands&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-bash"&gt;su - deploy
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1&gt;Setup SSH as the deploy user&lt;/h1&gt;
-
-&lt;p&gt;Create a new directory called .ssh and restrict its permissions with the following commands:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-bash"&gt;mkdir .ssh
-# set permissions so deploy can read, write and execute
-chmod 700 .ssh
-nano .ssh/authorized_keys
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;From your local machine, copy your public key &lt;code class="prettyprint"&gt;pbcopy &amp;lt; ~/.ssh/id_rsa.pub&lt;/code&gt;,
-and then paste it into &lt;em&gt;authorized_keys&lt;/em&gt;. Save and close.&lt;/p&gt;
-
-&lt;p&gt;Now restrict the permissions of the authorized_keys file with this command:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-bash"&gt;chmod 600 .ssh/authorized_keys
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You will now be able to SSH into your server as the &lt;em&gt;deploy&lt;/em&gt; user.&lt;/p&gt;
-
-&lt;h1&gt;Generate a server public key from Capistrano deployment&lt;/h1&gt;
-
-&lt;p&gt;On the server run &lt;code class="prettyprint"&gt;ssh-keygen -t rsa&lt;/code&gt; and follow the prompts.&lt;/p&gt;
-
-&lt;p&gt;Then add the server key to your git repo host (github, bitbucket, etc) deployment keys.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class="prettyprint"&gt;cat ~/.ssh/id_rsa.pub&lt;/code&gt; will display the public key.&lt;/p&gt;
-
-&lt;h1&gt;Install Nginx&lt;/h1&gt;
-
-&lt;p&gt;Update out-of-date packages&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-bash"&gt;sudo apt-get update
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Then, install Nginx:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-bash"&gt;sudo apt-get install curl git-core nginx
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1&gt;Configure Nginx to run the site&lt;/h1&gt;
-
-&lt;p&gt;Create a file named &lt;em&gt;static_site&lt;/em&gt; under Nginx&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-bash"&gt;cd /etc/nginx/sites-available
-nano static_site
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Then add this config to the file&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint"&gt;server {
-  root /var/www/static_site/current;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;code class="prettyprint"&gt;/var/www/static_site/current&lt;/code&gt; is the path where the site files will live. We
-will manually create the &lt;em&gt;static_site&lt;/em&gt; directory later and Capistrano will create
-the &lt;em&gt;current&lt;/em&gt; directory during deployment.&lt;/p&gt;
-
-&lt;p&gt;Next, we will enable the site and remove the default Nginx config.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-bash"&gt;cd ../sites-enabled
-ln -s ../sites-available/static_site static_site
-rm default
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And, create the base directory for the site files and change permissions to
-be owned by deploy.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-bash"&gt;mkdir /var/www/static_site
-chown deploy /var/www/static_site
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1&gt;Capistrano&lt;/h1&gt;
-
-&lt;p&gt;Add Capistrano to you Gemfile&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;gem &amp;#39;capistrano&amp;#39;, &amp;#39;~&amp;gt; 3.4.0&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;and run&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-bash"&gt;bundle install
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Capistrano needs a couple of directories and files so let&amp;rsquo;s run&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-bash"&gt;cap install
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Add the following to the generated &lt;code class="prettyprint"&gt;deploy.rb&lt;/code&gt; file, remembering to update the repo_url.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;# deploy.rb
-# config valid Capistrano 3.4.x
-lock &amp;#39;3.4.0&amp;#39;
-
-set :application,   &amp;#39;static_site&amp;#39;
-set :repo_url,      &amp;#39;git@&amp;lt;repoUrlHere&amp;gt;&amp;#39;
-set :scm,           :git
-set :user,          &amp;quot;deploy&amp;quot;
-set :pty,           true
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Copy this to your &lt;code class="prettyprint"&gt;production.rb&lt;/code&gt; file and update the server IP address.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-rb"&gt;# production.rb
-set :application, &amp;#39;static_site&amp;#39;
-
-## Servers we are going to deploy to ----------------------
-server &amp;#39;xxx.xxx.xxx.xxx&amp;#39;, user: &amp;#39;deploy&amp;#39;
-
-## Server Settings ----------------------------------------
-set :deploy_to, &amp;quot;/var/www/static_site&amp;quot;
-
-## Git Configuration Settings -----------------------------
-set :branch, &amp;quot;master&amp;quot; # set to your desired branch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;Test out Capistrano&lt;/h2&gt;
-
-&lt;p&gt;Check if necessary files and directories exist. If they don&amp;rsquo;t, Capistrano will create
-them.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-bash"&gt;bundle exec cap production deploy:check
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2&gt;Deploy your App&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint lang-bash"&gt;bundle exec cap production deploy
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-  </entry>
-  <entry>
-    <title>How to fix OpenSSL::SSL::SSLError: certificate verify failed</title>
-    <link rel="alternate" href="http://blog.url.com/articles/2015/10/07/how-to-fix-openssl-ssl-sslerror-certificate-verify-failed.html"/>
-    <id>http://blog.url.com/articles/2015/10/07/how-to-fix-openssl-ssl-sslerror-certificate-verify-failed.html</id>
-    <published>2015-10-07T17:23:00-06:00</published>
-    <updated>2016-02-09T13:19:27-07:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;p&gt;If you are using RVM, make sure to install Ruby versions without binaries. I&amp;rsquo;m
-not sure why this works, but it does. The crappy part is that you have to do this
-on every version bump of Ruby&amp;hellip; boo.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class="prettyprint"&gt;rvm install ruby-2.2.2 --without-binaries&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2&gt;Update&lt;/h2&gt;
-
-&lt;p&gt;&lt;em&gt;February 9, 2015&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;During my last install the Rails console was finding an old cert because it was
-not looking at the correct directory.&lt;/p&gt;
-
-&lt;p&gt;Run this in both an IRB and under your Rails console to verify that they are
-the same values.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint"&gt;require &amp;quot;openssl&amp;quot;
-puts OpenSSL::OPENSSL_VERSION
-puts &amp;quot;SSL_CERT_FILE: %s&amp;quot; % OpenSSL::X509::DEFAULT_CERT_FILE
-puts &amp;quot;SSL_CERT_DIR: %s&amp;quot; % OpenSSL::X509::DEFAULT_CERT_DIR
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If they are different values, you may need to add this to your development environment
-file:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="prettyprint"&gt;SSL_CERT_FILE=/usr/local/etc/openssl/cert.pem
-SSL_CERT_DIR=/usr/local/etc/openssl/certs
 &lt;/code&gt;&lt;/pre&gt;
 </content>
   </entry>
