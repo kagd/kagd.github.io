@@ -8476,22 +8476,28 @@ kagd-diablo {
     /* line 160, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
     kagd-diablo .heroes .monk-female {
       background-position: -83px -132px; }
-  /* line 165, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    /* line 163, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    kagd-diablo .heroes .necromancer-male {
+      background-position: 0 -396px; }
+    /* line 166, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+    kagd-diablo .heroes .necromancer-female {
+      background-position: -83px -396px; }
+  /* line 171, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
   kagd-diablo .seasonal,
   kagd-diablo .hardcore {
     font-size: 1.28571rem;
     right: 5px;
     position: absolute;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); }
-  /* line 173, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+  /* line 179, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
   kagd-diablo .seasonal {
     color: #40bf40;
     top: 5px; }
-  /* line 178, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+  /* line 184, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
   kagd-diablo .hardcore {
     color: #d12f37;
     top: 45px; }
-  /* line 183, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
+  /* line 189, /Users/gklinsing/Code/Personal/Sites/grantrklinsing.com/source/stylesheets/index/_diablo.scss */
   kagd-diablo .weapon {
     left: -2rem;
     position: absolute;

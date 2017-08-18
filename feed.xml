@@ -5,7 +5,7 @@
   <id>http://blog.url.com/articles</id>
   <link href="http://blog.url.com/articles"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2016-06-16T10:03:00-06:00</updated>
+  <updated>2016-06-16T11:03:00-05:00</updated>
   <author>
     <name>Blog Author</name>
   </author>
@@ -13,8 +13,8 @@
     <title>Error while installing therubyracer gem</title>
     <link rel="alternate" href="http://blog.url.com/articles/2016/06/16/error-while-installing-therubyracer-gem.html"/>
     <id>http://blog.url.com/articles/2016/06/16/error-while-installing-therubyracer-gem.html</id>
-    <published>2016-06-16T10:03:00-06:00</published>
-    <updated>2016-06-21T23:53:10-06:00</updated>
+    <published>2016-06-16T11:03:00-05:00</published>
+    <updated>2016-06-22T00:53:10-05:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -38,8 +38,8 @@ $ gem install therubyracer
     <title>Error while installing libv8 gem</title>
     <link rel="alternate" href="http://blog.url.com/articles/2016/06/16/error-while-installing-libv8-gem.html"/>
     <id>http://blog.url.com/articles/2016/06/16/error-while-installing-libv8-gem.html</id>
-    <published>2016-06-16T09:55:00-06:00</published>
-    <updated>2016-06-16T09:59:45-06:00</updated>
+    <published>2016-06-16T10:55:00-05:00</published>
+    <updated>2016-06-16T10:59:45-05:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -62,8 +62,8 @@ supported officially in older versions of libv8.&lt;/p&gt;
     <title>Simulate Cursor Typing with Angular</title>
     <link rel="alternate" href="http://blog.url.com/articles/2015/11/05/simulate-cursor-typing-with-angular.html"/>
     <id>http://blog.url.com/articles/2015/11/05/simulate-cursor-typing-with-angular.html</id>
-    <published>2015-11-05T00:20:00-07:00</published>
-    <updated>2015-11-05T00:25:04-07:00</updated>
+    <published>2015-11-05T01:20:00-06:00</published>
+    <updated>2015-11-05T01:25:04-06:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -145,8 +145,8 @@ Directive.$inject = [&amp;#39;$timeout&amp;#39;]
     <title>75 points &amp; 75 rebounds in 4 games... sick!</title>
     <link rel="alternate" href="http://blog.url.com/articles/2015/11/04/75-points-75-rebounds-in-4-games-sick.html"/>
     <id>http://blog.url.com/articles/2015/11/04/75-points-75-rebounds-in-4-games-sick.html</id>
-    <published>2015-11-04T22:23:00-07:00</published>
-    <updated>2015-11-04T22:31:00-07:00</updated>
+    <published>2015-11-04T23:23:00-06:00</published>
+    <updated>2015-11-04T23:31:00-06:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -159,8 +159,8 @@ Directive.$inject = [&amp;#39;$timeout&amp;#39;]
     <title>Installing the PG Gem with PostgresApp</title>
     <link rel="alternate" href="http://blog.url.com/articles/2015/11/04/installing-the-pg-gem-with-postgresapp.html"/>
     <id>http://blog.url.com/articles/2015/11/04/installing-the-pg-gem-with-postgresapp.html</id>
-    <published>2015-11-04T20:46:00-07:00</published>
-    <updated>2015-11-04T21:32:30-07:00</updated>
+    <published>2015-11-04T21:46:00-06:00</published>
+    <updated>2015-11-04T22:32:30-06:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -181,8 +181,8 @@ number to your installed version.&lt;/p&gt;
     <title>Ruby Fibonacci Sequence Generator</title>
     <link rel="alternate" href="http://blog.url.com/articles/2015/10/30/ruby-fibonacci-sequence-generator.html"/>
     <id>http://blog.url.com/articles/2015/10/30/ruby-fibonacci-sequence-generator.html</id>
-    <published>2015-10-30T21:14:00-06:00</published>
-    <updated>2015-10-30T21:17:45-06:00</updated>
+    <published>2015-10-30T22:14:00-05:00</published>
+    <updated>2015-10-30T22:17:45-05:00</updated>
     <author>
       <name>Article Author</name>
     </author>
