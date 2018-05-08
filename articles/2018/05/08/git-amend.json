@@ -1,0 +1,1 @@
+{"id":"/articles/2018/05/08/git-amend","title":"Amend last git commit with additional files","date":"2018-05-08 11:15 CDT","tags":"git","content":"<p>bash\ngit add .\ngit commit --amend --no-edit\n<code>`</code></p>\n"}
