@@ -1,1 +1,1 @@
-window.location = '/redirect=' + window.location.pathname;
+window.location = '/?redirect=' + window.location.pathname;
