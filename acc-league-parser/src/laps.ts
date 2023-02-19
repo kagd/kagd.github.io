@@ -1,130 +1,69 @@
-export function setLapPositions(laps: Results.Lap[], drivers: Processing.Driver[]): Processing.Driver[] {
-    let maxLapCount = 0;
+import { deepClone } from "./utils";
 
-    const driversWithLaps = drivers.map(function(driver){
-        const driverLaps = getDriverLaps(laps, driver);
+export function addLapDetailsFromRace(raceResultsFile: Results.ResultFile, participants: Processing.Participants): Processing.Participants {
+    const participantsCopy = deepClone(participants);
 
-        let elapsedTime = 0;
+    const lapNumberCounter: number[] = [];
+    const lapPositionCounter: number[] = [];
+    const allFirstSectorsExclFirstLap: number[] = [];
 
-        const fixedLaps = driverLaps.map<Processing.Lap>(function(lap, index){
-            const lapNumber = index + 1;
-            if(lapNumber > maxLapCount){
-                maxLapCount = lapNumber;
-            }
-
-            return {
-                ...lap,
-                elapsedTime: lap.laptime + elapsedTime,
-                number: lapNumber,
-                carPosition: 0
-            }
-        });
-
-        return {
-            ...driver,
-            laps: fixedLaps,
-        } as Processing.Driver
-    });
-
-    // Group laps by lap number and sort by elapsed time to find position
-    const lapsByNumber = Array.from(new Array(maxLapCount)).map(function(_, idx){
-        // https://github.com/mauserrifle/simresults/blob/f714438cf40f666a5d1ca518c5986c271ad72556/lib/Simresults/Data/Reader.php#L373
-        const lapsByNumber = getLapsByLapNumberSortedByTime(idx + 1, driversWithLaps);
-        const lapsByNumberSorted = sortLapsByElapsedTime(lapsByNumber);
-
-        lapsByNumberSorted.forEach(function(lap, index){
-            if(lap.laptime && lap.elapsedTime){
-                lap.carPosition = index + 1;
-            }
-        });
-
-        return lapsByNumberSorted;
-    });
-
-    return driversWithLaps.reduce(function(memo, driverWithLap){
+    raceResultsFile.laps.forEach(function(lapData, idx){
+        if(!lapData.carId || !participantsCopy[lapData.carId]){
+            return;
+        }
         
-        const driverLaps = lapsByNumber.map(function(laps){
-            const lap = laps.find(function(lap){
-                return lap.carId === driverWithLap.carId;
-            }) as Processing.Lap;
+        let lapNumber: number;
+        
+        if(!lapNumberCounter[lapData.carId]){
+            lapNumber = lapNumberCounter[lapData.carId] = 1;
+        } else {
+            lapNumber = ++lapNumberCounter[lapData.carId];
+        }
 
-            return lap;
+        if(lapNumber > 1){
+            allFirstSectorsExclFirstLap.push(lapData.splits[0]);
+        }
+        
+        let lapPosition: number;
+        
+        if(!lapPositionCounter[lapNumber]){
+            lapPosition = lapPositionCounter[lapNumber] = 1;
+        } else {
+            lapPosition = ++lapPositionCounter[lapNumber];
+        }
+
+        participantsCopy[lapData.carId].laps.push({
+            ...lapData,
+            number: lapNumber,
+            position: lapPosition,
         });
-        memo.push({
-            ...driverWithLap,
-            laps: driverLaps
-        })
+    });
 
-        return memo;
-    }, [] as Processing.Driver[]);
+    correctFirstLapFirstSector(participantsCopy, allFirstSectorsExclFirstLap);
+
+    return participantsCopy;
 }
 
-export function driverPositionPerLap(laps: Results.Lap[], driver: Processing.Driver){
+/**
+ * Data fixing of laps for race sessions
+ *
+ * The  timer starts when the player enters the session or presses drive.
+ * So we cannot trust sector 1 times or total times.
+ */
+function correctFirstLapFirstSector(participants: Processing.Participants, allFirstSectorsExclFirstLap: number[]) {
+    const totalFirstSectorTime = allFirstSectorsExclFirstLap.reduce(function(memo, sectorTime){
+        return memo + sectorTime;
+    }, 0);
     
-}
+    const avgFirstSectorTime = (totalFirstSectorTime / allFirstSectorsExclFirstLap.length);
 
-function getDriverLaps(laps: Results.Lap[], driver: Processing.Driver){
-    return laps.filter(function(lap){
-        return lap.carId === driver.carId;
-    });
-}
+    Object.keys(participants).forEach(function(carId){
+        const participant = participants[parseInt(carId)];
 
-function getLapsByLapNumberSortedByTime(lapNumber: number, driverWithLaps: Processing.Driver[]){
-    const lapsByNumber = driverWithLaps.reduce(function(memo, driverWithLap){
-        const driverLap = driverWithLap.laps.find(function(lap){
-            return lap.number === lapNumber;
-        });
-
-        if(driverLap){
-            memo.push(driverLap);
-        }
-
-        return memo;
-    }, [] as Processing.Lap[]);
-
-    return sortLapsByTime(lapsByNumber);
-}
-
-function sortLapsByTime(laps: Processing.Lap[]){
-    return laps.sort(function(a, b){
-        if(a.laptime === b.laptime){
-            return 0;
-        }
-
-        if(a.laptime === null){
-            return 1;
-        }
-
-        if(b.laptime === null){
-            return -1;
-        }
-
-        return a.laptime > b.laptime ? -1 : 1;
-    });
-}
-
-function sortLapsByElapsedTime(laps: Processing.Lap[]){
-    return laps.sort(function(a, b){
-        if(a.elapsedTime === b.elapsedTime){
-            return 0;
-        }
-
-        if(a.elapsedTime === null){
-            return 1;
-        }
-
-        if(b.elapsedTime === null){
-            return -1;
-        }
-
-        if(a.laptime === null){
-            return 1;
-        }
-
-        if(b.laptime === null){
-            return -1;
-        }
-
-        return a.elapsedTime > b.elapsedTime ? -1 : 1;
+        // + 5s to account for grid start
+        let newSector1Time = ((avgFirstSectorTime + 5000) / 1000);
+        newSector1Time += (participant.laps[0].position * 0.01);
+        participant.laps[0].splits[0] = Math.round(newSector1Time * 1000);
+        participant.laps[0].laptime = participant.laps[0].splits[0] + participant.laps[0].splits[1] + participant.laps[0].splits[2];
     });
 }

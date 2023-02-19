@@ -1,0 +1,22 @@
+{
+  "name": "kagd.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kagd/kagd.github.io.git"
+  },
+  "author": "Grant Klinsing",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kagd/kagd.github.io/issues"
+  },
+  "homepage": "grantrklinsing.com",
+  "devDependencies": {
+    "@tsconfig/esm": "^1.0.2"
+  }
+}

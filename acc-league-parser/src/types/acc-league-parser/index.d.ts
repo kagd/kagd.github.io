@@ -48,7 +48,7 @@ namespace Results {
         /**
          * @description Sector split times
          */
-        splits: number[];
+        splits: [number, number, number];
     }
 
     declare type Penalty = {
@@ -89,7 +89,14 @@ namespace Processing {
 
     declare type Lap = Results.Lap & {
         number: number;
-        carPosition: number;
-        elapsedTime: number;
+        position: number;
     }
+
+    declare type Participant = Driver & {
+        carModel: number;
+        qualified: number;
+        finished: number;
+    }
+
+    declare type Participants = { [carId: number]: Participant };
 }
