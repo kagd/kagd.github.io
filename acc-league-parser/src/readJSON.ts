@@ -21,23 +21,8 @@ export function readJSON<T>(filepath: string){
     return memo;
   }, null);
 
-//   try {
-//     // Kunos server files are in this format
-//     const contents = fs.readFileSync(filepath, {encoding: 'utf16le', flag:'r'});
-//     console.log({contents})
-//     return JSON.parse(contents) as T;
-//   } catch (error) {
-//     try {
-//       const contents = fs.readFileSync(filepath, {encoding: 'utf8', flag:'r'});
-//       console.log({contents})
-//       return JSON.parse(contents) as T;
-//     } catch (error) {
-//       throw new Error(`JSON parsing failed for utf16 and utf8:\n ${error}`)
-//     }
-//   }
-
   if(!json){
-    throw new Error(`JSON parsing failed`)
+    throw new Error('JSON parsing failed')
   }
 
   return json;
