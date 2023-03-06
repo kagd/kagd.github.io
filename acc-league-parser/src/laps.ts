@@ -1,6 +1,6 @@
 import { deepClone } from "./utils";
 
-export function addLapDetailsFromRace(raceResultsFile: Results.ResultFile, participants: Processing.Participants): Processing.Participants {
+export function addLapDetailsFromRaceToParticipants(raceResultsFile: Results.ResultFile, participants: Processing.Participants): Processing.Participants {
     const participantsCopy = deepClone(participants);
 
     const lapNumberCounter: number[] = [];

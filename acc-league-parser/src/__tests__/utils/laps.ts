@@ -1,10 +1,10 @@
 import { createDrivers } from "./drivers";
 
-export function createLap(){
+export function createLap(overrides: Partial<Results.Lap> = {}): Results.Lap{
     const drivers = createDrivers();
     
     return {
-        "carId": drivers.yee.car.carId,
+        "carId": drivers.grant.car.carId,
         "driverIndex": 0,
         "isValidForBest": true,
         "laptime": 100000,
@@ -12,6 +12,7 @@ export function createLap(){
           20000,
           45000,
           35000
-        ]
+        ],
+        ...overrides,
     };
 }

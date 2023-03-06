@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { consolidateResults } from './consolidateResults';
 import { getDrivers } from './drivers';
-import { addLapDetailsFromRace } from './laps';
+import { addLapDetailsFromRaceToParticipants } from './laps';
 import { createParticipantsFromRaceResults, addQualifyingToRaceParticipants, toList, sortByFinish } from "./participants";
 
 const seasonDir = path.join(__dirname, 'data', 'season6', 'results');
@@ -12,7 +12,7 @@ const trackList = consolidateResults(seasonDir);
 
 const participants = createParticipantsFromRaceResults(trackList['barcelona'].race);
 
-const results = addQualifyingToRaceParticipants(addLapDetailsFromRace(trackList['barcelona'].race, participants), trackList['barcelona'].qualifying);
+const results = addQualifyingToRaceParticipants(addLapDetailsFromRaceToParticipants(trackList['barcelona'].race, participants), trackList['barcelona'].qualifying);
 
 // const driver = drivers.find((driver) => driver.lastName === 'Koptsov') as Processing.Driver;
 
