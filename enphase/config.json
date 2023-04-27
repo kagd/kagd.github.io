@@ -1,0 +1,7 @@
+{
+  "urls": {
+    "token": "https://api.enphaseenergy.com/oauth/token?grant_type=authorization_code&redirect_uri=https://api.enphaseenergy.com/oauth/redirect_uri&code=",
+    "refreshToken": "https://api.enphaseenergy.com/oauth/token?grant_type=refresh_token&refresh_token=",
+    "rgmStats": "https://api.enphaseenergy.com/api/v4/systems/3400658/rgm_stats?key=6d2b18e99861a1a072683eebf717eea6"
+  }
+}
